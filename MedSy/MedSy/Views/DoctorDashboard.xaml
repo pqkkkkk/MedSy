@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MedSy.Views.DoctorDashboard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MedSy.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="#ffffff">
+        <!-- define navigate column and context column -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1336"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- set up the left part -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Set up User button -->
+            <Button Grid.Row="0"
+            Name="User_Button" 
+            Style="{StaticResource Button_Navigation}"
+            CornerRadius="50"
+            Background="#333">
+                <Image Source="/Assets/avt01.jpg"
+                   Stretch="UniformToFill"/>
+            </Button>
+
+            <!-- Set up Dashboard button -->
+            <Button Grid.Row="1"
+            Name="dashboard_Button"
+            Style="{StaticResource Button_Navigation}">
+            <FontIcon FontFamily="{StaticResource FontGoogle}" 
+                Glyph="&#xe871;" 
+                FontSize="48"
+                Foreground="#336699" />
+            </Button>
+
+            <!-- Set up Appointment Request button-->
+            <Button 
+            Grid.Row="2"
+            Name="AppointmentRequest_Button"
+            Style="{StaticResource Button_Navigation}">
+            <FontIcon
+            FontFamily="{StaticResource FontGoogle}" 
+            Glyph="&#xe179;" 
+            FontSize="48"
+            Foreground="#336699"/>
+            </Button>
+
+            <!--Set up Personal Schedule Button-->
+            <Button 
+            Grid.Row="3"
+            Name="PS_Button"
+            Style="{StaticResource Button_Navigation}">
+            <FontIcon
+            FontFamily="{StaticResource FontGoogle}"
+            Glyph="&#xebcc;"
+            FontSize="48"
+            Foreground="#336699"/>
+            </Button>
+            
+            <!--Set up Patient Management Button-->
+            <Button
+            Grid.Row="4"
+            Name="PM_Button"
+            Style="{StaticResource Button_Navigation}">
+            <FontIcon
+            FontFamily="{StaticResource FontAwesome}"
+            Glyph="&#xe594;"
+            FontSize="48"
+            Foreground="#336699"/>
+            </Button>
+            
+            <!-- Set up MedicalNews button -->
+            <Button Grid.Row="5"
+            Name="MedNews_Button"
+            Style="{StaticResource Button_Navigation}">
+            <FontIcon FontFamily="{StaticResource FontAwesome}" 
+                    Glyph="&#xf1ea;" 
+                    FontSize="48"
+                    Foreground="#336699" />
+            </Button>
+
+            <!-- Set up Message button -->
+            <Button Grid.Row="6"
+             Name="Chat_Button"
+             Style="{StaticResource Button_Navigation}">
+            <FontIcon FontFamily="{StaticResource FontAwesome}" 
+                      Glyph="&#xf075;" 
+                      FontSize="48"
+                      Foreground="#336699" /> 
+            </Button>
+
+        </Grid>
+
+        <!-- set up the right part -->
+        <Grid Grid.Column="1" Background="#d4f3ff">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Setup logo -->
+            <Grid Grid.Row="0">
+                <Rectangle
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Fill="#336699"
+               Width="230"
+               Height="100"
+               RadiusX="50"
+               RadiusY="50">
+                </Rectangle>
+
+                <StackPanel 
+                Orientation="Horizontal"
+                VerticalAlignment="Top" HorizontalAlignment="Center"
+                        Padding="0 35 0 0">
+                    <TextBlock FontSize="30" TextWrapping="Wrap"
+                    Text="Med" Foreground="#FFFFFF" FontWeight="Bold">
+                    </TextBlock>
+                    <TextBlock FontSize="30" TextWrapping="Wrap"
+                    Text="Sy" Foreground="#45CFDD" FontWeight="Bold">
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+
+            <!-- Setup bien quang cao -->
+            <Grid Grid.Row="1" Margin="0 10 0 0">
+
+                <Rectangle Grid.Row="1"
+                    Fill="#ffffff"
+                    Width="1231"
+                    Height="310"
+                    RadiusX="20"
+                    RadiusY="20">
+                </Rectangle>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" 
+                   Foreground="#0D4E55"
+                    FontWeight="Bold"
+                    TextWrapping="Wrap"
+                    FontSize="40"
+                    HorizontalAlignment="Left" 
+                    Width="413"
+                    Height="103"
+                    Margin="100 20 0 0"
+                    Text="Service System Of Medsy Hospital"
+                 >
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="1" 
+                    Foreground="#666666"
+                    FontWeight="Bold"
+                    TextWrapping="Wrap"
+                    FontSize="24"
+                    HorizontalAlignment="Left"
+                    Width="347"
+                    Height="84"
+                    Margin="100 0 0 0"
+                    Text="Connect Medsy hospital and customer more closely">
+                    </TextBlock>
+
+                    <Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+                       Source="\Assets\logo_advertisement\logo1.png"
+                       Width="250"
+                       Height="250"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="0 0 100 0">
+                    </Image>
+                </Grid>
+            </Grid>
+
+            <!-- Setup cac chuc nang -->
+            <!--- Set up hang 1 -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                 
+                <!--Appointment Request-->
+                <Button Name="AppointmentRequest_inline_Button" Grid.Column="0" HorizontalAlignment="Left"
+                    Margin="40 0 0 0">
+                    <Grid>
+                        <Rectangle 
+                        Style="{StaticResource RectangleStyle}">
+                        </Rectangle>
+
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon 
+                         Style="{StaticResource FontIconStyle}"
+                         FontFamily="{StaticResource FontGoogle}"
+                         Glyph="&#xe179;" >
+                            </FontIcon>
+                            <TextBlock
+                           Style="{StaticResource TextBlock_inButton_Style}"
+                            Text="Appointment Request">
+                            </TextBlock>
+                        </StackPanel>
+
+                    </Grid>
+                </Button>
+                
+                <!--Personal Schedule-->
+                <Button Name="PersonalSchedule_Button" Grid.Column="1"
+                    HorizontalAlignment="Center">
+                    <Grid>
+                        <Rectangle 
+                        Style="{StaticResource RectangleStyle}">
+                        </Rectangle>
+
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon 
+                            Style="{StaticResource FontIconStyle}"
+                            FontFamily="{StaticResource FontGoogle}" 
+                            Glyph="&#xebcc;" />
+                            <TextBlock
+                            Style="{StaticResource TextBlock_inButton_Style}"
+                            Margin="20 20 0 0"
+                            FontSize="40"
+                            Text="Personal Schedule">
+                            </TextBlock>
+                        </StackPanel>
+
+                    </Grid>
+                </Button>
+
+                <!--Patient Management-->
+                <Button Name="PatientMagement_Button" Grid.Column="2" Margin="30 0 0 0">
+                    <Grid>
+                        <Rectangle 
+                        Style="{StaticResource RectangleStyle}">
+                        </Rectangle>
+
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="{StaticResource FontAwesome}" 
+                             Glyph="&#xe594;" 
+                             Style="{StaticResource FontIconStyle}"/>
+                            <TextBlock
+                            Style="{StaticResource TextBlock_inButton_Style}"
+                            Text="Patient Management">
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Button>
+            </Grid>
+
+            <!--- Set up hang 2 -->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" HorizontalAlignment="Center">
+                    <Button Name="MedicalNews_Inline_Button" >
+                        <Grid>
+                            <Rectangle 
+                            Style="{StaticResource RectangleStyle}">
+                            </Rectangle>
+
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FontAwesome}" 
+                                 Glyph="&#xf1ea;" 
+                                 Style="{StaticResource FontIconStyle}"/>
+                                <TextBlock
+                                Style="{StaticResource TextBlock_inButton_Style}"
+                                Margin="0 60 0 0"
+                                FontWeight="ExtraBold"
+                                Text="Medical news">
+                                </TextBlock>
+                            </StackPanel>
+
+                        </Grid>
+                    </Button>
+                </Border>
+
+                <Border Grid.Column="1" HorizontalAlignment="Left">
+                    <Button Name="Chat_Inline_Button" 
+                        Grid.Column="1" 
+                        HorizontalAlignment="Center">
+                        <Grid>
+                            <Rectangle 
+                        Style="{StaticResource RectangleStyle}">
+                            </Rectangle>
+
+                            <StackPanel
+                            Orientation="Horizontal">
+                                <FontIcon 
+                                FontFamily="{StaticResource FontAwesome}" 
+                             Glyph="&#xf075;" 
+                             Style="{StaticResource FontIconStyle}"/>
+
+                                <TextBlock 
+                                Style="{StaticResource TextBlock_inButton_Style}"
+                                Text="Track people health">
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
