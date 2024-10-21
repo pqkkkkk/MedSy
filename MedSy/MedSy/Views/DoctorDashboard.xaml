@@ -10,101 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="#ffffff">
-        <!-- define navigate column and context column -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="1336"/>
-        </Grid.ColumnDefinitions>
-
-        <!-- set up the left part -->
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!-- Set up User button -->
-            <Button Grid.Row="0"
-            Name="User_Button" 
-            Style="{StaticResource Button_Navigation}"
-            CornerRadius="50"
-            Background="#333">
-                <Image Source="/Assets/avt01.jpg"
-                   Stretch="UniformToFill"/>
-            </Button>
-
-            <!-- Set up Dashboard button -->
-            <Button Grid.Row="1"
-            Name="dashboard_Button"
-            Style="{StaticResource Button_Navigation}">
-            <FontIcon FontFamily="{StaticResource FontGoogle}" 
-                Glyph="&#xe871;" 
-                FontSize="48"
-                Foreground="#336699" />
-            </Button>
-
-            <!-- Set up Appointment Request button-->
-            <Button 
-            Grid.Row="2"
-            Name="AppointmentRequest_Button"
-            Style="{StaticResource Button_Navigation}">
-            <FontIcon
-            FontFamily="{StaticResource FontGoogle}" 
-            Glyph="&#xe179;" 
-            FontSize="48"
-            Foreground="#336699"/>
-            </Button>
-
-            <!--Set up Personal Schedule Button-->
-            <Button 
-            Grid.Row="3"
-            Name="PS_Button"
-            Style="{StaticResource Button_Navigation}">
-            <FontIcon
-            FontFamily="{StaticResource FontGoogle}"
-            Glyph="&#xebcc;"
-            FontSize="48"
-            Foreground="#336699"/>
-            </Button>
-            
-            <!--Set up Patient Management Button-->
-            <Button
-            Grid.Row="4"
-            Name="PM_Button"
-            Style="{StaticResource Button_Navigation}">
-            <FontIcon
-            FontFamily="{StaticResource FontAwesome}"
-            Glyph="&#xe594;"
-            FontSize="48"
-            Foreground="#336699"/>
-            </Button>
-            
-            <!-- Set up MedicalNews button -->
-            <Button Grid.Row="5"
-            Name="MedNews_Button"
-            Style="{StaticResource Button_Navigation}">
-            <FontIcon FontFamily="{StaticResource FontAwesome}" 
-                    Glyph="&#xf1ea;" 
-                    FontSize="48"
-                    Foreground="#336699" />
-            </Button>
-
-            <!-- Set up Message button -->
-            <Button Grid.Row="6"
-             Name="Chat_Button"
-             Style="{StaticResource Button_Navigation}">
-            <FontIcon FontFamily="{StaticResource FontAwesome}" 
-                      Glyph="&#xf075;" 
-                      FontSize="48"
-                      Foreground="#336699" /> 
-            </Button>
-
-        </Grid>
+       
 
         <!-- set up the right part -->
         <Grid Grid.Column="1" Background="#d4f3ff">
@@ -141,11 +47,10 @@
             </Grid>
 
             <!-- Setup bien quang cao -->
-            <Grid Grid.Row="1" Margin="0 10 0 0">
+            <Grid Grid.Row="1" Margin="40 10 40 0">
 
                 <Rectangle Grid.Row="1"
                     Fill="#ffffff"
-                    Width="1231"
                     Height="310"
                     RadiusX="20"
                     RadiusY="20">

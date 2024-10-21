@@ -14,6 +14,7 @@
 	  <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="DoctorMainWindow.xaml" />
     <None Remove="Views\DoctorDashboard.xaml" />
     <None Remove="Views\SignInWindow.xaml" />
     <None Remove="Views\SignUpWindow.xaml" />
@@ -44,6 +45,11 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="DoctorMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\DoctorDashboard.xaml">

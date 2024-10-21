@@ -14,7 +14,7 @@
             <!-- Other app resources here -->
             <Style TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="Inter"/>
-
+             <!-- Font family for application -->
             </Style>
             <Style TargetType="TextBox">
                 <Setter Property="FontFamily" Value="Inter"/>
@@ -27,7 +27,7 @@
             </Style>
             
             <FontFamily x:Key="FontGoogle">ms-appx///Assets/font/fontGoogle/Material_Symbols_Outlined/MaterialSymbolsOutlined-VariableFont_FILL,GRAD,opsz,wght.ttf#Material Symbols Outlined Thin</FontFamily>
-            <FontFamily x:Key="FontAwesome">ms-appx///Assets/fontAwesome/webfonts/fa-solid-900.ttf#Font Awesome 6 Free Solid</FontFamily>
+            <FontFamily x:Key="FontAwesome">ms-appx///Assets/font/fontAwesome/webfonts/fa-solid-900.ttf#Font Awesome 6 Free Solid</FontFamily>
             
             <Style x:Key="RectangleStyle" TargetType="Rectangle">
                 <Setter Property="Fill" Value="#ffffff"/>
