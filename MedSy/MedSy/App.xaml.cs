@@ -41,10 +41,10 @@ namespace MedSy
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
+            m_window = new UserMainWindow();
             m_window.Activate();
         }
 
-        private MainWindow m_window;
+        private UserMainWindow m_window;
     }
 }

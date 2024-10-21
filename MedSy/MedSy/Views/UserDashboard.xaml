@@ -11,96 +11,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="#ffffff">
-        <!-- define navigate column and context column -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="1336"/>
-        </Grid.ColumnDefinitions>
-        
-        <!-- set up the left part -->
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            
-            <!-- Set up User button -->
-            <Button Grid.Row="0"
-                Name="User_Button" 
-                Style="{StaticResource Button_Navigation}"
-                CornerRadius="50"
-                Background="#333"
-                Margin="0 20 0 0">
-                <Image Source="/Assets/avt01.jpg"
-                       Stretch="UniformToFill"/>
-            </Button>
-            
-            <!-- Set up Dashboard button -->
-            <Button Grid.Row="1"
-                Name="dashboard_Button"
-                Style="{StaticResource Button_Navigation}"
-                Margin="0 20 0 0">
-                <FontIcon FontFamily="{StaticResource FontGoogle}" 
-                    Glyph="&#xe871;" 
-                    FontSize="48"
-                    Foreground="#336699" />
-            </Button>
-            
-            <!-- Set up consulation button-->
-            <Button 
-                Grid.Row="2"
-                Name="consulation_Button"
-                Style="{StaticResource Button_Navigation}"
-                Margin="0 20 0 0">
-                <FontIcon
-                FontFamily="{StaticResource FontAwesome}" 
-                Glyph="&#xf0f8;" 
-                FontSize="48"
-                Foreground="#336699"/>
-            </Button>
-            
-            <!--Set up Message Button-->
-            <Button 
-                Grid.Row="3"
-                Name="Chat_Button"
-                Style="{StaticResource Button_Navigation}"
-                    Margin="0 20 0 0">
-                <FontIcon
-                FontFamily="{StaticResource FontAwesome}"
-                Glyph="&#xf075;"
-                FontSize="48"
-                Foreground="#336699"/>
-            </Button>
-            
-            <!--Set up Pharmacy Button-->
-            <Button
-                Grid.Row="4"
-                Name="Pharmacy_Button"
-                Style="{StaticResource Button_Navigation}"
-                Margin="0 20 0 0">
-                <FontIcon
-                FontFamily="{StaticResource FontAwesome}"
-                Glyph="&#xf469;"
-                FontSize="48"
-                Foreground="#336699"/> 
-            </Button>
-            <!-- Set up MedicalNews button -->
-            <Button Grid.Row="5"
-            Name="MedicalNews_Button"
-            Style="{StaticResource Button_Navigation}"
-            Margin="0 20 0 0">
-                <FontIcon FontFamily="{StaticResource FontAwesome}" 
-                    Glyph="&#xf1ea;" 
-                    FontSize="48"
-                    Foreground="#336699" />
-            </Button>
-
-        </Grid>
-        
+         
         <!-- set up the right part -->
         <Grid Grid.Column="1" Background="#d4f3ff">
             <Grid.RowDefinitions>
@@ -140,7 +51,7 @@
 
                 <Rectangle Grid.Row="1"
                         Fill="#ffffff"
-                        Width="1231"
+                        Margin="40,0,40,0"
                         Height="310"
                         RadiusX="20"
                         RadiusY="20">
