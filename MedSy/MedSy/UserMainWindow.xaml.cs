@@ -1,4 +1,5 @@
 using MedSy.Views;
+using MedSy.Views.User;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -46,6 +47,7 @@ namespace MedSy
                 case "Consultation":
                     break;
                 case "Chat":
+                    content.Navigate(typeof(UserChatPage));
                     break;
                 case "Pharmacy":
                     break;

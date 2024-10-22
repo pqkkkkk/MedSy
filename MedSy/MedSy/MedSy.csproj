@@ -19,6 +19,7 @@
     <None Remove="Views\SignInWindow.xaml" />
     <None Remove="Views\SignUpWindow.xaml" />
     <None Remove="Views\UserDashboard.xaml" />
+    <None Remove="Views\User\UserChatPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +77,11 @@
     <Folder Include="Helpers\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\User\UserChatPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--
