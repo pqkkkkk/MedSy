@@ -14,17 +14,26 @@
 	  <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\avt01.jpg" />
+    <Content Remove="Assets\doctoravt.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="DoctorMainWindow.xaml" />
+    <None Remove="MainWindow.xaml" />
     <None Remove="Views\DoctorDashboard.xaml" />
-    <None Remove="Views\SignInWindow.xaml" />
-    <None Remove="Views\SignUpWindow.xaml" />
+    <None Remove="Views\DoctorMainPage.xaml" />
+    <None Remove="Views\SignInPage.xaml" />
+    <None Remove="Views\SignUpPage.xaml" />
     <None Remove="Views\UserDashboard.xaml" />
+    <None Remove="Views\UserMainPage.xaml" />
     <None Remove="Views\User\UserChatPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
@@ -34,8 +43,16 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    <PackageReference Include="Fody" Version="6.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
+    <PackageReference Include="MySql.Data" Version="9.1.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+    <PackageReference Include="SocketIOClient" Version="3.1.2" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -63,25 +80,35 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\SignUpWindow.xaml">
+    <None Update="Assets\avt01.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\doctoravt.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Update="Views\DoctorMainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\SignInWindow.xaml">
+    <Page Update="Views\SignUpPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
+    <Page Update="Views\UserMainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SignInPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\User\UserChatPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Doctor\" />
   </ItemGroup>
 
   <!--

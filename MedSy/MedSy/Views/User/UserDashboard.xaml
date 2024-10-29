@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MedSy.Views.UserDashboard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MedSy.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+    mc:Ignorable="d" Name="Patient" 
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid  Background="#d4f3ff">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Setup logo -->
+            <Border Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                   Background="#336699" CornerRadius="100,100,100,100"
+                   Width="230" Margin="0,10,0,0" >
+                
+                <Border.Shadow>
+                    <ThemeShadow></ThemeShadow>
+                </Border.Shadow>
+               
+                <Grid HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch"
+                               FontSize="30" Margin="0,20,0,0"
+                               TextWrapping="Wrap" HorizontalAlignment="Right"
+                               Text="Med" Foreground="#FFFFFF" FontWeight="Bold">
+                    </TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch"
+                               FontSize="30" Margin="0,20,0,0"
+                               TextWrapping="Wrap" HorizontalAlignment="Left"
+                               Text="Sy" Foreground="#45CFDD" FontWeight="Bold">
+                    </TextBlock>
+                </Grid>
+            </Border>
+
+            <!-- Setup bien quang cao -->
+            <Border Grid.Row="1" Margin="30 10 30 0" Background="#ffffff" CornerRadius="10,10,10,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" 
+                               Foreground="#0D4E55"
+                               FontWeight="Bold"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left" 
+                               FontSize="40"
+                               Margin="20,10,0,0"
+                               Text="Service System Of Medsy Hospital">
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="1" 
+                               Foreground="#666666"
+                               FontWeight="Bold"
+                               TextWrapping="Wrap"
+                               HorizontalAlignment="Left"
+                               FontSize="20"
+                               Margin="20,0,0,0"
+                               Text="Connect Medsy hospital and customer more closely">
+                    </TextBlock>
+                </Grid>
+
+                <Image Grid.Column="1" 
+                       Source="\Assets\logo_advertisement\logo1.png"
+                       Width="250"
+                       Height="250"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="0 0 50 0">
+                </Image>
+            </Grid>
+        </Border>
+
+            <!-- Setup cac chuc nang -->
+            <!--- Set up hang 1 -->
+            <Grid Grid.Row="2" Margin="0,10,0,0">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="0" Margin="30 0 0 0">
+                    <Border.Shadow>
+                        <ThemeShadow></ThemeShadow>
+                    </Border.Shadow>
+                
+                    <Button Name="OnlineConsultation_Button"  HorizontalAlignment="Left">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                        
+                            <FontIcon Grid.Column="0"
+                                 Style="{StaticResource FontIconStyle}"
+                                 FontFamily="{StaticResource FontAwesome}"
+                                 Glyph="&#xf0f1;" >
+                             </FontIcon>
+                            <TextBlock Grid.Column="1"
+                                       Style="{StaticResource TextBlock_inButton_Style}"
+                                        Text="Online Consultation">
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                </Border>
+
+                <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="1" Margin="30 0 0 0">
+                    <Border.Shadow>
+                        <ThemeShadow></ThemeShadow>
+                    </Border.Shadow>
+
+                    <Button Name="HospitalAppoiment_Button"  HorizontalAlignment="Center">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon Grid.Column="0"
+                                 Style="{StaticResource FontIconStyle}"
+                                 FontFamily="{StaticResource FontAwesome}"
+                                 Glyph="&#xf073;" >
+                            </FontIcon>
+                            
+                            <TextBlock Grid.Column="1"
+                               Style="{StaticResource TextBlock_inButton_Style}"
+                                Text="Offline Consultation">
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                </Border>
+                
+                <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="2" Margin="30 0 30 0">
+                    <Border.Shadow>
+                        <ThemeShadow></ThemeShadow>
+                    </Border.Shadow>
+
+                    <Button Name="OnlinePharmacy_Button"  HorizontalAlignment="Right">
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon Grid.Column="0"
+                                      
+                                     Style="{StaticResource FontIconStyle}"
+                                     FontFamily="{StaticResource FontAwesome}"
+                                     Glyph="&#xf469;" >
+                            </FontIcon>
+                            <TextBlock Grid.Column="1"
+                                       Style="{StaticResource TextBlock_inButton_Style}"
+                                       Text="Online Pharmacy">
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                </Border>
+
+            </Grid>
+
+            <!--- Set up hang 2 -->
+            <Grid Grid.Row="3" Margin="0,20,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="0" Margin="30 0 50 0">
+                    <Border.Shadow>
+                        <ThemeShadow></ThemeShadow>
+                    </Border.Shadow>
+
+                <Button Name="TrackPersonalHealth_Button"  HorizontalAlignment="Left">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon Grid.Column="0"
+                                     Style="{StaticResource FontIconStyle}"
+                                     FontFamily="{StaticResource FontAwesome}"
+                                     Glyph="&#xf21e;">
+                            </FontIcon>
+                            <TextBlock Grid.Column="1"
+                           Style="{StaticResource TextBlock_inButton_Style}"
+                            Text="Track personal health">
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                </Border>
+
+                <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="1" Margin="50 0 30 0">
+                    <Border.Shadow>
+                        <ThemeShadow></ThemeShadow>
+                    </Border.Shadow>
+
+                    <Button Name="MedicalNewsButton"  HorizontalAlignment="Left">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon Grid.Column="0"
+                                     Style="{StaticResource FontIconStyle}"
+                                     FontFamily="{StaticResource FontAwesome}"
+                                     Glyph="&#xf1ea;">
+                            </FontIcon>
+                            
+                            <TextBlock Grid.Column="1"
+                                       Style="{StaticResource TextBlock_inButton_Style}"
+                                       Text="Medical News">
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                </Border>
+           
+            </Grid>
+        </Grid>
+    
+</Page>
