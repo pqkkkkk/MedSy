@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MedSy.Views.Doctor_Infor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MedSy.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local1="using:MedSy.Models"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <!-- DataTemplate for each item in the GridView -->
+        <DataTemplate x:Name="ItemBox" x:DataType="local1:Doctor">
+
+            <Grid Background="#D4F3FF" Width="264" Height="264" CornerRadius="50" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Doctor avatar -->
+                <Border Grid.Column="0" Grid.Row="0" Width="100" Height="100" CornerRadius="50">
+                    <Image Source="/Assets/avt01.jpg"/>
+                </Border>
+                <!-- Doctor Name & ID -->
+                <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 0">
+                    <TextBlock FontSize="24" TextWrapping="Wrap" Text="{x:Bind DoctorName}" Foreground="#336699" FontWeight="Bold" Margin="0 0 0 5"/>
+                    <TextBlock FontSize="20" Text="{x:Bind DoctorID}" Foreground="#B6B3B3"></TextBlock>
+                </StackPanel>
+
+                <!-- Attribute -->
+                <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+                    <StackPanel Orientation="Vertical"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock Name="Specialty_on_item" FontSize="15" Text="Specialty: " Foreground="#336699" FontWeight="Bold"></TextBlock>
+                        <TextBlock Name="Gender_on_item" FontSize="15" Text="Gender: " Foreground="#336699" FontWeight="Bold"></TextBlock>
+                        <TextBlock Name="Experience_on_item" FontSize="15" Text="Experience: " Foreground="#336699" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <!-- attribute Details -->
+                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+                    <StackPanel Orientation="Vertical"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
+                        <TextBlock Name="SpecialtyDetail" FontSize="15" Text="{x:Bind Specialty}" Foreground="#336699"></TextBlock>
+                        <TextBlock Name="GenderDetail" FontSize="15" Text="{x:Bind Gender}" Foreground="#336699"></TextBlock>
+                        <TextBlock Name="ExperienceDetail" FontSize="15" Text="{x:Bind ExperienceYear}" Foreground="#336699"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate  x:Name="DetailedDoctor" x:DataType="local1:Doctor">
+            <Grid Background="#fff">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
+                <!--avt, name & id-->
+                <Grid Grid.Row="0" Background="#336699"
+                      CornerRadius="10"
+                      Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Grid.Row="0" CornerRadius="50" BorderBrush="Bisque" 
+                            BorderThickness="2"
+                            HorizontalAlignment="Center" Margin="10">
+                            <Image Source="/Assets/avt01.jpg"/>
+                    </Border>
+
+                    
+                    <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 0">
+                        <TextBlock FontSize="24" TextWrapping="Wrap" Text="{x:Bind DoctorName}" Foreground="#CFEBFC" FontWeight="Bold" Margin="0 0 0 5"/>
+                        <TextBlock FontSize="20" Text="{x:Bind DoctorID}" Foreground="#B6B3B3"></TextBlock>
+                    </StackPanel>
+                </Grid>
+                
+                <!--detailed information-->
+                <Grid Grid.Row="1" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <TextBlock Text="Email: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
+                        <TextBlock Text="Phone Number: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
+                        <TextBlock Text="Address: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
+                        <TextBlock Text="Birthday: " Style="{StaticResource Format textblock in detailed doctor}" ></TextBlock>
+                        <TextBlock Text="Specialty: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
+                        <TextBlock Text="Gender: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
+                        <TextBlock Text="Experience: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
+                    </StackPanel>
+
+                    <!-- attribute Details -->
+                    <StackPanel Grid.Column="1" Margin="10"> 
+                        <TextBlock Text="{x:Bind Email}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind PhoneNumber}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind Address}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind Birthday}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind Specialty}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind Gender}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind ExperienceYear}" Style="{StaticResource Format attribute value}"></TextBlock>
+                    </StackPanel>
+                    
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="10">
+                    <TextBlock Foreground="#336699" FontSize="15" TextWrapping="Wrap"> 
+                       Tôi đã có trải nghiệm khám bệnh với bác sĩ [Tên Bác Sĩ] tại [Tên Phòng Khám/Bệnh Viện] và thật sự rất hài lòng. Ngay từ khi bước vào, tôi đã cảm nhận được sự chuyên nghiệp và thân thiện từ nhân viên y tế. Bác sĩ rất tận tâm, lắng nghe tôi chia sẻ về triệu chứng và không ngần ngại giải thích rõ ràng về tình trạng sức khỏe của tôi.
+                        Bác sĩ đã dành thời gian để kiểm tra kỹ lưỡng và đưa ra những lời khuyên hữu ích, giúp tôi hiểu rõ hơn về cách chăm sóc sức khỏe bản thân. Tôi cũng đánh giá cao việc bác sĩ không vội vàng, mà thực sự chú ý đến từng vấn đề mà tôi gặp phải.
+                        Môi trường khám bệnh sạch sẽ, thoải mái và quy trình làm việc nhanh chóng. Tôi cảm thấy rất an tâm khi được khám và điều trị tại đây. Tôi chắc chắn sẽ quay lại nếu có nhu cầu và cũng sẽ giới thiệu cho bạn bè, người thân về bác sĩ này.</TextBlock>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+           
+    <Grid Background="#ffffff">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- set up the left part -->
+
+        <Grid Grid.Column="0" Background="#336699">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Setup User infor -->
+            <Grid  
+                Grid.Row="0"
+                VerticalAlignment="Center"
+                Background="#D4F3FF"
+                Margin="0 0 30 0"
+                CornerRadius="0 20 20 0">
+                
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border Grid.Column="0" CornerRadius="70">
+                        <Image Source="/Assets/avt01.jpg"/>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" Margin="10 0 0 0" VerticalAlignment="Center">
+                        <TextBlock FontSize="20" TextWrapping="Wrap" Text="Patient Name" Foreground="#000000" FontWeight="Bold" Margin="0 0 0 5"/>
+                        <TextBlock FontSize="15" TextWrapping="Wrap" Text="Patient ID" Foreground="#B6B3B3" FontWeight="Bold"/>
+                    </StackPanel>
+                </Grid>
+                
+            
+            <!-- Setup Search part -->
+
+            <Grid 
+                  HorizontalAlignment="Center"
+                  Grid.Row="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="8*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "5*"/>
+                        <ColumnDefinition Width = "2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox 
+                        Grid.Column="0"
+                        Name="keyword" Text="{x:Bind DoctorViewModel.Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Background="#ffffff"
+                        CornerRadius="20"
+                        Height="40"
+                        PlaceholderText="Type doctor name"
+                        PlaceholderForeground="#666666">
+                    </TextBox>
+
+                    <Button 
+                        Grid.Column="1" 
+                        HorizontalAlignment="Center"
+                        Margin="10 0 0 0"
+                        Padding="10"
+                        Height="40"
+                        Name="searchButton" CornerRadius="20" BorderBrush="#ccc" BorderThickness="1" Content="Search" Click="searchButton_Click"/>
+                </Grid>
+
+                <!-- Set up Sort Button -->
+                <!-- Sort by Specialty -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "*"/>
+                        <ColumnDefinition Width = "*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0"
+                              ItemsSource="{x:Bind DoctorViewModel.UniqueSpecialties, Mode=OneWay}"
+                              SelectedItem="{x:Bind DoctorViewModel.SelectedSpecialty, Mode=TwoWay}"
+                              PlaceholderText="Specialty"
+                              PlaceholderForeground="#666666"
+                              Foreground="#666666"
+                              Width="auto" 
+                              Height="40" Margin="0 10 10 0" CornerRadius="20" Background="#ffffff">
+                    </ComboBox>
+
+                    <!-- Sort by Gender -->
+                    <ComboBox Grid.Column="1"
+                               ItemsSource="{x:Bind DoctorViewModel.Genders, Mode=OneWay}"
+                               SelectedItem="{x:Bind DoctorViewModel.SelectedGender, Mode=TwoWay}"
+                               PlaceholderText="Gender"
+                               PlaceholderForeground="#666666"
+                               Foreground="#666666"
+                               Width="Auto" Height="40" Margin="0 10 0 0" CornerRadius="20" Background="#ffffff">
+                    </ComboBox>
+
+                </Grid>
+
+                    <!-- Sort by ExYear-->
+                <ComboBox Grid.Row="2"
+                          ItemsSource="{x:Bind DoctorViewModel.UniqueExperienceYears, Mode=OneWay}"
+                          SelectedItem="{x:Bind DoctorViewModel.SelectedYearExperience, Mode=TwoWay}"
+                          PlaceholderText="Experience Year"
+                          PlaceholderForeground="#666666"
+                          Foreground="#666666" 
+                          Width="auto" Height="40" CornerRadius="20" Background="#ffffff">
+                </ComboBox>
+            </Grid>
+        </Grid>
+        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="9*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <!-- Hiển thị tiêu đề -->
+            <Grid Grid.Row="0" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Rectangle Grid.Column="1" RadiusX="20" RadiusY="20"  Fill="#336699" Margin="2"/>
+                <TextBlock Grid.Column="1"
+                           Margin="30 10 30 10"
+                           TextAlignment="Center"
+                           HorizontalTextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="Doctor Information" Foreground="#ffffff" FontSize="25" FontWeight="SemiBold">
+                </TextBlock>
+            </Grid>
+            
+            <!-- Hiển thị các item -->
+            <GridView Width="auto" Height="auto"
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                x:Name="BasicGridView"
+                ItemTemplate="{StaticResource ItemBox}"
+                IsItemClickEnabled="True"
+                ItemClick="Doctor_ItemClick"
+                ItemsSource="{x:Bind DoctorViewModel.Doctors, Mode=OneWay}"
+                SelectionMode="Single"/>
+
+            <ContentDialog
+                    Background="#92b9e3"
+                    x:Name="DoctorDetail_Dialogue"
+                    Title="{x:Bind DoctorViewModel.SelectedDoctor.DoctorName}"
+                    PrimaryButtonText="Chat with doctor"
+                    PrimaryButtonClick="OnPrimaryButtonClick"
+                    CloseButtonText="Close"
+                    SecondaryButtonText="Schedule Consulation"
+                    SecondaryButtonClick="OnSecondaryButtonClick"
+                    PrimaryButtonStyle="{StaticResource Button In ContentDialogue}"
+                    CloseButtonStyle="{StaticResource Button In ContentDialogue}"
+                    SecondaryButtonStyle="{StaticResource Button In ContentDialogue}"
+                    ContentTemplate="{StaticResource DetailedDoctor}"
+                    Content="{x:Bind DoctorViewModel.SelectedDoctor, Mode=OneWay}">
+            </ContentDialog>
+
+                <!-- Thanh chuyển trang -->
+            <Grid Grid.Row="2" Background="#336699">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <Button Margin="5" Content="Previous" Width="80" Height="35" Name="previousButton" Click="previousButton_Click"/>
+                    <ComboBox ItemsSource="{x:Bind DoctorViewModel.PageInfos, Mode=OneWay}"
+                    SelectedIndex="{x:Bind DoctorViewModel.SelectedPageIndex, Mode=TwoWay}"
+                    SelectionChanged="pagesComboBox_SelectionChanged"
+                    Margin="5" Name="pagesComboBox" Width="100" Height="35">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock >
+                                <Run Text="{Binding Page}"/>/<Run Text="{Binding Total}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Margin="5" Content="Next" Width="80" Height="35" Name="nextButton" Click="nextButton_Click"/>
+                </StackPanel>
+            </Grid>
+            
+        </Grid>
+        
+    </Grid>
+</Page>
