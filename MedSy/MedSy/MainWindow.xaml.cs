@@ -28,7 +28,7 @@ namespace MedSy
         public MainWindow()
         {
             this.InitializeComponent();
-            content.Navigate(typeof(SignInPage));
+            content.Navigate(typeof(UserMainPage));
         }
 
        

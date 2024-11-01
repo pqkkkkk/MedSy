@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedSy.Services.Patient
+namespace MedSy.Services.User
 {
-    public interface IPatientDao
+    public interface IUserDao
     {
-        public Models.Patient getPatient();
+        public Models.User getUserByUsername(string username);
     }
 }

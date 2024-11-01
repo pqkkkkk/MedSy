@@ -58,5 +58,9 @@ namespace MedSy.Services.Message
 
             return result.ToList();
         }
+        public int addMessage(int senderId, int receiverId, string content)
+        {
+            return 1;
+        }
     }
 }

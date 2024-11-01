@@ -6,71 +6,106 @@
     xmlns:local="using:MedSy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:MedSy.Converter.Main"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <NavigationView x:Name="Navigation"
-                PaneDisplayMode="Left"
-                SelectionChanged="Navigation_SelectionChanged">
+    <Page.Resources>
+        <converter:NotificationDisplayConverter x:Key="NotificationDisplayConverter"/>
+        <converter:selectedNavigationItemConverter x:Key="selectedNavigationItemConverter"/>
+    </Page.Resources>
 
-        <NavigationView.MenuItems>
-            <NavigationViewItem  Content="UserProfile" FontSize="20" FontWeight="Bold" Tag="UserProfile">
-                <NavigationViewItem.Icon>
-                    <BitmapIcon UriSource="ms-appx:///Assets/avt01.jpg" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="12*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
-            <NavigationViewItem Content="Dashboard" FontSize="20" FontWeight="Bold" Tag="Dashboard">
-                <NavigationViewItem.Icon>
+        <Grid Grid.Column="0" x:Name="Navigation" Background="#ffffff">
+
+            <Grid.Shadow>
+                <ThemeShadow></ThemeShadow>
+            </Grid.Shadow>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="UserProfileButton" Click="UserProfileClick" Tag="UserProfile" Grid.Row="0"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <Image Source="ms-appx:///Assets/defaultavt.jpg" />
+                </Grid>
+            </Button>
+
+            <Button x:Name="DashboardButton" Click="DashboardCLick" Tag="Dashboard" Grid.Row="1"
+                    HorizontalAlignment="Center">
+                <Grid>
                     <FontIcon FontFamily="{StaticResource FontGoogle}" 
-                            Glyph="&#xe871;" 
-                            FontSize="48"
-                            Foreground="#336699" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
+                              Glyph="&#xe871;" 
+                              FontSize="40"
+                              Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='Dashboard',Mode=OneWay}"/>
+                </Grid>
+            </Button>
 
-            <NavigationViewItem Content="Consultation" FontSize="20" FontWeight="Bold" Tag="Consultation">
-                <NavigationViewItem.Icon>
+            <Button x:Name="ConsultationButton" Click="ConsultationClick" Tag="Consultation" Grid.Row="2"
+                    HorizontalAlignment="Center">
+                <Grid>
                     <FontIcon
-                    FontFamily="{StaticResource FontAwesome}" 
-                    Glyph="&#xf0f8;" 
-                    FontSize="48"
-                    Foreground="#336699"/>
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
+                        FontFamily="{StaticResource FontAwesome}" 
+                        Glyph="&#xf0f8;" 
+                        FontSize="40"
+                        Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='Consultation',Mode=OneWay}"/>
+                </Grid>
+            </Button>
 
-            <NavigationViewItem Content="Chat" FontSize="20" FontWeight="Bold" Tag="Chat">
-                <NavigationViewItem.Icon>
+            <Button x:Name="ChatButton" Click="ChatClick" Tag="Chat" Grid.Row="3"
+                    HorizontalAlignment="Center">
+                <Grid>
                     <FontIcon
-                    FontFamily="{StaticResource FontAwesome}"
-                    Glyph="&#xf075;"
-                    FontSize="48"
-                    Foreground="#336699"/>
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
+                        FontFamily="{StaticResource FontAwesome}"
+                        Glyph="&#xf075;"
+                        FontSize="40"
+                        Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='Chat',Mode=OneWay}"/>
 
-            <NavigationViewItem Content="Pharmacy" FontSize="20" FontWeight="Bold" Tag="Pharmacy">
-                <NavigationViewItem.Icon>
+                    <Ellipse Visibility="{x:Bind mainPageViewModel.IsNewMessage, Converter={StaticResource NotificationDisplayConverter}, Mode=OneWay}"
+                        Width="10"
+                        Height="10"
+                        Fill="Red"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,0,5,0"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="PharmacyButton" Click="PharmacyClick" Tag="Pharmacy"  Grid.Row="4"
+                    HorizontalAlignment="Center">
+                <Grid>
                     <FontIcon
-                    FontFamily="{StaticResource FontAwesome}"
-                    Glyph="&#xf469;"
-                    FontSize="48"
-                    Foreground="#336699"/>
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
+                        FontFamily="{StaticResource FontAwesome}"
+                        Glyph="&#xf469;"
+                        FontSize="40"
+                        Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='Pharmacy',Mode=OneWay}"/>
+                </Grid>
+            </Button>
 
-            <NavigationViewItem Content="MedicalNews" FontSize="20" FontWeight="Bold" Tag="MedicalNews">
-                <NavigationViewItem.Icon>
+            <Button x:Name="MedicalNewsButton" Click="MedicalNewsClick" Tag="MedicalNews" Grid.Row="5"
+                    HorizontalAlignment="Center">
+                <Grid>
                     <FontIcon 
-                     FontFamily="{StaticResource FontAwesome}"
-                     Glyph="&#xf1ea;"
-                     FontSize="48"
-                     Foreground="#336699"/>
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
+                         FontFamily="{StaticResource FontAwesome}"
+                         Glyph="&#xf1ea;"
+                         FontSize="40"
+                         Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='MedicalNews',Mode=OneWay}"/>
+                </Grid>
+            </Button>
+        </Grid>
 
-        </NavigationView.MenuItems>
-
-        <Frame x:Name="content"/>
-    </NavigationView>
+        <Frame x:Name="content" Grid.Column="1"/>
+    </Grid>
 </Page>

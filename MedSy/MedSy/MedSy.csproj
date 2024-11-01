@@ -15,6 +15,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\avt01.jpg" />
+    <Content Remove="Assets\defaultavt.jpg" />
     <Content Remove="Assets\doctoravt.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -22,8 +23,8 @@
     <None Remove="MainWindow.xaml" />
     <None Remove="Views\DoctorDashboard.xaml" />
     <None Remove="Views\DoctorMainPage.xaml" />
-    <None Remove="Views\SignInPage.xaml" />
-    <None Remove="Views\SignUpPage.xaml" />
+    <None Remove="Views\SignInWindow.xaml" />
+    <None Remove="Views\SignUpWindow.xaml" />
     <None Remove="Views\UserDashboard.xaml" />
     <None Remove="Views\UserMainPage.xaml" />
     <None Remove="Views\User\UserChatPage.xaml" />
@@ -86,16 +87,16 @@
     <None Update="Assets\doctoravt.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\SignUpWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SignInWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\DoctorMainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\SignUpPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="Views\UserMainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\SignInPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="MainWindow.xaml">

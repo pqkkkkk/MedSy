@@ -9,8 +9,9 @@ namespace MedSy.Services.Management
 {
     public interface IManagementDao
     {
-        public List<Models.Doctor> getDoctors(int patientId);
-        public void offDoctorNewMessageNotify(int patientId, int doctorId);
-        public void onDoctorNewMessageNotify(int patientId, int doctorId);
+        public List<Models.User> getConnectingUsers(int currentUserId, string currentRole);
+        public void offNewMessageNotify(int currentUserId, int oppositeUserId, string currentRole);
+        public void onNewMessageNotify(int currentUserId, int oppositeUserId, string currentRole);
+        public int checkNewMessage(int currentUserId, string currentRole);
     }
 }

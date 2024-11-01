@@ -26,6 +26,7 @@ namespace MedSy
     public partial class App : Application
     {
         public Locator locator { get; set; }
+        private SignInWindow signInWindow;
        
         public App()
         {
@@ -36,7 +37,8 @@ namespace MedSy
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             locator = new Locator();
-            locator.mainWindow.Activate();
+            signInWindow = new SignInWindow();
+            signInWindow.Activate();
         }
 
         

@@ -1,3 +1,4 @@
+using MedSy.Services;
 using MedSy.ViewModels;
 using MedSy.Views.User;
 using Microsoft.UI.Xaml;
@@ -23,36 +24,61 @@ namespace MedSy.Views
 {
     public sealed partial class UserMainPage : Page
     {
+        private MainPageViewModel mainPageViewModel;
         public UserMainPage()
         {
             this.InitializeComponent();
             content.Navigate(typeof(UserDashboard));
+            
+            mainPageViewModel = new MainPageViewModel();
+        }
+        private void UserProfileClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(UserDashboard));
         }
 
-        private void Navigation_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void DashboardCLick(object sender, RoutedEventArgs e)
         {
-            var selectedItem = args.SelectedItem as NavigationViewItem;
-            string selectedPage = selectedItem.Tag.ToString();
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(UserDashboard));
+        }
 
-           
-            switch (selectedPage)
-            {
-                case "UserProfile":
-                    break;
-                case "Dashboard":
-                    content.Navigate(typeof(UserDashboard));
-                    break;
-                case "Consultation":
-                    break;
-                case "Chat":
-                    content.Navigate(typeof(UserChatPage));
-                    break;
-                case "Pharmacy":
-                    break;
-                case "MedicalNews":
-                    break;
-            }
-          
+        private void ConsultationClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(UserDashboard));
+        }
+
+        private void ChatClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            mainPageViewModel.offNewMessageNotification();
+            content.Navigate(typeof(UserChatPage));
+        }
+
+        private void PharmacyClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(UserDashboard));
+        }
+
+        private void MedicalNewsClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(UserDashboard));
         }
     }
 }

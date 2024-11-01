@@ -19,11 +19,11 @@ using Windows.Foundation.Collections;
 namespace MedSy.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SignUpPage : Page
+    public sealed partial class SignUpWindow : Window
     {
-        public SignUpPage()
+        public SignUpWindow()
         {
             this.InitializeComponent();
         }

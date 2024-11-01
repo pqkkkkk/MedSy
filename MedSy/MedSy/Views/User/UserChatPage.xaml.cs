@@ -31,24 +31,24 @@ namespace MedSy.Views.User
         {
             this.InitializeComponent();
 
-            chatViewModel = new ChatViewModel();
+            chatViewModel = (Application.Current as App).locator.chatViewModel;
         }
         private void switchToNewChatClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var selectedDoctor = button?.Tag as Doctor;
-            chatViewModel.updateSelectedDoctor(selectedDoctor);
+            var selectedUser = button?.Tag as Models.User;
+            chatViewModel.updateSelectedUser(selectedUser);
 
-            int patientId = (Application.Current as App).locator.patientDao.getPatient().id;
-            int doctorId = chatViewModel.selectedDoctor.id;
-            chatViewModel.loadMessages(patientId, doctorId);
+            int currentUserId = (Application.Current as App).locator.currentUser.id;
+            int oppositeUserId = chatViewModel.selectedUser.id;
+            chatViewModel.loadMessages(currentUserId, oppositeUserId);
         }
 
         private async void SendMessageClick(object sender, RoutedEventArgs e)
         {
             string message = messageTextBox.Text;
-            int senderId = (Application.Current as App).locator.patientDao.getPatient().id;
-            int receiverId = chatViewModel.selectedDoctor.id;
+            int senderId = (Application.Current as App).locator.currentUser.id;
+            int receiverId = chatViewModel.selectedUser.id;
 
             await chatViewModel.sendMessage(message, senderId,receiverId);
             messageTextBox.Text = "";

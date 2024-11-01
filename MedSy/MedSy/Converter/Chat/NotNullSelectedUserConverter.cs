@@ -1,5 +1,4 @@
-﻿using MedSy.Models;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
@@ -9,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace MedSy.Converter.Chat
 {
-    public class NotNullSelectedDoctorConverter : IValueConverter
+    public class NotNullSelectedUserConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value is Doctor doctor)
+            if (value is Models.User user)
             {
-                return (doctor == null) ? Visibility.Collapsed : Visibility.Visible;
+                return (user == null) ? Visibility.Collapsed : Visibility.Visible;
             }
 
             return Visibility.Collapsed;

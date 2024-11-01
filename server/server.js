@@ -9,6 +9,8 @@ const io = socketIo(server);
 const port = 5555;
 
 const db = require('./db.config');
+const queries = require('./queries');
+
 app.use(express.static(path.join(__dirname,'testClient')));
 
 app.get('/',(req,res) =>{
@@ -35,6 +37,7 @@ io.on('connection', function(socket)
         if(users.has(receiverId))
         {
             console.log(`Received message: ${message} from ${senderId}. Send to ${receiverId}`);
+            queries.addMessage(senderId,receiverId,message);
             recipientSocketId = users.get(receiverId);
             io.to(recipientSocketId).emit('messageFromServer', {message, senderId}); 
         }

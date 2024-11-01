@@ -13,7 +13,7 @@ namespace MedSy.Services.Message
 {
     public class MessageSqlDao : IMessageDao
     {
-        public List<Models.Message> getMessages(int patientId, int doctorId)
+        public List<Models.Message> getMessages(int currentUserId, int oppositeUserId)
         {
             var result = new List<Models.Message>();
 
@@ -34,9 +34,9 @@ namespace MedSy.Services.Message
                 """;
             var messageCommand = new MySqlCommand(messageSql, connection);
             messageCommand.Parameters.Add("@patientId", MySqlDbType.Int64)
-                .Value = patientId;
+                .Value = currentUserId;
             messageCommand.Parameters.Add("doctorId", MySqlDbType.Int64)
-                .Value = doctorId;
+                .Value = oppositeUserId;
 
             var reader = messageCommand.ExecuteReader();
             while(reader.Read())
@@ -47,6 +47,34 @@ namespace MedSy.Services.Message
                 message.content = (string)reader["content"];
                 result.Add(message);
             }
+
+            connection.Close();
+            return result;
+        }
+        public int addMessage(int senderId, int receiverId, string content)
+        {
+            var connectionString = """
+                Server=localhost;
+                Database=medsy;
+                User=root;
+                Password=pqkiet854;
+                """;
+            var connection = new MySqlConnection(connectionString);
+            connection.Open();
+
+            var sql = $"""
+                INSERT INTO message(senderId,receiverId,content) VALUES (@si,@ri,@c)
+                """;
+            var messageCommand = new MySqlCommand(sql, connection);
+            messageCommand.Parameters.Add("@si", MySqlDbType.Int64)
+                .Value = senderId;
+            messageCommand.Parameters.Add("ri", MySqlDbType.Int64)
+                .Value = receiverId;
+            messageCommand.Parameters.Add("@c", MySqlDbType.String)
+                .Value = content;
+
+            int result = messageCommand.ExecuteNonQuery();
+            
 
             connection.Close();
             return result;

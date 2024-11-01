@@ -20,7 +20,7 @@ sendMessageButton.onclick = () =>{
         const data = {
             message: user_message,
             senderId :2,
-            receiverId: 3,
+            receiverId: 1,
         };
         socket.emit('messageFromClient',data); // send message to server
         messageInput.value = "";

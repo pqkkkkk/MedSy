@@ -14,7 +14,7 @@ namespace MedSy.Converter.Chat
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            int userId = (Application.Current as App).locator.patientDao.getPatient().id;
+            int userId = (Application.Current as App).locator.currentUser.id;
 
             if (value is int senderId)
             {

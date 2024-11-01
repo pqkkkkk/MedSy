@@ -21,44 +21,44 @@ namespace MedSy.ViewModels
     {
         public SocketService socketService { get; set; }
         public ObservableCollection<Message> messages { get; set; }
-        public ObservableCollection<Doctor> doctors { get; set; }
-        public Doctor selectedDoctor { get; set; }
-        public DispatcherQueue dispatcherQueue { get; set; }
+        public ObservableCollection<User> connectingUsers { get; set; }
+        public User selectedUser { get; set; }
+        
 
         public ChatViewModel()
         {
-            
             var messageList = (Application.Current as App).locator.messageDao.getMessages(0,0);
             messages = new ObservableCollection<Message>(messageList);
 
-            int patientId = (Application.Current as App).locator.patientDao.getPatient().id;
-            var doctorList = (Application.Current as App).locator.managementDao.getDoctors(patientId);
-            doctors = new ObservableCollection<Doctor>(doctorList);
+            int currentUserId = (Application.Current as App).locator.currentUser.id;
+            string currentRole = (Application.Current as App).locator.currentUser.role;
+            var connectingUserList = (Application.Current as App).locator.managementDao.getConnectingUsers(currentUserId, currentRole);
+            connectingUsers = new ObservableCollection<User>(connectingUserList);
 
             socketService = (Application.Current as App).locator.socketService;
             socketService.MessageReceived += onMessageReceived;
 
-            selectedDoctor = new Doctor();
-            selectedDoctor = null;
+            selectedUser = new User();
+            selectedUser = null;
 
-            dispatcherQueue = (Application.Current as App).locator.mainWindow.DispatcherQueue;
+            
         }
-        
         public void onMessageReceived(object sender, Tuple<string,int> data)
         {            
             var (message, senderId) = data;
 
-            if(selectedDoctor == null || senderId != selectedDoctor.id)
+            if(selectedUser == null || senderId != selectedUser.id)
             {
-                for (int i = 0; i < doctors.Count; i++)
+                for (int i = 0; i < connectingUsers.Count; i++)
                 {
-                    if (doctors[i].id == senderId)
+                    if (connectingUsers[i].id == senderId)
                     {
-                        dispatcherQueue.TryEnqueue(() =>
+                        (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
                         {
-                            doctors[i].newMessage = true;
-                            int patientId = (Application.Current as App).locator.patientDao.getPatient().id;
-                            (Application.Current as App).locator.managementDao.onDoctorNewMessageNotify(patientId, senderId);
+                            connectingUsers[i].newMessage = true;
+                            int currentUserId = (Application.Current as App).locator.currentUser.id;
+                            string currentRole = (Application.Current as App).locator.currentUser.role;
+                            (Application.Current as App).locator.managementDao.onNewMessageNotify(currentUserId, senderId, currentRole);
                         });                        
                         break;
                     }
@@ -66,30 +66,31 @@ namespace MedSy.ViewModels
             }
             else
             {
-                dispatcherQueue.TryEnqueue(() =>
+                (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
                 {
                     messages.Add(new Message { content = message, senderId = senderId, receiverId = 1 });
                 });  
             }
         }
-        public void loadMessages(int patientId, int doctorId)
+        public void loadMessages(int currentUserId, int oppositeUserId)
         {
             IMessageDao messageDao = (Application.Current as App).locator.messageDao;
-            messages = new ObservableCollection<Message>(messageDao.getMessages(patientId, doctorId));
+            messages = new ObservableCollection<Message>(messageDao.getMessages(currentUserId, oppositeUserId));
         }
-        public void updateSelectedDoctor(Doctor selectedDoctor)
+        public void updateSelectedUser(User selectedUser)
         {
-            this.selectedDoctor = selectedDoctor;
-            this.selectedDoctor.newMessage = false;
+            this.selectedUser = selectedUser;
+            this.selectedUser.newMessage = false;
 
-            int patientId = (Application.Current as App).locator.patientDao.getPatient().id;
-            int doctorId = selectedDoctor.id;
-            (Application.Current as App).locator.managementDao.offDoctorNewMessageNotify(patientId, doctorId);
+            int currentUserId = (Application.Current as App).locator.currentUser.id;
+            int oppositeUserId = selectedUser.id;
+            string currentRole = (Application.Current as App).locator.currentUser.role;
+            (Application.Current as App).locator.managementDao.offNewMessageNotify(currentUserId, oppositeUserId, currentRole);
         }
         public async Task sendMessage(string message, int senderId, int receiverId)
         {
             await socketService.sendMessage(message, senderId, receiverId);
-            
+            (Application.Current as App).locator.messageDao.addMessage(senderId, receiverId, message);
             messages.Add(new Message { content = message, senderId = senderId, receiverId = receiverId });
         }
 

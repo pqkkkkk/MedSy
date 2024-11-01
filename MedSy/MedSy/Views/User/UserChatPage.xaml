@@ -15,9 +15,9 @@
         <converter:NewMessageBgConverter x:Key="NewMessageBgConverter"/>
         <converter:MessageAlignmentConverter x:Key="MessageAlignmentConverter"/>
         <converter:MessageContainerBgConverter x:Key="MessageContainerBgConverter"/>
-        <converter:EmptyConnectedDoctorsConverter x:Key="EmptyConnectedDoctorsConverter"/>
-        <converter:NullSelectedDoctorConverter x:Key="NullSelectedDoctorConverter"/>
-        <converter:NotNullSelectedDoctorConverter x:Key="NotNullSelectedDoctorConverter"/>
+        <converter:EmptyConnectingUsersConverter x:Key="EmptyConnectingUsersConverter"/>
+        <converter:NullSelectedUserConverter x:Key="NullSelectedUserConverter"/>
+        <converter:NotNullSelectedUserConverter x:Key="NotNullSelectedUserConverter"/>
     </Page.Resources>
     
     <Grid Background="#e7e8ff">
@@ -31,10 +31,10 @@
             <Border Background="#336699" CornerRadius="0,50,50,0">
                 <StackPanel>
 
-                    <ItemsControl x:Name="doctorsField" Margin="0,40,0,0" ItemsSource="{x:Bind chatViewModel.doctors}">
+                    <ItemsControl x:Name="connectingUsersField" Margin="0,40,0,0" ItemsSource="{x:Bind chatViewModel.connectingUsers}">
 
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate  x:DataType="models:Doctor">
+                            <DataTemplate  x:DataType="models:User">
                                 <Border CornerRadius="10,10,10,10">
                                     <Button x:Name="doctorInfor" Height="50" Margin="30,10,50,0" Click="switchToNewChatClick"
                                             Background="{x:Bind newMessage, Converter={StaticResource NewMessageBgConverter}, Mode=OneWay}"  Tag="{x:Bind }" HorizontalAlignment="Stretch">
@@ -66,7 +66,7 @@
                     </ItemsControl>
 
                     <TextBlock Text="You have not connected to anyone" FontWeight="Bold"
-                               Visibility="{x:Bind chatViewModel.doctors.Count, Converter={StaticResource EmptyConnectedDoctorsConverter}, Mode=OneWay}"
+                               Visibility="{x:Bind chatViewModel.connectingUsers.Count, Converter={StaticResource EmptyConnectingUsersConverter}, Mode=OneWay}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"/>
 
@@ -84,9 +84,9 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
-            <Border x:Name="selectedDoctorField" Grid.Row="0" Background="#336699" CornerRadius="30,30,30,30"
+            <Border x:Name="selectedUserField" Grid.Row="0" Background="#336699" CornerRadius="30,30,30,30"
                     Margin="40,10,40,15"
-                    Visibility="{x:Bind chatViewModel.selectedDoctor, Converter={StaticResource NotNullSelectedDoctorConverter}, Mode=OneWay}">
+                    Visibility="{x:Bind chatViewModel.selectedUser, Converter={StaticResource NotNullSelectedUserConverter}, Mode=OneWay}">
                 <Border.Shadow>
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
@@ -99,10 +99,10 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind chatViewModel.selectedDoctor.username, Mode=OneWay}"
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind chatViewModel.selectedUser.username, Mode=OneWay}"
                                FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,20,0"/>
                     <Image Grid.Row="0" Grid.Column="1" Margin="0,5,0,5"
-                           Source="{x:Bind chatViewModel.selectedDoctor.avatarPath, Mode=OneWay}"/>
+                           Source="{x:Bind chatViewModel.selectedUser.avatarPath, Mode=OneWay}"/>
                 </Grid>
             </Border>
 
@@ -111,9 +111,9 @@
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Visibility="{x:Bind chatViewModel.selectedDoctor, Converter={StaticResource NullSelectedDoctorConverter}, Mode=OneWay}"/>
+                       Visibility="{x:Bind chatViewModel.selectedUser, Converter={StaticResource NullSelectedUserConverter}, Mode=OneWay}"/>
             
-            <ScrollViewer Grid.Row="1" Visibility="{x:Bind chatViewModel.selectedDoctor, Converter={StaticResource NotNullSelectedDoctorConverter}, Mode=OneWay}" >
+            <ScrollViewer Grid.Row="1" Visibility="{x:Bind chatViewModel.selectedUser, Converter={StaticResource NotNullSelectedUserConverter}, Mode=OneWay}" >
                 <ItemsControl x:Name="messageField" ItemsSource="{x:Bind chatViewModel.messages, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate  x:DataType="models:Message">
@@ -127,7 +127,7 @@
             </ScrollViewer>
             
             <Grid Grid.Row="2"
-                  Visibility="{x:Bind chatViewModel.selectedDoctor, Converter={StaticResource NotNullSelectedDoctorConverter}, Mode=OneWay}">
+                  Visibility="{x:Bind chatViewModel.selectedUser, Converter={StaticResource NotNullSelectedUserConverter}, Mode=OneWay}">
                 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*"/>

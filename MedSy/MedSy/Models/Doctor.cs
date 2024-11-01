@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace MedSy.Models
 {
-    public class Doctor : INotifyPropertyChanged
+    public class Doctor : User
     {
-        public int id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public string avatarPath { get; set; }
-        public bool newMessage { get; set; }
-        
-        public event PropertyChangedEventHandler PropertyChanged;
+       
     }
 }
