@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace MedSy.Models
 {
-    public class Doctor : INotifyCollectionChanged
     {
         public string DoctorID { get; set; }
         public string DoctorName { get; set; }
@@ -17,7 +17,7 @@ namespace MedSy.Models
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public DateTime Birthday { get; set; }
-
+       
         public event NotifyCollectionChangedEventHandler CollectionChanged;
     }
 }

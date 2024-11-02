@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedSy.Models
+namespace MedSy.Services.User
 {
-    public class Patient : User
+    public class UserSqlDao
     {
-       
     }
 }

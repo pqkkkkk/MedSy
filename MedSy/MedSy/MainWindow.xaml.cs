@@ -1,3 +1,4 @@
+using MedSy.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -12,13 +13,6 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,12 +22,15 @@ namespace MedSy
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TestWindow : Window
+    public sealed partial class MainWindow : Window
     {
-        public TestWindow()
+        public Frame contentFrame => content;
+        public MainWindow()
         {
             this.InitializeComponent();
-            content.Navigate(typeof(Doctor_Infor));
+            content.Navigate(typeof(UserMainPage));
         }
+
+       
     }
 }
