@@ -14,68 +14,68 @@ public class DoctorMockDao : IDoctorDao
         {
             new Doctor 
             { 
-                DoctorID = "1", 
-                DoctorName = "Le Van A", 
-                Specialty = "Cardiology", 
-                Gender = "Male" , 
-                ExperienceYear= 2, 
-                Email = "abc@gmail.com",
-                Address="road 1", 
-                PhoneNumber = "0354747227",
-                Birthday = new DateTime(2004,1,1),
+                id = 1, 
+                fullName = "Le Van A", 
+                speciality = "Cardiology", 
+                gender = "Male" , 
+                experienceYear= 2, 
+                email = "abc@gmail.com",
+                address="road 1", 
+                phoneNumber = "0354747227",
+                birthday = new DateTime(2004,1,1),
             },
             new Doctor { 
-                DoctorID = "2", 
-                DoctorName = "Tran Thi B", 
-                Specialty = "Neurology",
-                Gender = "Female" , 
-                ExperienceYear= 1,
-                Email = "xyz@gmail.com",
-                Address="road 2",
-                Birthday = new DateTime(2004,2,2),},
+                id = 2, 
+                fullName = "Tran Thi B", 
+                speciality = "Neurology",
+                gender = "Female" , 
+                experienceYear= 1,
+                email = "xyz@gmail.com",
+                address="road 2",
+                birthday = new DateTime(2004,2,2),},
 
             new Doctor { 
-                DoctorID = "3", 
-                DoctorName = "Nguyen Van C",
-                Specialty = "Pediatrics", 
-                Gender = "Male", 
-                ExperienceYear= 5,
-                Email = "abx@gmail.com",
-                Address="road 3",
-                Birthday = new DateTime(2004,3,3),},
+                id = 3, 
+                fullName = "Nguyen Van C",
+                speciality = "Pediatrics", 
+                gender = "Male", 
+                experienceYear= 5,
+                email = "abx@gmail.com",
+                address="road 3",
+                birthday = new DateTime(2004,3,3),},
 
             new Doctor { 
-                DoctorID = "4", 
-                DoctorName = "Le Thi D", 
-                Specialty = "Dermatology", 
-                Gender = "Female", 
-                ExperienceYear= 1,
-                Email = "abc@gmail.com",
-                Address="road 4",
-                Birthday = new DateTime(2004,4,4),},
-            new Doctor { DoctorID = "5", DoctorName = "Le Van E", Specialty = "Cardiology", Gender = "Male" , ExperienceYear= 2},
-            new Doctor { DoctorID = "6", DoctorName = "Tran Thi F", Specialty = "Neurology", Gender = "Female" , ExperienceYear= 1},
-            new Doctor { DoctorID = "7", DoctorName = "Nguyen Van G", Specialty = "Pediatrics", Gender = "Male", ExperienceYear= 5 },
-            new Doctor { DoctorID = "8", DoctorName = "Le Thi H", Specialty = "Dermatology", Gender = "Female", ExperienceYear= 1},
-            new Doctor { DoctorID = "9", DoctorName = "Le Van I", Specialty = "Cardiology", Gender = "Male" , ExperienceYear= 2},
-            new Doctor { DoctorID = "10", DoctorName = "Tran Thi J", Specialty = "Neurology", Gender = "Female" , ExperienceYear= 1},
-            new Doctor { DoctorID = "11", DoctorName = "Nguyen Van K", Specialty = "Pediatrics", Gender = "Male", ExperienceYear= 5 },
-            new Doctor { DoctorID = "12", DoctorName = "Le Thi L", Specialty = "Dermatology", Gender = "Female", ExperienceYear= 1}
+                id = 4, 
+                fullName = "Le Thi D", 
+                speciality = "Dermatology", 
+                gender = "Female", 
+                experienceYear= 1,
+                email = "abc@gmail.com",
+                address="road 4",
+                birthday = new DateTime(2004,4,4),},
+            new Doctor { id = 5, fullName = "Le Van E", speciality = "Cardiology", gender = "Male" , experienceYear= 2},
+            new Doctor { id = 6, fullName = "Tran Thi F", speciality = "Neurology", gender = "Female" , experienceYear= 1},
+            new Doctor { id = 7, fullName = "Nguyen Van G", speciality = "Pediatrics", gender = "Male", experienceYear= 5 },
+            new Doctor { id = 8, fullName = "Le Thi H", speciality = "Dermatology", gender = "Female", experienceYear= 1},
+            new Doctor { id = 9, fullName = "Le Van I", speciality = "Cardiology", gender = "Male" , experienceYear= 2},
+            new Doctor { id = 10, fullName = "Tran Thi J", speciality = "Neurology", gender = "Female" , experienceYear= 1},
+            new Doctor { id = 11, fullName = "Nguyen Van K", speciality = "Pediatrics", gender = "Male", experienceYear= 5 },
+            new Doctor { id = 12, fullName = "Le Thi L", speciality = "Dermatology", gender = "Female", experienceYear= 1}
         };
 
         var query = Doctors.AsQueryable();
 
         if (!string.IsNullOrEmpty(keyword))
-            query = query.Where(d => d.DoctorName.Contains(keyword, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(d => d.fullName.Contains(keyword, StringComparison.OrdinalIgnoreCase));
 
         if (!string.IsNullOrEmpty(specialty))
-            query = query.Where(d => d.Specialty == specialty);
+            query = query.Where(d => d.speciality == specialty);
 
         if (!string.IsNullOrEmpty(gender))
-            query = query.Where(d => d.Gender == gender);
+            query = query.Where(d => d.gender == gender);
 
         if (experienceYear > 0)
-            query = query.Where(d => d.ExperienceYear == experienceYear);
+            query = query.Where(d => d.experienceYear == experienceYear);
 
         // Phân trang và trả về kết quả
         var result = query.Skip((page - 1) * rowsPerPage).Take(rowsPerPage).ToList();
