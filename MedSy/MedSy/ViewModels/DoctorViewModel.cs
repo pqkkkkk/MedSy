@@ -11,7 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 namespace MedSy.ViewModels;
 public partial class DoctorViewModel : INotifyPropertyChanged
 {
-    public ObservableCollection<Doctor> Doctors { get; set;}
+    public ObservableCollection<Models.Doctor> Doctors { get; set;}
 
     public ObservableCollection<PageInfo> PageInfos { get; set; }
     public int SelectedPageIndex { get; set; }
@@ -75,8 +75,8 @@ public partial class DoctorViewModel : INotifyPropertyChanged
 
     private void LoadUniqueValues()
     {
-        UniqueSpecialties = Doctors.Select(d => d.Specialty).Distinct().ToList();
-        UniqueExperienceYears = Doctors.Select(d => d.ExperienceYear).Distinct().OrderBy(y => y).ToList();
+        UniqueSpecialties = Doctors.Select(d => d.speciality).Distinct().ToList();
+        UniqueExperienceYears = Doctors.Select(d => d.experienceYear).Distinct().OrderBy(y => y).ToList();
     }
 
 

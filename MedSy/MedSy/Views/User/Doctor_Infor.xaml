@@ -31,8 +31,8 @@
                 </Border>
                 <!-- Doctor Name & ID -->
                 <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 0">
-                    <TextBlock FontSize="24" TextWrapping="Wrap" Text="{x:Bind DoctorName}" Foreground="#336699" FontWeight="Bold" Margin="0 0 0 5"/>
-                    <TextBlock FontSize="20" Text="{x:Bind DoctorID}" Foreground="#B6B3B3"></TextBlock>
+                    <TextBlock FontSize="24" TextWrapping="Wrap" Text="{x:Bind fullName}" Foreground="#336699" FontWeight="Bold" Margin="0 0 0 5"/>
+                    <TextBlock FontSize="20" Text="{x:Bind id}" Foreground="#B6B3B3"></TextBlock>
                 </StackPanel>
 
                 <!-- Attribute -->
@@ -50,9 +50,9 @@
                     <StackPanel Orientation="Vertical"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center">
-                        <TextBlock Name="SpecialtyDetail" FontSize="15" Text="{x:Bind Specialty}" Foreground="#336699"></TextBlock>
-                        <TextBlock Name="GenderDetail" FontSize="15" Text="{x:Bind Gender}" Foreground="#336699"></TextBlock>
-                        <TextBlock Name="ExperienceDetail" FontSize="15" Text="{x:Bind ExperienceYear}" Foreground="#336699"></TextBlock>
+                        <TextBlock Name="SpecialtyDetail" FontSize="15" Text="{x:Bind speciality}" Foreground="#336699"></TextBlock>
+                        <TextBlock Name="GenderDetail" FontSize="15" Text="{x:Bind gender}" Foreground="#336699"></TextBlock>
+                        <TextBlock Name="ExperienceDetail" FontSize="15" Text="{x:Bind experienceYear}" Foreground="#336699"></TextBlock>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -82,8 +82,8 @@
 
                     
                     <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 0">
-                        <TextBlock FontSize="24" TextWrapping="Wrap" Text="{x:Bind DoctorName}" Foreground="#CFEBFC" FontWeight="Bold" Margin="0 0 0 5"/>
-                        <TextBlock FontSize="20" Text="{x:Bind DoctorID}" Foreground="#B6B3B3"></TextBlock>
+                        <TextBlock FontSize="24" TextWrapping="Wrap" Text="{x:Bind fullName}" Foreground="#CFEBFC" FontWeight="Bold" Margin="0 0 0 5"/>
+                        <TextBlock FontSize="20" Text="{x:Bind id}" Foreground="#B6B3B3"></TextBlock>
                     </StackPanel>
                 </Grid>
                 
@@ -105,13 +105,13 @@
 
                     <!-- attribute Details -->
                     <StackPanel Grid.Column="1" Margin="10"> 
-                        <TextBlock Text="{x:Bind Email}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind PhoneNumber}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind Address}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind Birthday}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind Specialty}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind Gender}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind ExperienceYear}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind email}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind phoneNumber}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind address}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind birthday}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind speciality}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind gender}" Style="{StaticResource Format attribute value}"></TextBlock>
+                        <TextBlock Text="{x:Bind experienceYear}" Style="{StaticResource Format attribute value}"></TextBlock>
                     </StackPanel>
                     
                 </Grid>
@@ -197,9 +197,14 @@
                         Grid.Column="1" 
                         HorizontalAlignment="Center"
                         Margin="10 0 0 0"
-                        Padding="10"
                         Height="40"
-                        Name="searchButton" CornerRadius="20" BorderBrush="#ccc" BorderThickness="1" Content="Search" Click="searchButton_Click"/>
+                        Name="searchButton" CornerRadius="20" BorderBrush="#ccc" BorderThickness="1" Click="searchButton_Click">
+                        <Grid>
+                            <FontIcon FontFamily="{StaticResource FontAwesome}" 
+                                      Glyph="&#xf002;" 
+                                      />
+                        </Grid>
+                    </Button>
                 </Grid>
 
                 <!-- Set up Sort Button -->
@@ -282,7 +287,7 @@
             <ContentDialog
                     Background="#92b9e3"
                     x:Name="DoctorDetail_Dialogue"
-                    Title="{x:Bind DoctorViewModel.SelectedDoctor.DoctorName}"
+                    Title="{x:Bind DoctorViewModel.SelectedDoctor.fullName}"
                     PrimaryButtonText="Chat with doctor"
                     PrimaryButtonClick="OnPrimaryButtonClick"
                     CloseButtonText="Close"

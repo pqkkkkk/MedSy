@@ -71,7 +71,7 @@ namespace MedSy.Views
             var selectedDoctor = DoctorViewModel.SelectedDoctor;
             if (selectedDoctor != null)
             {
-                Frame.Navigate(typeof(UserDashboard), selectedDoctor);
+                
             };
         }
 
@@ -80,7 +80,7 @@ namespace MedSy.Views
             var selectedDoctor = DoctorViewModel.SelectedDoctor;
             if (selectedDoctor != null)
             {
-                Frame.Navigate(typeof(DoctorDashboard), selectedDoctor);
+                
             };
         }
     }
