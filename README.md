@@ -72,23 +72,31 @@
 - Nhập thông tin đăng nhập như bên dưới và bấm vào nút sign in
      - Username: pqkiet854
      - Password: pqkiet854
+  
 ![alt text]() chèn ảnh
 
 2. User Dashboard hiển thị lên, điều hướng qua trang Doctor_Infor (icon số 2 trên thanh navigate) để thực hiện việc xem danh sách bác sĩ:
 ![alt text]() chèn ảnh
+
 Trang Doctor_Infor hiện lên:
+
 ![alt text]() chèn ảnh
+
 Kiểm tra thấy:
 - Danh sách bác sĩ hiển thị giao diện đúng số lượng
 - Các thông tin trùng khớp với dự liệu giả lập
+
 3. Click vào 1 item Bác sĩ nào đó trên trang Doctor_Infor để thực hiện điều hướng tới trang DoctorDetail (giả sử click vào item đầu tiên).
 ![alt text]() chèn ảnh
+
 - Trang DoctorDetail được điều hướng đến, các thông tin hiển thị (thông tin bác sĩ, các feedback của bệnh nhân) trùng khớp với dữ liệu giả lập.
 - Có phần comment cho việc xem feedback của bác sĩ và hỗ trợ thực hiện Feedback
+
 ![alt text]() chèn ảnh
 
 4. Thực hiện đưa ra một feedback và đánh giá sao, sau đó nhấn gửi
 - Nhập một đánh giá nào đó vào ô textbox, rating sao sau đó ấn gửi, thông tin hiển thị lên danh sách các feedback
+
 ![alt text]() chèn ảnh
 
 ### Hướng dẫn chạy ứng dụng
