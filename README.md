@@ -80,15 +80,16 @@
 
 Trang Doctor_Infor hiện lên:
 
-![alt text]() chèn ảnh
+![alt text](./report_resource/Doctor_Infor.png)
 
 Kiểm tra thấy:
 - Danh sách bác sĩ hiển thị giao diện đúng số lượng (trường hợp dữ liệu giả lập rỗng, sẽ không hiển thị bác sĩ nào)
 - Các thông tin trùng khớp với dự liệu giả lập
+- Trên một trang hiển thị số lượng tối đa (SLTĐ) là 9 items, và có sử dụng phân trang nếu dữ liệu nhiều hơn SLTĐ đã set 
 
 3. Click vào 1 item Bác sĩ nào đó trên trang Doctor_Infor để thực hiện điều hướng tới trang DoctorDetail (giả sử click vào item đầu tiên).
 
-![alt text]() chèn ảnh
+![alt text]() chèn ản
 
 - Trang DoctorDetail được điều hướng đến, các thông tin hiển thị (thông tin bác sĩ, các feedback của bệnh nhân) trùng khớp với dữ liệu giả lập.
 - Có phần comment cho việc xem feedback của bác sĩ và hỗ trợ thực hiện Feedback (trường hợp dữ liệu giả lập feedback rỗng hoặc DoctorID trong feedback không trùng với ID của bác sĩ trong danh sách hiện có, sẽ không hiển thị feedback)
