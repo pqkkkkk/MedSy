@@ -83,20 +83,25 @@ Trang Doctor_Infor hiện lên:
 ![alt text]() chèn ảnh
 
 Kiểm tra thấy:
-- Danh sách bác sĩ hiển thị giao diện đúng số lượng
+- Danh sách bác sĩ hiển thị giao diện đúng số lượng (trường hợp dữ liệu giả lập rỗng, sẽ không hiển thị bác sĩ nào)
 - Các thông tin trùng khớp với dự liệu giả lập
 
 3. Click vào 1 item Bác sĩ nào đó trên trang Doctor_Infor để thực hiện điều hướng tới trang DoctorDetail (giả sử click vào item đầu tiên).
+
 ![alt text]() chèn ảnh
 
 - Trang DoctorDetail được điều hướng đến, các thông tin hiển thị (thông tin bác sĩ, các feedback của bệnh nhân) trùng khớp với dữ liệu giả lập.
-- Có phần comment cho việc xem feedback của bác sĩ và hỗ trợ thực hiện Feedback
+- Có phần comment cho việc xem feedback của bác sĩ và hỗ trợ thực hiện Feedback (trường hợp dữ liệu giả lập feedback rỗng hoặc DoctorID trong feedback không trùng với ID của bác sĩ trong danh sách hiện có, sẽ không hiển thị feedback)
 
 ![alt text]() chèn ảnh
 
 4. Thực hiện đưa ra một feedback và đánh giá sao, sau đó nhấn gửi
 - Nhập một đánh giá nào đó vào ô textbox, rating sao sau đó ấn gửi, thông tin hiển thị lên danh sách các feedback
 
+![alt text]() chèn ảnh
+
+- Trường hợp comment không hợp lệ (Không comment và rating nhưng bấm nút gửi, comment nhưng không rating) sẽ hiện thông báo cho người dùng
+ 
 ![alt text]() chèn ảnh
 
 ### Hướng dẫn chạy ứng dụng
