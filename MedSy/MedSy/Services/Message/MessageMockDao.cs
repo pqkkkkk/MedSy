@@ -10,56 +10,70 @@ namespace MedSy.Services.Message
 {
     public class MessageMockDao : IMessageDao
     {
-        public List<Models.Message> getMessages(int patientId, int doctorId)
+        private List<Models.Message> messages;
+        public MessageMockDao()
         {
-            var messages = new List<Models.Message>()
+            messages = new List<Models.Message>()
             {
                 new Models.Message()
                 {
                     content = "Hello",
+                    senderId = 2,
+                    receiverId = 1
+                },
+                new Models.Message()
+                {
+                    content = "How can I help you?",
+                    senderId = 2,
+                    receiverId = 1
+                },
+                new Models.Message()
+                {
+                    content = "Thanks",
                     senderId = 1,
                     receiverId = 2
                 },
                 new Models.Message()
                 {
                     content = "How can I help you?",
-                    senderId = 1,
-                    receiverId = 2
-                },
-                new Models.Message()
-                {
-                    content = "kkkkk",
-                    senderId = 1,
-                    receiverId = 2
-                },
-                new Models.Message()
-                {
-                    content = "How can I help you?",
-                    senderId = 1,
-                    receiverId = 3
+                    senderId = 3,
+                    receiverId = 1
                 },
                 new Models.Message()
                 {
                     content = "Hello",
-                    senderId = 1,
-                    receiverId = 3
+                    senderId = 3,
+                    receiverId = 1
                 },
                 new Models.Message()
                 {
-                    content = "How can I help you?",
+                    content = "Thanks",
                     senderId = 1,
                     receiverId = 3
                 }
             };
+        }
+        public List<Models.Message> getMessages(int currentUserId, int oppositeUserId)
+        {
+            
 
             var result = from m in messages
-                         where m.senderId == patientId && m.receiverId == doctorId
+                         where (m.senderId == currentUserId && m.receiverId == oppositeUserId)
+                               || (m.senderId == oppositeUserId && m.receiverId == currentUserId)
                          select m;
 
             return result.ToList();
         }
         public int addMessage(int senderId, int receiverId, string content)
         {
+            var message = new Models.Message()
+            {
+                senderId = senderId,
+                receiverId = receiverId,
+                content = content
+            };
+            messages.Add(message);
+
             return 1;
         }
     }

@@ -8,8 +8,8 @@ const server = http.createServer(app);
 const io = socketIo(server);
 const port = 5555;
 
-const db = require('./db.config');
-const queries = require('./queries');
+// const db = require('./db.config'); // add this line when connecting the application with database
+// const queries = require('./queries'); // add this line when connecting the application with database
 
 app.use(express.static(path.join(__dirname,'testClient')));
 
@@ -37,7 +37,7 @@ io.on('connection', function(socket)
         if(users.has(receiverId))
         {
             console.log(`Received message: ${message} from ${senderId}. Send to ${receiverId}`);
-            queries.addMessage(senderId,receiverId,message);
+            // queries.addMessage(senderId,receiverId,message); // Add this line when connecting application with database
             recipientSocketId = users.get(receiverId);
             io.to(recipientSocketId).emit('messageFromServer', {message, senderId}); 
         }
