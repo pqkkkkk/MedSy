@@ -22,11 +22,13 @@
     <None Remove="DoctorMainWindow.xaml" />
     <None Remove="MainWindow.xaml" />
     <None Remove="Views\DoctorDashboard.xaml" />
+    <None Remove="Views\DoctorDetail.xaml" />
     <None Remove="Views\DoctorMainPage.xaml" />
     <None Remove="Views\SignInWindow.xaml" />
     <None Remove="Views\SignUpWindow.xaml" />
     <None Remove="Views\UserDashboard.xaml" />
     <None Remove="Views\UserMainPage.xaml" />
+    <None Remove="Views\User\DoctorDetail.xaml" />
     <None Remove="Views\User\UserChatPage.xaml" />
   </ItemGroup>
 
@@ -87,6 +89,15 @@
     <None Update="Assets\doctoravt.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\User\DoctorDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\User\DoctorDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\DoctorDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\SignUpWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

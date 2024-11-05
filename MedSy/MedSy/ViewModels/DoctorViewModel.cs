@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MedSy.Models;
+using MedSy.Services.Feedback;
 using Microsoft.UI.Xaml.Controls;
 namespace MedSy.ViewModels;
 public partial class DoctorViewModel : INotifyPropertyChanged
 {
     public ObservableCollection<Models.Doctor> Doctors { get; set;}
-
+    public ObservableCollection<Models.Feedback> Feedbacks { get; set;}
     public ObservableCollection<PageInfo> PageInfos { get; set; }
     public int SelectedPageIndex { get; set; }
     public string Keyword { get; set; } = "";
@@ -50,6 +51,25 @@ public partial class DoctorViewModel : INotifyPropertyChanged
 
         SelectedPageIndex = CurrentPage - 1;
         CreatePageInfos();
+    }
+
+    public void LoadFeedback()
+    {
+        Feedbacks = new ObservableCollection<Feedback>();
+        IFeedbackDao fb_dao = new FeedbackMockDao();
+        var fb = fb_dao.GetFeedback();
+        foreach(var fb_item in fb)
+        {
+            if (fb_item.DoctorID == SelectedDoctor.id)
+            {
+                Feedbacks.Add(fb_item);
+            }
+        }
+    }
+
+    public void reset()
+    {
+        Feedbacks.Clear();
     }
 
     private void CreatePageInfos()
@@ -109,6 +129,7 @@ public partial class DoctorViewModel : INotifyPropertyChanged
         CurrentPage = 1;
         LoadData();
     }
+
 
 }
 

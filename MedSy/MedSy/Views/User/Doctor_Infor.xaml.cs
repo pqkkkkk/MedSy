@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using MedSy.ViewModels;
 using MedSy.Models;
+using MedSy.Views.User;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,16 +34,17 @@ namespace MedSy.Views
             this.DataContext = DoctorViewModel;
         }
 
-        private async void Doctor_ItemClick(object sender, ItemClickEventArgs e)
+        private void Doctor_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is Doctor doctor)
             {
                 DoctorViewModel.SelectedDoctor = doctor;
-                await DoctorDetail_Dialogue.ShowAsync();
+                DoctorViewModel.LoadFeedback();
+                Frame.Navigate(typeof(DoctorDetail), DoctorViewModel);
             }
         }
 
-    private void searchButton_Click(object sender, RoutedEventArgs e)
+        private void searchButton_Click(object sender, RoutedEventArgs e)
         {
             DoctorViewModel.Search();
         }
@@ -71,7 +73,7 @@ namespace MedSy.Views
             var selectedDoctor = DoctorViewModel.SelectedDoctor;
             if (selectedDoctor != null)
             {
-                
+
             };
         }
 

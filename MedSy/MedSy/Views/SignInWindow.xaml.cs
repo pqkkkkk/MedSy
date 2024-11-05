@@ -46,8 +46,8 @@ namespace MedSy.Views
             if (username == actualUsername && password == actualPassword)
             {
                 (Application.Current as App).locator.currentUser = user;
-                (Application.Current as App).locator.managementDao = new ManagementSqlDao();
-                (Application.Current as App).locator.messageDao = new MessageSqlDao();
+                (Application.Current as App).locator.managementDao = new ManagementMockDao();
+                (Application.Current as App).locator.messageDao = new MessageMockDao();
                 (Application.Current as App).locator.socketService = new SocketService();
                 (Application.Current as App).locator.mainWindow = new MainWindow();
                 (Application.Current as App).locator.chatViewModel = new ChatViewModel();
