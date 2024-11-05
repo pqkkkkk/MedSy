@@ -88,22 +88,23 @@ Kiểm tra thấy:
 - Trên một trang hiển thị số lượng tối đa (SLTĐ) là 9 items, và có sử dụng phân trang nếu dữ liệu nhiều hơn SLTĐ đã set 
 
 3. Click vào 1 item Bác sĩ nào đó trên trang Doctor_Infor để thực hiện điều hướng tới trang DoctorDetail (giả sử click vào item đầu tiên).
+- Trang DoctorDetail được điều hướng đến, có thông tin chi tiết bác sĩ trùng khớp với dữ liệu giả lập.
+- Có phần comment cho việc xem feedback của bác sĩ và hỗ trợ thực hiện Feedback (dữ liệu giả lập trùng khớp; trường hợp dữ liệu giả lập feedback rỗng hoặc DoctorID trong feedback không trùng với ID của bác sĩ trong danh sách hiện có, sẽ không hiển thị feedback)
 
-![alt text]() chèn ản
-
-- Trang DoctorDetail được điều hướng đến, các thông tin hiển thị (thông tin bác sĩ, các feedback của bệnh nhân) trùng khớp với dữ liệu giả lập.
-- Có phần comment cho việc xem feedback của bác sĩ và hỗ trợ thực hiện Feedback (trường hợp dữ liệu giả lập feedback rỗng hoặc DoctorID trong feedback không trùng với ID của bác sĩ trong danh sách hiện có, sẽ không hiển thị feedback)
-
-![alt text]() chèn ảnh
+![alt text](./report_resource/Doctor_Detailed.png)
 
 4. Thực hiện đưa ra một feedback và đánh giá sao, sau đó nhấn gửi
-- Nhập một đánh giá nào đó vào ô textbox, rating sao sau đó ấn gửi, thông tin hiển thị lên danh sách các feedback
+- Nhập một đánh giá nào đó vào ô textbox, rating sao sau đó ấn gửi
 
-![alt text]() chèn ảnh
+![alt text](./report_resource/test_comment.png)
+
+Thông tin hiển thị lên phần comment
+
+![alt text](./report_resource/comment_success.png)
 
 - Trường hợp comment không hợp lệ (Không comment và rating nhưng bấm nút gửi, comment nhưng không rating) sẽ hiện thông báo cho người dùng
  
-![alt text]() chèn ảnh
+![alt text](./report_resouce/InvalidCommentSituation.png)
 
 ### Hướng dẫn chạy ứng dụng
 ### Số giờ làm việc
