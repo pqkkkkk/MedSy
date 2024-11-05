@@ -35,8 +35,8 @@
 - Đảm bảo danh sách bác sĩ được hiển thị chính xác trên giao diện theo đúng bố cục đề ra, bao gồm các thông tin về tên, id, chuyên môn, giới tính, số năm kinh nghiệm
 
 ##### Điều kiện tiên quyết
-Ứng dụng đã khởi động và đăng nhập thành công.
-Dữ liệu bác sĩ có sẵn trong danh sách giả lập (sử dụng mock data).
+- Ứng dụng đã khởi động và đăng nhập thành công.
+- Dữ liệu bác sĩ có sẵn trong danh sách giả lập (sử dụng mock data).
 
 #### Các bước kiểm thử
 
