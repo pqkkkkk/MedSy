@@ -49,22 +49,36 @@ namespace MedSy.Views.User
             base.OnNavigatedTo(e);
         }
 
-        private void CommentButton_Click(object sender, RoutedEventArgs e)
+        private async void CommentButton_Click(object sender, RoutedEventArgs e)
         {
             if (DoctorViewModel.SelectedDoctor != null)
             {
-                var newFeedback = new Feedback
+                if (string.IsNullOrWhiteSpace(CommentBox.Text) && CommentRating.Value <= 0)
                 {
-                    DoctorID = DoctorViewModel.SelectedDoctor.id,
-                    Content = CommentBox.Text, 
-                    Rating = (int)CommentRating.Value,        
-                };
-                DoctorViewModel.Feedbacks.Add(newFeedback);
+                    await MissingInfoDialog.ShowAsync();
+                }
+                else if (!string.IsNullOrWhiteSpace(CommentBox.Text) && CommentRating.Value <= 0)
+                {
+                    await MissingInfoDialog.ShowAsync();
+                }
+                else
+                {
+                    var newFeedback = new Feedback
+                    {
+                        DoctorID = DoctorViewModel.SelectedDoctor.id,
+                        Content = CommentBox.Text,
+                        Rating = (int)CommentRating.Value
+                    };
 
-                CommentBox.Text = string.Empty;
-                CommentRating.Value = 0;         
+                    DoctorViewModel.Feedbacks.Add(newFeedback);
+
+                    CommentBox.Text = string.Empty;
+                    CommentRating.Value = 0;
+
+                }
             }
         }
+
 
         private void ScheduleButton_Click(object sender, RoutedEventArgs e)
         {
