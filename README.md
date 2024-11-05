@@ -73,7 +73,7 @@
      - Username: pqkiet854
      - Password: pqkiet854
   
-![alt text]() chèn ảnh
+![alt text](./report_resource/Login_Precondition.png)
 
 2. User Dashboard hiển thị lên, điều hướng qua trang Doctor_Infor (icon số 2 trên thanh navigate) để thực hiện việc xem danh sách bác sĩ:
 ![alt text]() chèn ảnh
