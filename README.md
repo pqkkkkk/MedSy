@@ -76,11 +76,11 @@
 ![alt text](./report_resource/Login_Precondition.png)
 
 2. User Dashboard hiển thị lên, điều hướng qua trang Doctor_Infor (icon số 2 trên thanh navigate) để thực hiện việc xem danh sách bác sĩ:
-![alt text]() chèn ảnh
+![alt text](./report_resource/UserDashboard.png)
 
 Trang Doctor_Infor hiện lên:
 
-![alt text](./report_resource/UserDashboard.png)
+![alt text]() chèn ảnh
 
 Kiểm tra thấy:
 - Danh sách bác sĩ hiển thị giao diện đúng số lượng (trường hợp dữ liệu giả lập rỗng, sẽ không hiển thị bác sĩ nào)
