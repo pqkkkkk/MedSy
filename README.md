@@ -80,7 +80,7 @@
 
 Trang Doctor_Infor hiện lên:
 
-![alt text]() chèn ảnh
+![alt text](./report_resource/UserDashboard.png)
 
 Kiểm tra thấy:
 - Danh sách bác sĩ hiển thị giao diện đúng số lượng (trường hợp dữ liệu giả lập rỗng, sẽ không hiển thị bác sĩ nào)
