@@ -27,7 +27,7 @@
 
                 <!-- Doctor avatar -->
                 <Border Grid.Column="0" Grid.Row="0" Width="100" Height="100" CornerRadius="50">
-                    <Image Source="/Assets/avt01.jpg"/>
+                    <Image Source="{x:Bind avatarPath}"/>
                 </Border>
                 <!-- Doctor Name & ID -->
                 <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 0">
@@ -57,73 +57,6 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
-        
-        <DataTemplate  x:Name="DetailedDoctor" x:DataType="local1:Doctor">
-            <Grid Background="#fff">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="6*"/>
-                    <RowDefinition Height="6*"/>
-                </Grid.RowDefinitions>
-                <!--avt, name & id-->
-                <Grid Grid.Row="0" Background="#336699"
-                      CornerRadius="10"
-                      Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="4*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Grid.Row="0" CornerRadius="50" BorderBrush="Bisque" 
-                            BorderThickness="2"
-                            HorizontalAlignment="Center" Margin="10">
-                            <Image Source="/Assets/avt01.jpg"/>
-                    </Border>
-
-                    
-                    <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 10 0">
-                        <TextBlock FontSize="24" TextWrapping="Wrap" Text="{x:Bind fullName}" Foreground="#CFEBFC" FontWeight="Bold" Margin="0 0 0 5"/>
-                        <TextBlock FontSize="20" Text="{x:Bind id}" Foreground="#B6B3B3"></TextBlock>
-                    </StackPanel>
-                </Grid>
-                
-                <!--detailed information-->
-                <Grid Grid.Row="1" Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Margin="10">
-                        <TextBlock Text="Email: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
-                        <TextBlock Text="Phone Number: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
-                        <TextBlock Text="Address: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
-                        <TextBlock Text="Birthday: " Style="{StaticResource Format textblock in detailed doctor}" ></TextBlock>
-                        <TextBlock Text="Specialty: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
-                        <TextBlock Text="Gender: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
-                        <TextBlock Text="Experience: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
-                    </StackPanel>
-
-                    <!-- attribute Details -->
-                    <StackPanel Grid.Column="1" Margin="10"> 
-                        <TextBlock Text="{x:Bind email}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind phoneNumber}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind address}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind birthday}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind speciality}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind gender}" Style="{StaticResource Format attribute value}"></TextBlock>
-                        <TextBlock Text="{x:Bind experienceYear}" Style="{StaticResource Format attribute value}"></TextBlock>
-                    </StackPanel>
-                    
-                </Grid>
-
-                <Grid Grid.Row="2" Margin="10">
-                    <TextBlock Foreground="#336699" FontSize="15" TextWrapping="Wrap"> 
-                       Tôi đã có trải nghiệm khám bệnh với bác sĩ [Tên Bác Sĩ] tại [Tên Phòng Khám/Bệnh Viện] và thật sự rất hài lòng. Ngay từ khi bước vào, tôi đã cảm nhận được sự chuyên nghiệp và thân thiện từ nhân viên y tế. Bác sĩ rất tận tâm, lắng nghe tôi chia sẻ về triệu chứng và không ngần ngại giải thích rõ ràng về tình trạng sức khỏe của tôi.
-                        Bác sĩ đã dành thời gian để kiểm tra kỹ lưỡng và đưa ra những lời khuyên hữu ích, giúp tôi hiểu rõ hơn về cách chăm sóc sức khỏe bản thân. Tôi cũng đánh giá cao việc bác sĩ không vội vàng, mà thực sự chú ý đến từng vấn đề mà tôi gặp phải.
-                        Môi trường khám bệnh sạch sẽ, thoải mái và quy trình làm việc nhanh chóng. Tôi cảm thấy rất an tâm khi được khám và điều trị tại đây. Tôi chắc chắn sẽ quay lại nếu có nhu cầu và cũng sẽ giới thiệu cho bạn bè, người thân về bác sĩ này.</TextBlock>
-                </Grid>
-            </Grid>
-        </DataTemplate>
     </Page.Resources>
            
     <Grid Background="#ffffff">
@@ -151,17 +84,17 @@
                 <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="6*"/>
-                    </Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
                     
                     <Border Grid.Column="0" CornerRadius="70">
-                        <Image Source="/Assets/avt01.jpg"/>
+                        <Image Source="./Assets/avt01.jpg"/>
                     </Border>
 
                     <StackPanel Grid.Column="1" Margin="10 0 0 0" VerticalAlignment="Center">
                         <TextBlock FontSize="20" TextWrapping="Wrap" Text="Patient Name" Foreground="#000000" FontWeight="Bold" Margin="0 0 0 5"/>
                         <TextBlock FontSize="15" TextWrapping="Wrap" Text="Patient ID" Foreground="#B6B3B3" FontWeight="Bold"/>
                     </StackPanel>
-                </Grid>
+            </Grid>
                 
             
             <!-- Setup Search part -->
@@ -284,23 +217,7 @@
                 ItemsSource="{x:Bind DoctorViewModel.Doctors, Mode=OneWay}"
                 SelectionMode="Single"/>
 
-            <ContentDialog
-                    Background="#92b9e3"
-                    x:Name="DoctorDetail_Dialogue"
-                    Title="{x:Bind DoctorViewModel.SelectedDoctor.fullName}"
-                    PrimaryButtonText="Chat with doctor"
-                    PrimaryButtonClick="OnPrimaryButtonClick"
-                    CloseButtonText="Close"
-                    SecondaryButtonText="Schedule Consulation"
-                    SecondaryButtonClick="OnSecondaryButtonClick"
-                    PrimaryButtonStyle="{StaticResource Button In ContentDialogue}"
-                    CloseButtonStyle="{StaticResource Button In ContentDialogue}"
-                    SecondaryButtonStyle="{StaticResource Button In ContentDialogue}"
-                    ContentTemplate="{StaticResource DetailedDoctor}"
-                    Content="{x:Bind DoctorViewModel.SelectedDoctor, Mode=OneWay}">
-            </ContentDialog>
-
-                <!-- Thanh chuyển trang -->
+            <!-- Thanh chuyển trang -->
             <Grid Grid.Row="2" Background="#336699">
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
@@ -309,7 +226,8 @@
                     <ComboBox ItemsSource="{x:Bind DoctorViewModel.PageInfos, Mode=OneWay}"
                     SelectedIndex="{x:Bind DoctorViewModel.SelectedPageIndex, Mode=TwoWay}"
                     SelectionChanged="pagesComboBox_SelectionChanged"
-                    Margin="5" Name="pagesComboBox" Width="100" Height="35">
+                    Margin="5" Name="pagesComboBox" Width="100" Height="35"
+                    Background="Transparent">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock >
@@ -321,8 +239,7 @@
                     <Button Margin="5" Content="Next" Width="80" Height="35" Name="nextButton" Click="nextButton_Click"/>
                 </StackPanel>
             </Grid>
-            
         </Grid>
-        
+        <Frame Name="content" Grid.Column="1"></Frame>
     </Grid>
 </Page>

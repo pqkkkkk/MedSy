@@ -23,6 +23,7 @@ public class DoctorMockDao : IDoctorDao
                 address="road 1", 
                 phoneNumber = "0354747227",
                 birthday = new DateTime(2004,1,1),
+                avatarPath="ms-appx:///Assets/doctoravt.jpg",
             },
             new Doctor { 
                 id = 2, 
@@ -32,7 +33,11 @@ public class DoctorMockDao : IDoctorDao
                 experienceYear= 1,
                 email = "xyz@gmail.com",
                 address="road 2",
-                birthday = new DateTime(2004,2,2),},
+                 phoneNumber = "0354747227",
+                birthday = new DateTime(2004,2,2),
+                avatarPath="ms-appx:///Assets/doctoravt.jpg",
+            },
+
 
             new Doctor { 
                 id = 3, 
@@ -42,7 +47,11 @@ public class DoctorMockDao : IDoctorDao
                 experienceYear= 5,
                 email = "abx@gmail.com",
                 address="road 3",
-                birthday = new DateTime(2004,3,3),},
+                 phoneNumber = "0354747227",
+                birthday = new DateTime(2004,3,3),
+                avatarPath="ms-appx:///Assets/doctoravt.jpg",
+            },
+
 
             new Doctor { 
                 id = 4, 
@@ -52,15 +61,18 @@ public class DoctorMockDao : IDoctorDao
                 experienceYear= 1,
                 email = "abc@gmail.com",
                 address="road 4",
-                birthday = new DateTime(2004,4,4),},
-            new Doctor { id = 5, fullName = "Le Van E", speciality = "Cardiology", gender = "Male" , experienceYear= 2},
-            new Doctor { id = 6, fullName = "Tran Thi F", speciality = "Neurology", gender = "Female" , experienceYear= 1},
-            new Doctor { id = 7, fullName = "Nguyen Van G", speciality = "Pediatrics", gender = "Male", experienceYear= 5 },
-            new Doctor { id = 8, fullName = "Le Thi H", speciality = "Dermatology", gender = "Female", experienceYear= 1},
-            new Doctor { id = 9, fullName = "Le Van I", speciality = "Cardiology", gender = "Male" , experienceYear= 2},
-            new Doctor { id = 10, fullName = "Tran Thi J", speciality = "Neurology", gender = "Female" , experienceYear= 1},
-            new Doctor { id = 11, fullName = "Nguyen Van K", speciality = "Pediatrics", gender = "Male", experienceYear= 5 },
-            new Doctor { id = 12, fullName = "Le Thi L", speciality = "Dermatology", gender = "Female", experienceYear= 1}
+                 phoneNumber = "0354747227",
+                birthday = new DateTime(2004,4,4),
+                avatarPath="ms-appx:///Assets/doctoravt.jpg",
+            },
+            new Doctor { id = 5, fullName = "Le Van E", speciality = "Cardiology", gender = "Male" , experienceYear= 2, avatarPath="ms-appx:///Assets/doctoravt.jpg", phoneNumber = "0354747227",},
+            new Doctor { id = 6, fullName = "Tran Thi F", speciality = "Neurology", gender = "Female" , experienceYear= 1, avatarPath = "ms-appx:///Assets/doctoravt.jpg",  phoneNumber = "0354747227",},
+            new Doctor { id = 7, fullName = "Nguyen Van G", speciality = "Pediatrics", gender = "Male", experienceYear= 5, avatarPath = "ms-appx:///Assets/doctoravt.jpg",  phoneNumber = "0354747227",},
+            new Doctor { id = 8, fullName = "Le Thi H", speciality = "Dermatology", gender = "Female", experienceYear= 1, avatarPath = "ms-appx:///Assets/doctoravt.jpg",  phoneNumber = "0354747227",},
+            new Doctor { id = 9, fullName = "Le Van I", speciality = "Cardiology", gender = "Male" , experienceYear= 2, avatarPath="ms-appx:///Assets/doctoravt.jpg", phoneNumber = "0354747227",},
+            new Doctor { id = 10, fullName = "Tran Thi J", speciality = "Neurology", gender = "Female" , experienceYear= 1, avatarPath = "ms-appx:///Assets/doctoravt.jpg", phoneNumber = "0354747227",},
+            new Doctor { id = 11, fullName = "Nguyen Van K", speciality = "Pediatrics", gender = "Male", experienceYear= 5 , avatarPath = "ms-appx:///Assets/doctoravt.jpg",  phoneNumber = "0354747227",},
+            new Doctor { id = 12, fullName = "Le Thi L", speciality = "Dermatology", gender = "Female", experienceYear= 1, avatarPath = "ms-appx:///Assets/doctoravt.jpg",  phoneNumber = "0354747227",}
         };
 
         var query = Doctors.AsQueryable();

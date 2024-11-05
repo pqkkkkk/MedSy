@@ -58,6 +58,7 @@ namespace MedSy.ViewModels
                             connectingUsers[i].newMessage = true;
                             int currentUserId = (Application.Current as App).locator.currentUser.id;
                             string currentRole = (Application.Current as App).locator.currentUser.role;
+                            (Application.Current as App).locator.messageDao.addMessage(senderId, currentUserId, message); // remove when using sqlDao
                             (Application.Current as App).locator.managementDao.onNewMessageNotify(currentUserId, senderId, currentRole);
                         });                        
                         break;
