@@ -104,7 +104,7 @@ Thông tin hiển thị lên phần comment
 
 - Trường hợp comment không hợp lệ (Không comment và rating nhưng bấm nút gửi, comment nhưng không rating) sẽ hiện thông báo cho người dùng
  
-![alt text](./report_resouce/InvalidCommentSituation.png)
+![alt text](./report_resource/InvalidCommentSituation.png)
 
 ### Hướng dẫn chạy ứng dụng
 ### Số giờ làm việc
