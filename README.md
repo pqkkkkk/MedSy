@@ -159,8 +159,12 @@ npm install express socket.io
 ``` bash
 node server.js
 ```
-5. Chạy ứng dụng winui (folder MedSy) và đăng nhập với username và password đều là **"pqkiet854"** để vào cửa sổ chính
-6. (Optional) Truy cập địa chỉ http://localhost:5555 để mở client web (client web này được xây dựng với mục đích kiểm thử tính năng chat realtime ở milestone 1)
+5. Vào folder của project WinUI MedSy -> Assets -> font -> fontAwesome -> webfonts -> mở file **fa-solid-900.ttf**. Nhấn **Install** để tải fontAwesome về máy. Bước này để tránh bị lỗi font icon khi chạy ứng dụng
+
+![all text](./report_resource/Screenshot%202024-11-06%20185401.png)
+
+6. Chạy ứng dụng winui (folder MedSy) và đăng nhập với username và password đều là **"pqkiet854"** để vào cửa sổ chính
+7. (Optional) Truy cập địa chỉ http://localhost:5555 để mở client web (client web này được xây dựng với mục đích kiểm thử tính năng chat realtime ở milestone 1)
 
 ### 4. Số giờ làm việc
 
@@ -175,7 +179,7 @@ node server.js
 ### 5. Điểm tự đánh giá
 | STT | Tính năng | Điểm tự đánh giá |
 |------|-------|------------------|
-| 1    | Đăng nhập | 10 |
+| 1    | Đăng nhập | 9.5 |
 | 2    | Tìm kiếm thông tin bác sĩ | 9.5 |
 | 3    | Tư vấn trực tuyến | 9.5 |
 | 4    | Đánh giá và phản hồi| 9.5 |
