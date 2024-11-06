@@ -163,4 +163,20 @@ node server.js
 6. (Optional) Truy cập địa chỉ http://localhost:5555 để mở client web (client web này được xây dựng với mục đích kiểm thử tính năng chat realtime ở milestone 1)
 
 ### 4. Số giờ làm việc
+
+| STT | Tính năng | Mô tả | Số giờ làm việc |
+|-----------|-------|------------------|------------------|
+| 1    | Đăng nhập | Cho phép người dùng đăng nhập bằng tài khoản của mình | 1 |
+| 2    | Tìm kiếm thông tin bác sĩ | Cho phép tìm kiếm bác sĩ theo chuyên khoa, số năm kinh nghiệm, giới tính, tìm theo tên | 1 |
+| 3    | Tư vấn trực tuyến | Cho phép bệnh nhân trao đổi với bác sĩ về các vấn đề liên quan đến sức khoẻ thông qua tin nhắn | 2 |
+| 4    | Đánh giá và phản hồi | Cho phép bệnh nhân gửi đánh giá và phản hồi về chất lượng khám của bác sĩ| 2 |
+| Tổng số giờ làm việc| | | 6 |
+
 ### 5. Điểm tự đánh giá
+| STT | Tính năng | Mô tả | Điểm tự đánh giá |
+|-----------|-------|------------------|------------------|
+| 1    | Đăng nhập | Cho phép người dùng đăng nhập bằng tài khoản của mình | 10 |
+| 2    | Tìm kiếm thông tin bác sĩ | Cho phép tìm kiếm bác sĩ theo chuyên khoa, số năm kinh nghiệm, giới tính, tìm theo tên | 9.5 |
+| 3    | Tư vấn trực tuyến | Cho phép bệnh nhân trao đổi với bác sĩ về các vấn đề liên quan đến sức khoẻ thông qua tin nhắn | 9.5 |
+| 4    | Đánh giá và phản hồi | Cho phép bệnh nhân gửi đánh giá và phản hồi về chất lượng khám của bác sĩ| 9.5 |
+| Điểm đánh giá chung | | | 9.5 |
