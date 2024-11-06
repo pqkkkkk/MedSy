@@ -21,6 +21,15 @@
                 </TextBlock>
             </Grid>
         </DataTemplate>
+        
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#336699"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
+
     </Page.Resources>
 
     <Grid>
@@ -118,6 +127,16 @@
                         <Button Grid.Column="2" x:Name="CommentButton" Content="Comment" Background="#336699" Foreground="#fff" Margin="10" Click="CommentButton_Click"/>
                         <RatingControl x:Name="CommentRating" Grid.Column="1" MaxRating="5" />
                     </Grid>
+
+                    <ContentDialog
+                     x:Name="MissingInfoDialog"
+                     Title="Thông báo"
+                     Content="Vui lòng nhập bình luận và đánh giá trước khi gửi."
+                     CloseButtonText="Đóng"
+                     CloseButtonStyle="{StaticResource CustomButtonStyle}"
+                     Background="#ffffff"
+                     Foreground="#336699"/> 
+
                 </Grid>
             </Grid>
 
