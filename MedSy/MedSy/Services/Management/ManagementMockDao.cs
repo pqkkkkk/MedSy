@@ -63,7 +63,7 @@ namespace MedSy.Services.Management
         }
         public List<Models.User> getConnectingUsers(int currentUserId, string currentRole)
         {
-            
+
             var result = from m in managements
                          join u in users on m.doctorId equals u.id
                          where m.patientId == currentUserId
