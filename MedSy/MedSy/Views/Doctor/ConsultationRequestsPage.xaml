@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MedSy.Views.Doctor.ConsultationRequestsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MedSy.Views.Doctor"
+    xmlns:models="using:MedSy.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="#d4f3ff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1.5*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        
+        <TextBlock 
+            x:Name="title" Grid.Row="0" Text="Consultation Request"
+            Foreground="#336699" FontWeight="Bold" FontSize="25"
+            HorizontalAlignment="Center"
+            Margin="0,10,0,0"/>
+        
+        <Grid 
+            Grid.Row="1" x:Name="searchField"
+            Background="#7f9199"> 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                
+            </Grid.ColumnDefinitions>
+
+            <TextBox Background="#ffffff" CornerRadius="20,20,20,20"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"
+                     Margin="20,20,20,20" PlaceholderForeground="#666666"
+                     PlaceholderText="Type patient name..."
+                     TextAlignment="Left">
+            </TextBox>
+            <ComboBox
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Margin="0,20,25,20"
+                CornerRadius="20,20,20,20"
+                Grid.Column="1" Background="#ffffff"
+                PlaceholderText="Status"
+                PlaceholderForeground="#666666"
+                Foreground="#666666">
+                
+                <x:String>New</x:String>
+                <x:String>Comfirmed</x:String>
+                <x:String>Done</x:String>
+            </ComboBox>
+            <CalendarDatePicker
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="0,20,20,20"
+                Grid.Column="2"
+                CornerRadius="20,20,20,20"
+                Foreground="#666666"
+                Background="#ffffff"/>
+            <Button 
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Margin="50,20,20,20"
+                Background="#ffffff"
+                Grid.Column="3" 
+                CornerRadius="20">
+                <Grid>
+                    <FontIcon
+                        Foreground="#666666"
+                        FontFamily="{StaticResource FontAwesome}" 
+                        Glyph="&#xf002;" 
+                  />
+                </Grid>
+            </Button>
+
+        </Grid>
+
+        <Grid Grid.Row="2" x:Name="requestField">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" x:Name="requestList">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="8*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="requestListTitle" Grid.Row="0"
+                           Foreground="#336699" HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"
+                           Margin="20,20,0,0" FontSize="23"
+                           Text="Request List" FontWeight="Bold"/>
+                
+                <ScrollViewer Grid.Row="1" x:Name="requestListValue">
+                    <ItemsControl ItemsSource="{x:Bind consultationRequestsViewModel.consultations}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:Consultation">
+                                <Button
+                                    Margin="20,0,0,4"
+                                    CornerRadius="10,10,10,10"
+                                    Background="#ffffff">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            x:Name="paientName"
+                                            Foreground="Black"
+                                            Text="{x:Bind patientId }"
+                                            Margin="0,0,20,0"/>
+                                        <TextBlock 
+                                            Margin="0,0,10,0"
+                                            x:Name="status" Foreground="Black"
+                                            Text="{x:Bind status}"
+                                            Grid.Column="1"/>
+                                        <TextBlock 
+                                            x:Name="reason" Foreground="Black"
+                                            Text="{x:Bind reason}"
+                                            Grid.Column="2"/>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                
+            </Grid>
+
+            <Border Grid.Column="1" Background="#336699" CornerRadius="100,0,0,100">
+                <Grid x:Name="detailedRequest">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="8*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock x:Name="detailedRequestTitle" Grid.Row="0"
+                               Foreground="#ffffff"
+                               HorizontalAlignment="Center"
+                               Margin="20,10,0,0"
+                               FontSize="23"
+                               Text="Detailed Request" FontWeight="Bold"/>
+                    <ScrollViewer Grid.Row="1" x:Name="detailedRequestValue">
+
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

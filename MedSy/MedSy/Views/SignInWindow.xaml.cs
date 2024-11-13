@@ -38,34 +38,43 @@ namespace MedSy.Views
             var username = usernameBox.Text;
             var password = passwordBox.Password;
 
-            IUserDao userDao = new UserMockDao();
-            Models.User user = userDao.getUserByUsername(username);
-            var actualUsername = user.username;
-            var actualPassword = user.password;
-
-            if (username == actualUsername && password == actualPassword)
+            
+            Models.User user = (Application.Current as App).locator.userDao.getUserByUsername(username);
+           
+            if (user != null)
             {
-                (Application.Current as App).locator.currentUser = user;
-                (Application.Current as App).locator.managementDao = new ManagementMockDao();
-                (Application.Current as App).locator.messageDao = new MessageMockDao();
-                (Application.Current as App).locator.socketService = new SocketService();
-                (Application.Current as App).locator.mainWindow = new MainWindow();
-                (Application.Current as App).locator.chatViewModel = new ChatViewModel();
-                
+                var actualUsername = user.username;
+                var actualPassword = user.password;
 
-                int userId = (Application.Current as App).locator.currentUser.id;
-                await(Application.Current as App).locator.socketService.connectAsync();
-                await(Application.Current as App).locator.socketService.register(userId);
+                if (username == actualUsername && password == actualPassword)
+                {
+                    (Application.Current as App).locator.currentUser = user;
 
-                (Application.Current as App).locator.mainWindow.Activate();
-                this.Close();
+                    int userId = (Application.Current as App).locator.currentUser.id;
+                    await (Application.Current as App).locator.socketService.connectAsync();
+                    await (Application.Current as App).locator.socketService.register(userId);
+
+                    string roleOfUser = (Application.Current as App).locator.currentUser.role;
+                    (Application.Current as App).locator.mainWindow = new MainWindow(roleOfUser);
+                    (Application.Current as App).locator.mainWindow.Activate();
+                    this.Close();
+                }
+                else
+                {
+                    await new ContentDialog()
+                    {
+                        XamlRoot = this.Content.XamlRoot,
+                        Content = "Invalid username or password",
+                        CloseButtonText = "OK"
+                    }.ShowAsync();
+                }
             }
             else
             {
                 await new ContentDialog()
                 {
                     XamlRoot = this.Content.XamlRoot,
-                    Content = "Invalid username or password",
+                    Content = "Account is not exist",
                     CloseButtonText = "OK"
                 }.ShowAsync();
             }

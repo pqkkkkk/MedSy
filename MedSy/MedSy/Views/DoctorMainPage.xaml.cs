@@ -1,3 +1,6 @@
+using MedSy.ViewModels;
+using MedSy.Views.Doctor;
+using MedSy.Views.User;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,9 +26,63 @@ namespace MedSy.Views
     /// </summary>
     public sealed partial class DoctorMainPage : Page
     {
+        private MainPageViewModel mainPageViewModel;
         public DoctorMainPage()
         {
             this.InitializeComponent();
+            content.Navigate(typeof(DoctorDashboard));
+
+            mainPageViewModel = new MainPageViewModel();
+        }
+        
+        private void UserProfileClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(DoctorDashboard));
+        }
+        private void DashboardCLick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(DoctorDashboard));
+        }
+        private void ConsultationRequestClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(ConsultationRequestsPage));
+        }
+        private void ChatClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            mainPageViewModel.offNewMessageNotification();
+            content.Navigate(typeof(DoctorDashboard));
+        }
+        private void workScheduleClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(DoctorDashboard));
+        }
+        private void MedicalNewsClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(DoctorDashboard));
+        }
+        private void patientManagementClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
             content.Navigate(typeof(DoctorDashboard));
         }
     }

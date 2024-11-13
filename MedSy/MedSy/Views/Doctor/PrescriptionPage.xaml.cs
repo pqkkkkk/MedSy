@@ -1,4 +1,4 @@
-using MedSy.Views;
+using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -17,29 +17,17 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace MedSy
+namespace MedSy.Views.Doctor
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class PrescriptionPage : Page
     {
-        public Frame contentFrame => content;
-        public MainWindow(string roleOfUser)
+        public PrescriptionPage()
         {
             this.InitializeComponent();
-
-            switch (roleOfUser)
-            {
-                case "patient":
-                    content.Navigate(typeof(UserMainPage));
-                    break;
-                case "doctor":
-                    content.Navigate(typeof(DoctorMainPage));
-                    break;
-            }
+            
         }
-
-       
     }
 }

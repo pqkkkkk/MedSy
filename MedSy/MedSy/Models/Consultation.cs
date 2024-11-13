@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.VoiceCommands;
+
+namespace MedSy.Models
+{
+    public class Consultation
+    {
+        public int id { get; set; }
+        public string status { get; set; }
+        public int patientId { get; set; }
+        public int doctorId { get; set; }
+        public string result { get; set; }
+        public string reason { get; set; }
+        public DateTime date { get; set; }
+    }
+    
+}

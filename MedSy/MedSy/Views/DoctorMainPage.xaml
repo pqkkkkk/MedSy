@@ -4,12 +4,129 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MedSy.Views"
+    xmlns:converter="using:MedSy.Converter.Main"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converter:NotificationDisplayConverter x:Key="NotificationDisplayConverter"/>
+        <converter:selectedNavigationItemConverter x:Key="selectedNavigationItemConverter"/>
+    </Page.Resources>
+    
     <Grid>
-        <Frame x:Name="content" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="12*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" x:Name="Navigation" Background="#ffffff">
+
+            <Grid.Shadow>
+                <ThemeShadow></ThemeShadow>
+            </Grid.Shadow>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="UserProfileButton" Click="UserProfileClick"
+                    Tag="UserProfile" Grid.Row="0"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <Image Source="ms-appx:///Assets/defaultavt.jpg" />
+                </Grid>
+            </Button>
+
+            <Button x:Name="DashboardButton" Click="DashboardCLick"
+                    Tag="Dashboard" Grid.Row="1"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <FontIcon
+                        FontFamily="{StaticResource FontGoogle}" 
+                        Glyph="&#xe871;" 
+                        FontSize="40"
+                        Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='Dashboard',Mode=OneWay}"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="ConsultationRequestButton" Click="ConsultationRequestClick"
+                    Tag="ConsultationRequest" Grid.Row="2"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <FontIcon
+                        FontFamily="{StaticResource FontAwesome}" 
+                        Glyph="&#xf03a;" 
+                        FontSize="40"
+                        Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='ConsultationRequest',Mode=OneWay}"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="ChatButton" Click="ChatClick"
+                    Tag="Chat" Grid.Row="3"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <FontIcon
+                        FontFamily="{StaticResource FontAwesome}"
+                        Glyph="&#xf075;"
+                        FontSize="40"
+                        Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='Chat',Mode=OneWay}"/>
+
+                    <Ellipse 
+                        Visibility="{x:Bind mainPageViewModel.IsNewMessage, Converter={StaticResource NotificationDisplayConverter}, Mode=OneWay}"
+                        Width="10"
+                        Height="10"
+                        Fill="Red"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,0,5,0"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="workScheduleButton" Click="workScheduleClick"
+                    Tag="workSchedule"  Grid.Row="4"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <FontIcon
+                FontFamily="{StaticResource FontAwesome}"
+                Glyph="&#xf073;"
+                FontSize="40"
+                Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='workSchedule',Mode=OneWay}"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="MedicalNewsButton" Click="MedicalNewsClick"
+                    Tag="MedicalNews" Grid.Row="5"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <FontIcon 
+                 FontFamily="{StaticResource FontAwesome}"
+                 Glyph="&#xf1ea;"
+                 FontSize="40"
+                 Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='MedicalNews',Mode=OneWay}"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="patientManagementButton" Click="patientManagementClick"
+                    Tag="patientManagement" Grid.Row="6"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <FontIcon 
+                        FontFamily="{StaticResource FontAwesome}"
+                        Glyph="&#xf80d;"
+                        FontSize="40"
+                        Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='patientManagement',Mode=OneWay}"/>
+                </Grid>
+            </Button>
+        </Grid>
+
+        <Frame x:Name="content" Grid.Column="1"/>
     </Grid>
 </Page>
