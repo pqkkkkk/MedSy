@@ -1,4 +1,6 @@
+using MedSy.Models;
 using MedSy.ViewModels;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -29,7 +31,53 @@ namespace MedSy.Views.Doctor
         {
             this.InitializeComponent();
             consultationRequestsViewModel = new ConsultationRequestsViewModel();
+            this.DataContext = consultationRequestsViewModel;
+        }
+        private void searchClicked(object sender, RoutedEventArgs e)
+        {
+            
+            DateTimeOffset? selectedDate = dateFilter.Date;
+            DateTime? date = null;
+            if (selectedDate.HasValue)
+            {
+                date = selectedDate.Value.DateTime;
+            }
+
+            consultationRequestsViewModel.searchAndFilterConsultations(date);
+
+        }
+        private void acceptAllClicked(object sender, RoutedEventArgs e)
+        {
+            consultationRequestsViewModel.acceptRequest();   
         }
 
+        private void rejectAllClicked(object sender, RoutedEventArgs e)
+        {
+            consultationRequestsViewModel.rejectRequest();
+        }
+        private void cancelRequestClicked(object sender, RoutedEventArgs e)
+        {
+            
+            
+            consultationRequestsViewModel.cancelRequest();
+        }
+
+        private void createRoomClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Models.Consultation consultation = requestList.SelectedItem as Models.Consultation;
+            consultationRequestsViewModel.updateSelectedConsultation(consultation);
+        }
+
+        private void selectStatusClicked(object sender, RoutedEventArgs e)
+        {
+            string status = (sender as Button).Tag as string;
+            consultationRequestsViewModel.getConsultations(status, null);
+            consultationRequestsViewModel.updateSelectedStatus(status);
+        }
     }
 }

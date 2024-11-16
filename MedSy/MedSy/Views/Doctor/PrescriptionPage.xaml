@@ -11,6 +11,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-       
+        <WebView2 x:Name="youtube" Source="https://www.youtube.com/"/>
+        <Button x:Name="close" Content="Close Youtube" Click="test"></Button>
+        <CalendarView />
     </Grid>
 </Page>

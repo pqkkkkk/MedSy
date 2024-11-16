@@ -29,5 +29,9 @@ namespace MedSy.Views.Doctor
             this.InitializeComponent();
             
         }
+        private void test(object sender, RoutedEventArgs e)
+        {
+            youtube.Close();
+        }
     }
 }

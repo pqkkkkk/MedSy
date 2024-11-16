@@ -8,6 +8,6 @@ namespace MedSy.Services.Consultation
 {
     public interface IConsultationDao
     {
-        public List<Models.Consultation> GetConsultations(int doctorId);
+        public List<Models.Consultation> GetConsultations(int doctorId, string status, DateTime? date);
     }
 }
