@@ -88,7 +88,7 @@
             </Grid.ColumnDefinitions>
 
             <TimePicker
-                
+                ClockIdentifier="24HourClock"
                 x:Name="timeFilter"
                 CornerRadius="20,20,20,20"
                 Margin="20,0,0,0"
@@ -134,7 +134,9 @@
                     <controls:DataGridTextColumn Header="Patient Id" Binding="{Binding patientId}"/>
                     <controls:DataGridTextColumn Header="Status" Binding="{Binding status}"/>
                     <controls:DataGridTextColumn Header="Reason" Binding="{Binding reason}"/>
-                    <controls:DataGridTextColumn Header="Date Time" Binding="{Binding date}"/>
+                    <controls:DataGridTextColumn Header="Date " Binding="{Binding date}"/>
+                    <controls:DataGridTextColumn Header="Date Time" Binding="{Binding startTime}"/>
+                    <controls:DataGridTextColumn Header="Date Time" Binding="{Binding endTime}"/>
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
         </Grid>

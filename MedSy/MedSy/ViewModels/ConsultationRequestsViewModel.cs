@@ -20,13 +20,15 @@ namespace MedSy.ViewModels
         {
             selectedConsultation = null;
             selectedStatus = "All";
-            getConsultations(selectedStatus, null);
+            int doctorId = (Application.Current as App).locator.currentUser.id;
+
+            getConsultations(null,null,null);
         }
-        public void getConsultations(string status, DateTime? date)
+        public void getConsultations(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
             int doctorId = (Application.Current as App).locator.currentUser.id;
-            consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetConsultations(doctorId, status, date));
+            consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetConsultations(doctorId, selectedStatus, date,startTime,endTime));
         }
         public void updateSelectedConsultation(Models.Consultation consultation)
         {
@@ -36,11 +38,11 @@ namespace MedSy.ViewModels
         {
             selectedStatus = status;
         }
-        public void searchAndFilterConsultations(DateTime? date)
+        public void searchAndFilterConsultations(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
             int doctorId = (Application.Current as App).locator.currentUser.id;
-            consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetConsultations(doctorId, selectedStatus, date));
+            consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetConsultations(doctorId, selectedStatus, date,startTime, endTime));
         }
         public Models.Consultation FindConsultationById(int consultationId)
         {

@@ -35,15 +35,21 @@ namespace MedSy.Views.Doctor
         }
         private void searchClicked(object sender, RoutedEventArgs e)
         {
-            
-            DateTimeOffset? selectedDate = dateFilter.Date;
-            DateTime? date = null;
-            if (selectedDate.HasValue)
+            var selectedTime = timeFilter.SelectedTime;
+            TimeOnly? startTime = null;
+            if(selectedTime.HasValue)
             {
-                date = selectedDate.Value.DateTime;
+                startTime = TimeOnly.FromTimeSpan(selectedTime.Value);
             }
 
-            consultationRequestsViewModel.searchAndFilterConsultations(date);
+            DateTimeOffset? selectedDateTime = dateFilter.Date;
+            DateOnly? date = null;
+            if (selectedDateTime.HasValue)
+            {
+                date = DateOnly.FromDateTime(selectedDateTime.Value.DateTime);
+            }
+
+            consultationRequestsViewModel.searchAndFilterConsultations(date, startTime, null);
 
         }
         private void acceptAllClicked(object sender, RoutedEventArgs e)
@@ -76,8 +82,8 @@ namespace MedSy.Views.Doctor
         private void selectStatusClicked(object sender, RoutedEventArgs e)
         {
             string status = (sender as Button).Tag as string;
-            consultationRequestsViewModel.getConsultations(status, null);
             consultationRequestsViewModel.updateSelectedStatus(status);
+            consultationRequestsViewModel.getConsultations(null,null,null);
         }
     }
 }

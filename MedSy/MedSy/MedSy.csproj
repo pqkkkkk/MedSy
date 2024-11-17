@@ -26,6 +26,7 @@
     <None Remove="Views\DoctorMainPage.xaml" />
     <None Remove="Views\Doctor\ConsultationRequestsPage.xaml" />
     <None Remove="Views\Doctor\PrescriptionPage.xaml" />
+    <None Remove="Views\Doctor\WorkSchedulePage.xaml" />
     <None Remove="Views\SignInWindow.xaml" />
     <None Remove="Views\SignUpWindow.xaml" />
     <None Remove="Views\UserDashboard.xaml" />
@@ -92,6 +93,9 @@
     <None Update="Assets\doctoravt.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\Doctor\WorkSchedulePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Doctor\PrescriptionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

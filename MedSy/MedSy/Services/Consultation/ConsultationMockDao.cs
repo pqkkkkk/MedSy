@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ABI.Windows.ApplicationModel.Activation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,20 +19,24 @@ namespace MedSy.Services.Consultation
                     id = 1,
                     patientId = 1,
                     doctorId = 2,
-                    status = "New",
+                    status = "Accepted",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateTime(2024, 11,13,14,30,30)
+                    date = new DateOnly(2024, 11,13),
+                    startTime = new TimeOnly(5,00),
+                    endTime = new TimeOnly(6,00)
                 },
                 new Models.Consultation()
                 {
                     id = 2,
                     patientId = 1,
-                    doctorId = 3,
+                    doctorId = 2,
                     status = "New",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateTime(2024, 11,13,14,30,30)
+                    date = new DateOnly(2024, 11,13),
+                    startTime = new TimeOnly(12,00),
+                    endTime = new TimeOnly(13,00)
                 },
                 new Models.Consultation()
                 {
@@ -41,7 +46,9 @@ namespace MedSy.Services.Consultation
                     status = "Accepted",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateTime(2024, 11,13,14,30,30)
+                    date = new DateOnly(2024, 11,13),
+                    startTime = new TimeOnly(10,00),
+                    endTime = new TimeOnly(11,00)
                 },
                 new Models.Consultation()
                 {
@@ -51,7 +58,9 @@ namespace MedSy.Services.Consultation
                     status = "Done",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateTime(2024, 11,13,14,30,30)
+                    date = new DateOnly(2024, 11,16),
+                    startTime = new TimeOnly(5,00),
+                    endTime = new TimeOnly(6,00)
                 },
                 new Models.Consultation()
                 {
@@ -61,7 +70,9 @@ namespace MedSy.Services.Consultation
                     status = "New",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateTime(2024, 11,13,14,30,30)
+                    date = new DateOnly(2024, 11,16),
+                    startTime = new TimeOnly(11,00),
+                    endTime = new TimeOnly(12,00)
                 },
                 new Models.Consultation()
                 {
@@ -71,7 +82,9 @@ namespace MedSy.Services.Consultation
                     status = "Accepted",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateTime(2024, 11,15,14,30,30)
+                    date = new DateOnly(2024, 11,15),
+                    startTime = new TimeOnly(5,00),
+                    endTime = new TimeOnly(6,00)
                 },
                 new Models.Consultation()
                 {
@@ -81,12 +94,14 @@ namespace MedSy.Services.Consultation
                     status = "Done",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateTime(2024, 11,16,14,30,30)
+                    date = new DateOnly(2024, 11,16),
+                    startTime = new TimeOnly(5,00),
+                    endTime = new TimeOnly(6,00)
                 },
 
             };
         }
-        public List<Models.Consultation> GetConsultations(int doctorId, string status, DateTime? date)
+        public List<Models.Consultation> GetConsultations(int doctorId, string status, DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             var result = from c in consultations
                          where c.doctorId == doctorId
@@ -105,8 +120,36 @@ namespace MedSy.Services.Consultation
                          && c.date.Day == date.Value.Day
                          select c;
             }
+            if(startTime.HasValue)
+            {
+                result = from c in result
+                         where c.startTime >= startTime
+                         select c;
+            }
+            if (endTime.HasValue)
+            {
+                result = from c in result
+                         where c.endTime <= endTime
+                         select c;
+            }
 
             return result.ToList();
+        }
+        public List<Models.Consultation> GetConsultationsInAWeek(int doctorId, DateOnly? date)
+        {
+            if (date.HasValue)
+            {
+                int dayOfWeek = (int)date.Value.DayOfWeek;
+                DateOnly sunday = date.Value.AddDays(-dayOfWeek);
+                DateOnly saturday = sunday.AddDays(6);
+
+                var result = from c in consultations
+                             where c.date >= sunday && c.date <= saturday && c.doctorId == doctorId && c.status == "Accepted"
+                             select c;
+
+                return result.ToList(); 
+;           }
+            return null;
         }
     }
 }

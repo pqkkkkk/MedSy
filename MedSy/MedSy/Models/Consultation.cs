@@ -16,9 +16,11 @@ namespace MedSy.Models
         public int doctorId { get; set; }
         public string result { get; set; }
         public string reason { get; set; }
-        public DateTime date { get; set; }
-
+        public DateOnly date { get; set; }
+        public TimeOnly startTime { get; set; }
+        public TimeOnly endTime { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
+        
     }
     
 }
