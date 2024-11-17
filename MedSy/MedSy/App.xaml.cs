@@ -1,4 +1,7 @@
 ﻿using MedSy.Helpers;
+using MedSy.Services.Management;
+using MedSy.Services.Message;
+using MedSy.Services;
 using MedSy.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -17,6 +20,8 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using MedSy.Services.User;
+using MedSy.Services.Consultation;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -37,6 +42,12 @@ namespace MedSy
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             locator = new Locator();
+            (Application.Current as App).locator.userDao = new UserMockDao();
+            (Application.Current as App).locator.managementDao = new ManagementMockDao();
+            (Application.Current as App).locator.messageDao = new MessageMockDao();
+            (Application.Current as App).locator.consultationDao = new ConsultationMockDao();
+            (Application.Current as App).locator.socketService = new SocketService();
+            
             signInWindow = new SignInWindow();
             signInWindow.Activate();
         }

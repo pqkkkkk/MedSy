@@ -1,0 +1,148 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Shapes;
+using Windows.UI;
+using Microsoft.UI;
+using MedSy.ViewModels;
+using MedSy.Converter;
+using MedSy.Converter.WorkSchedule;
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
+
+namespace MedSy.Views.Doctor
+{
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class WorkSchedulePage : Page
+    {
+        public WorkScheduleViewModel workScheduleViewModel { get; set; }
+        public WorkSchedulePage()
+        {
+            this.InitializeComponent();
+            workScheduleViewModel = new WorkScheduleViewModel();
+            DefineScheduleGrid();
+        }
+        private void DefineScheduleGrid()
+        {
+
+            for (int i = 0; i < 8; i++)
+            {
+                ColumnDefinition column = new ColumnDefinition();
+                column.Width = new GridLength(1, GridUnitType.Star);
+                schedule.ColumnDefinitions.Add(column);
+            }
+            for (int i = 0; i < 25; i++)
+            {
+                RowDefinition row = new RowDefinition();
+                row.Height = new GridLength(40);
+                schedule.RowDefinitions.Add(row);
+            }
+            
+            MarkerItemConverter markerItemConverter = new MarkerItemConverter();
+            for (int i = 0;i<25;i++)
+            {
+                for(int j = 0;j<8;j++)
+                {
+                    Binding binding = new Binding()
+                    {
+                        Mode = BindingMode.OneWay,
+                        Source = workScheduleViewModel,
+                        Path = new PropertyPath("marker"),
+                        Converter = markerItemConverter,
+                        ConverterParameter = $"{i},{j}"
+                    };
+                    Border border = new Border
+                    {
+                        
+                        BorderThickness = new Thickness(1),
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        HorizontalAlignment = HorizontalAlignment.Stretch
+                    };
+                    if(i == 0 && j > 0)
+                    {
+                        string dayOfWeek = "Monday";
+                        switch (j)
+                        {
+                            case 1:
+                                dayOfWeek = "Sunday";
+                                break;
+                            case 2:
+                                dayOfWeek = "Monday";
+                                break;
+                            case 3:
+                                dayOfWeek = "Tuesday";
+                                break;
+                            case 4:
+                                dayOfWeek = "Wednesday";
+                                break;
+                            case 5:
+                                dayOfWeek = "Thursday";
+                                break;
+                            case 6:
+                                dayOfWeek = "Friday";
+                                break;
+                            case 7:
+                                dayOfWeek = "Saturday";
+                                break;
+
+
+                        };
+                        TextBlock textBlock = new TextBlock()
+                        {
+                            Text = dayOfWeek,
+                            Foreground = new SolidColorBrush(Colors.Black),
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center
+                        };
+                        border.Child = textBlock;
+                    }
+                    if(j == 0 && i > 0)
+                    {
+                        TextBlock textBlock = new TextBlock()
+                        {
+                            Text = (i - 1).ToString() + ":00",
+                            Foreground = new SolidColorBrush(Colors.Black),
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Top
+                        };
+                        border.Child = textBlock;
+                    }
+                    border.SetBinding(Border.BackgroundProperty, binding);
+                    
+                    Grid.SetColumn(border, j);
+                    Grid.SetRow(border, i);
+                    schedule.Children.Add(border);
+                }
+            }
+
+            
+        }
+        private void selectDateClicked(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
+        {
+            DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+
+            if (calendar.SelectedDates.Count > 0)
+            {
+                DateTime selectedDate = calendar.SelectedDates[0].DateTime;
+                date = DateOnly.FromDateTime(selectedDate);
+            }
+
+            workScheduleViewModel.getConsultations(date);
+            workScheduleViewModel.refreshMarker();
+            workScheduleViewModel.updateMarker();
+        }
+    }
+}
