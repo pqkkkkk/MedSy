@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using MedSy.Models;
+using MedSy.Services.User;
 namespace MedSy.Services.Management
 {
     public class ManagementMockDao:IManagementDao
@@ -20,7 +21,7 @@ namespace MedSy.Services.Management
                     id = 3,
                     doctorId = 2,
                     patientId = 1,
-                    doctorNewMessage = true,
+                    doctorNewMessage = false,
                     patientNewMessage = false,
                 },
                 new Models.Management()
@@ -32,34 +33,8 @@ namespace MedSy.Services.Management
                     patientNewMessage = false,
                 },
             };
-            users = new List<Models.User>()
-            {
-                new Models.User()
-                {
-                    id = 1,
-                    username = "pqkiet854",
-                    password = "pqkiet854",
-                    avatarPath = "ms-appx:///Assets/avt01.jpg",
-                    role = "patient"
-                },
-                new Models.User()
-                {
-                    id = 2,
-                    username = "John Doe",
-                    password = "pqkiet854",
-                    avatarPath = "ms-appx:///Assets/doctoravt.jpg",
-                    role = "doctor"
-                },
-                new Models.User()
-                {
-                    id = 3,
-                    username = "Lionel Messi",
-                    password = "pqkiet854",
-                    avatarPath = "ms-appx:///Assets/doctoravt.jpg",
-                    role = "doctor"
-                },
-
-            };
+            IUserDao userDao = new UserMockDao();
+            users = userDao.getAllUsers();
         }
         public List<Models.User> getConnectingUsers(int currentUserId, string currentRole)
         {

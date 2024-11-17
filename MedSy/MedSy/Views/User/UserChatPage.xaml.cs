@@ -31,7 +31,7 @@ namespace MedSy.Views.User
         {
             this.InitializeComponent();
 
-            chatViewModel = (Application.Current as App).locator.chatViewModel;
+            chatViewModel = new ChatViewModel();
         }
         private void switchToNewChatClick(object sender, RoutedEventArgs e)
         {

@@ -36,7 +36,7 @@ namespace MedSy.Views
 
         private void Doctor_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (e.ClickedItem is Doctor doctor)
+            if (e.ClickedItem is Models.Doctor doctor)
             {
                 DoctorViewModel.SelectedDoctor = doctor;
                 DoctorViewModel.LoadFeedback();
