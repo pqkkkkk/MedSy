@@ -10,7 +10,7 @@ namespace MedSy.Services.User
     public class UserMockDao : IUserDao
     {
         private List<Models.User> users;
-        
+
         public UserMockDao()
         {
             users = new List<Models.User>()
@@ -54,5 +54,6 @@ namespace MedSy.Services.User
             Models.User user = users.FirstOrDefault(u => u.username == username);
             return user;
         }
+
     }
 }

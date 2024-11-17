@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -42,6 +43,7 @@ namespace MedSy
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             locator = new Locator();
+
             (Application.Current as App).locator.userDao = new UserMockDao();
             (Application.Current as App).locator.managementDao = new ManagementMockDao();
             (Application.Current as App).locator.messageDao = new MessageMockDao();

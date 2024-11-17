@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MedSy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local1="using:MedSy.Views.User"
     mc:Ignorable="d">
 
     <Grid Background="#d4f3ff">
@@ -14,72 +14,105 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="1"  CornerRadius="300,0,0,300">
-            <Border.Shadow>
-                <ThemeShadow/>
-            </Border.Shadow>
+        <Grid Name="SignUp_part" Grid.Column="1">
+            <Border Grid.Column="1"  CornerRadius="300,0,0,300">
+                <Border.Shadow>
+                    <ThemeShadow/>
+                </Border.Shadow>
 
-            <Border.Background>
-                <AcrylicBrush  TintColor="#336699" TintOpacity="0.85" FallbackColor="White" />
-            </Border.Background>
-        </Border>
+                <Border.Background>
+                    <AcrylicBrush  TintColor="#336699" TintOpacity="0.85" FallbackColor="White" />
+                </Border.Background>
+            </Border>
+            <StackPanel Orientation="Horizontal" Grid.Column="1"  HorizontalAlignment="Left" Margin="20,0,0,0">
+                <TextBlock Text="Med"
+                FontWeight="Bold"
+               Grid.Column="0"
+               Foreground="#ffffff"
+               FontSize="48"
+               VerticalAlignment="Center"
+               Margin="0,0,5,0"
+               HorizontalAlignment="Center"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="1"  HorizontalAlignment="Left" Margin="20,0,0,0">
-            <TextBlock Text="Med"
-       Grid.Column="0"
-       Foreground="#ffffff"
-       FontSize="48"
-       VerticalAlignment="Center"
-       Margin="0,0,5,0"
-       HorizontalAlignment="Center"/>
-            <TextBlock Text="Sy"
-       Grid.Column="0"
-       Foreground="#45cfdd"
-       FontSize="48"
-       VerticalAlignment="Center"
-       HorizontalAlignment="Center"/>
-        </StackPanel>
-
-        <Border  CornerRadius="10"  Padding="20" Grid.Column="1" HorizontalAlignment="Right"
-             BorderBrush="#0c123c" BorderThickness="0.5" Margin="0,0,80,0"
-             Width="300" Height="350">
-
-            <Border.Shadow>
-                <ThemeShadow/>
-            </Border.Shadow>
-
-            <Border.Background>
-                <AcrylicBrush  TintColor="White" TintOpacity="0.85" FallbackColor="White" />
-            </Border.Background>
-
-            <StackPanel>
-
-                <TextBlock Text="Welcome!"
-                       FontSize="24"
-                       FontWeight="Bold"
-                       Foreground="#336699"
-                       HorizontalAlignment="Center"/>
-
-                <TextBox PlaceholderText="Username"
-                 CornerRadius="10"
-                 Background="#bababa"
-                 BorderBrush="#bababa"
-                 Margin="0,20,0,25">
-                </TextBox>
-                <PasswordBox PlaceholderText="Password"
-                     Background="#bababa"
-                     CornerRadius="10"
-                     BorderBrush="#bababa"
-                     Margin="0,10,0,50"/>
-
-                <Button Content="Sign In"
-                Width="100"
-                CornerRadius="5"
-                Background="#336699"
-                Foreground="#0c123c"
-                HorizontalAlignment="Center">
-                </Button>
+                <TextBlock Text="Sy"
+                FontWeight="Bold"
+               Grid.Column="0"
+               Foreground="#45cfdd"
+               FontSize="48"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"/>
             </StackPanel>
-        </Border>
+
+            <Border CornerRadius="10"  Padding="20" Grid.Column="1" HorizontalAlignment="Right" 
+                 BorderBrush="#0c123c" BorderThickness="0.5" Margin="0,0,80,0"
+                 Width="300" Height="350">
+
+                <Border.Shadow>
+                    <ThemeShadow/>
+                </Border.Shadow>
+
+                <Border.Background>
+                    <AcrylicBrush  TintColor="White" TintOpacity="0.85" FallbackColor="White" />
+                </Border.Background>
+
+                <StackPanel>
+                    <TextBlock Text="Welcome!"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="#336699"
+                           HorizontalAlignment="Center"/>
+
+                    <TextBox Name="usernameBox"
+                     PlaceholderText="Username"
+                     CornerRadius="10"
+                     Background="#bababa"
+                     BorderBrush="#bababa"
+                     Margin="0,20,0,20">
+                    </TextBox>
+                    <PasswordBox x:Name="passwordBox"
+                        PlaceholderText="Password"
+                         Background="#bababa"
+                         CornerRadius="10"
+                         BorderBrush="#bababa"
+                         Margin="0,0,0,20"/>
+
+                    <ComboBox Name="role" PlaceholderText="You are..." Background="Transparent" HorizontalAlignment="Center" Margin="0,10,0,20" Width="250" CornerRadius="10" BorderBrush="#666666" BorderThickness="1" Foreground="#666" PlaceholderForeground="#666">
+                        <ComboBoxItem Content="Doctor" />
+                        <ComboBoxItem Content="Patient" />
+                    </ComboBox>
+
+                    <Button Content="Next"
+                    Click="onSignUpButton_Clicked"
+                    Width="100"
+                    CornerRadius="5"
+                    Background="#336699"
+                    Foreground="#0c123c"
+                    HorizontalAlignment="Center">
+                    </Button>
+
+                    <StackPanel 
+                    Orientation="Horizontal" 
+                    Margin="0 20 0 0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                        <TextBlock Text="Already have an account?" 
+                            FontSize="15"
+                            Foreground="#7A7979"
+                            VerticalAlignment="Center" 
+                            />
+                
+                        <HyperlinkButton Content="Sign In"
+                        Click="SignInClicked_hyperlinkButton"
+                        FontSize="15"
+                        Foreground="#666666"
+                        HorizontalAlignment="Left"
+                        Margin="-8 0 0 1.5">
+                        </HyperlinkButton>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <local1:SignUpUserControl x:Name="DetailsUserControl" Grid.Column="1" Visibility="Collapsed"/>
     </Grid>
 </Window>
