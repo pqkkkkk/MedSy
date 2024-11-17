@@ -1,4 +1,4 @@
-using MedSy.Services.Management;
+﻿using MedSy.Services.Management;
 using MedSy.Services.Message;
 using MedSy.Services.User;
 using MedSy.Services;
@@ -28,22 +28,21 @@ namespace MedSy.Views
     /// </summary>
     public sealed partial class SignInWindow : Window
     {
+        public List<Models.User> Users { get; set; }
         public SignInWindow()
         {
             this.InitializeComponent();
         }
-
         private async void SignInClicked(object sender, RoutedEventArgs e)
         {
             var username = usernameBox.Text;
             var password = passwordBox.Password;
 
-            IUserDao userDao = new UserMockDao();
-            Models.User user = userDao.getUserByUsername(username);
-            var actualUsername = user.username;
-            var actualPassword = user.password;
+            var users = (Application.Current as App).locator.users;
 
-            if (username == actualUsername && password == actualPassword)
+            var user = users.FirstOrDefault(u => u.username == username && u.password == password);
+
+            if (user != null)
             {
                 (Application.Current as App).locator.currentUser = user;
                 (Application.Current as App).locator.managementDao = new ManagementMockDao();
@@ -69,6 +68,13 @@ namespace MedSy.Views
                     CloseButtonText = "OK"
                 }.ShowAsync();
             }
+        }
+
+        private void SignUpClicked(object sender, RoutedEventArgs e)
+        {
+            var signupWindow = new SignUpWindow();
+            signupWindow.Activate();
+            this.Close();
         }
     }
 }

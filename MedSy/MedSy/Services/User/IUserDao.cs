@@ -10,5 +10,6 @@ namespace MedSy.Services.User
     public interface IUserDao
     {
         public Models.User getUserByUsername(string username);
+        public List<Models.User> getAllUsers();
     }
 }

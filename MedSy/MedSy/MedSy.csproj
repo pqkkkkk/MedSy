@@ -29,6 +29,7 @@
     <None Remove="Views\UserDashboard.xaml" />
     <None Remove="Views\UserMainPage.xaml" />
     <None Remove="Views\User\DoctorDetail.xaml" />
+    <None Remove="Views\User\SignUpUserControl.xaml" />
     <None Remove="Views\User\UserChatPage.xaml" />
   </ItemGroup>
 
@@ -89,6 +90,12 @@
     <None Update="Assets\doctoravt.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\User\SignUpUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SignUpWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\User\DoctorDetail.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,9 +103,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\DoctorDetail.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\SignUpWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\SignInWindow.xaml">

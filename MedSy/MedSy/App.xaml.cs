@@ -1,4 +1,5 @@
 ﻿using MedSy.Helpers;
+using MedSy.Services.User;
 using MedSy.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -37,6 +39,8 @@ namespace MedSy
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             locator = new Locator();
+            IUserDao userDao = new UserSqlDao(); 
+            locator.users = userDao.getAllUsers();
             signInWindow = new SignInWindow();
             signInWindow.Activate();
         }

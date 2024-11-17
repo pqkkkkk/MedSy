@@ -14,6 +14,8 @@ namespace MedSy.Helpers
     public class Locator
     {
         public User currentUser { get; set; }
+
+        public List<User> users { get; set; } = new List<User>();
         public IMessageDao messageDao { get; set; }
         public IManagementDao managementDao { get; set; }
         public SocketService socketService { get; set; }
@@ -21,5 +23,5 @@ namespace MedSy.Helpers
         public ChatViewModel chatViewModel { get; set; }
         
     }
-   
+
 }
