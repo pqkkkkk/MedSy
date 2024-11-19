@@ -11,7 +11,7 @@
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-	  <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
+	<WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\avt01.jpg" />
@@ -105,7 +105,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\User\DoctorDetail.xaml">
-      
+        <Generator>MSBuild:Compile</Generator>
+    </Page>
      <Page Update="Views\User\SignUpUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
