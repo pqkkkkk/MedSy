@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Online consultation</title>
+        <style>
+            video {
+                width: 45%;
+                margin: 10px;
+                border: 1px solid black;
+            }
+            h2{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Online Consultation</h2>
+        <video id="localVideo" autoplay muted></video>
+        <video id="remoteVideo" autoplay></video>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="videocall.js"></script>
+    </body>
+</html>

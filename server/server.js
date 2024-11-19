@@ -14,7 +14,7 @@ const port = 5555;
 app.use(express.static(path.join(__dirname,'testClient')));
 
 app.get('/',(req,res) =>{
-    res.sendFile(path.join(__dirname,'testClient','client.html'));
+    res.sendFile(path.join(__dirname,'testClient','videocall.html'));
 });
 
 const users = new Map();
@@ -50,6 +50,19 @@ io.on('connection', function(socket)
         users.delete(userId);
     });
 
+    // Signaling server for video call
+    socket.on('offer',(data) =>{
+        console.log('Offer received: ', data);
+        socket.broadcast.emit('offer',data);
+    });
+    socket.on('answer', (data)=>{
+        console.log('Answer received:', data);
+        socket.broadcast.emit('answer',data);
+    });
+    socket.on('candidate', (data) =>{
+       console.log('ICE Candidate received: ',data);
+       socket.broadcast.emit('candidate',data);
+    });
 });
 
 server.listen(port,() =>{
