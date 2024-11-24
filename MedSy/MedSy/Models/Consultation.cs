@@ -12,6 +12,8 @@ namespace MedSy.Models
     {
         public int id { get; set; }
         public string status { get; set; }
+
+        public string form { get; set; }
         public int patientId { get; set; }
         public int doctorId { get; set; }
         public string result { get; set; }
