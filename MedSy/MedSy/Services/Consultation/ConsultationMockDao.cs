@@ -151,5 +151,9 @@ namespace MedSy.Services.Consultation
 ;           }
             return null;
         }
+
+        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, String form, String status, int patientId, int doctorId, String consultation_result, String reason) {
+            return true;
+        }
     }
 }
