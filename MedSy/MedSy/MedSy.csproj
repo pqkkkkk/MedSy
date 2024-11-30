@@ -24,11 +24,21 @@
     <None Remove="Views\DoctorDashboard.xaml" />
     <None Remove="Views\DoctorDetail.xaml" />
     <None Remove="Views\DoctorMainPage.xaml" />
+
+    <None Remove="Views\Doctor\ConsultationRequestsPage.xaml" />
+    <None Remove="Views\Doctor\ConsultationRequestUC.xaml" />
+    <None Remove="Views\Doctor\OnlineConsultationUC.xaml" />
+    <None Remove="Views\Doctor\PrescriptionPage.xaml" />
+    <None Remove="Views\Doctor\WorkSchedulePage.xaml" />
+
     <None Remove="Views\SignInWindow.xaml" />
     <None Remove="Views\SignUpWindow.xaml" />
     <None Remove="Views\UserDashboard.xaml" />
     <None Remove="Views\UserMainPage.xaml" />
     <None Remove="Views\User\DoctorDetail.xaml" />
+    <None Remove="Views\User\MyConsultationsPage.xaml" />
+    <None Remove="Views\User\MyConsultationUC.xaml" />
+    <None Remove="Views\User\OnlineConsultationUC.xaml" />
     <None Remove="Views\User\SignUpUserControl.xaml" />
     <None Remove="Views\User\UserChatPage.xaml" />
   </ItemGroup>
@@ -91,6 +101,22 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
 
+    <Page Update="Views\User\OnlineConsultationUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\User\MyConsultationUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\User\MyConsultationsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Doctor\OnlineConsultationUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Doctor\ConsultationRequestUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    
     <Page Update="Views\Doctor\WorkSchedulePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

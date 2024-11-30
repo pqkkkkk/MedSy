@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="MedSy.Views.Doctor.OnlineConsultationUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MedSy.Views.Doctor"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" >
+
+    <Grid Background="#d4f3ff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <WebView2
+            Grid.Row="0"
+            x:Name="videlcall"
+            Source="http://localhost:5555/videocall"
+            NavigationCompleted="sendDataToVideoCallClientAsync"/>
+        <TextBlock
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            x:Name="endOCMessage"
+            Visibility="Collapsed"
+            Grid.Row="0"
+            FontWeight="Bold"
+            Text="Online consultation has finished..."
+            Foreground="#336699"
+            FontSize="30"/>
+        <Button
+            x:Name="endOCButton"
+            Visibility="Collapsed"
+            IsEnabled="False"
+            HorizontalAlignment="Center"
+            Grid.Row="1"
+            Background="#ffffff"
+            Click="endOnlineConsultation">
+            <TextBlock
+                x:Name="endOCText"
+                Text="Return to consultation request page"
+                FontWeight="SemiBold"
+                Foreground="#336699">
+            </TextBlock>
+        </Button>
+    </Grid>
+</UserControl>

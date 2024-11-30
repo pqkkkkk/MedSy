@@ -13,32 +13,37 @@ const port = 5555;
 
 app.use(express.static(path.join(__dirname,'testClient')));
 
-app.get('/',(req,res) =>{
+app.get('/chat',(req,res) =>{
+    res.sendFile(path.join(__dirname,'testClient','client.html'));
+});
+app.get('/videocall',(req,res) =>{
     res.sendFile(path.join(__dirname,'testClient','videocall.html'));
 });
-
 const users = new Map();
 
 io.on('connection', function(socket)
 {
     console.log("A user connected");
 
-    socket.on('register',function(userId){
-        users.set(userId,socket.id);
-        console.log(users.get(userId))
-        console.log(`A user with id: ${userId} registered`);
+    socket.on('register',function(data){
+        let {userId,role} = data;
+        const id = role + userId;
+        users.set(id,socket.id);
+        console.log(users.get(id))
+        console.log(`A user with id: ${id} registered`);
     });
 
     socket.on('messageFromClient',function(data){
         console.log('Data received: ', data);
         let {message, senderId, receiverId} = data;
         receiverId = parseInt(receiverId, 10);
-
-        if(users.has(receiverId))
+        const actualReceiverId = "user" + receiverId;
+        const actualSenderId = "user" + senderId;
+        if(users.has(actualReceiverId))
         {
-            console.log(`Received message: ${message} from ${senderId}. Send to ${receiverId}`);
+            console.log(`Received message: ${message} from ${actualSenderId}. Send to ${actualReceiverId}`);
             // queries.addMessage(senderId,receiverId,message); // Add this line when connecting application with database
-            recipientSocketId = users.get(receiverId);
+            recipientSocketId = users.get(actualReceiverId);
             io.to(recipientSocketId).emit('messageFromServer', {message, senderId}); 
         }
         else{
@@ -52,16 +57,48 @@ io.on('connection', function(socket)
 
     // Signaling server for video call
     socket.on('offer',(data) =>{
-        console.log('Offer received: ', data);
-        socket.broadcast.emit('offer',data);
+        const {offer,senderId, receiverId} = data;
+        const receiverVideoCallId = 'videocall' + receiverId;
+
+        if(users.has(receiverVideoCallId))
+        {
+            io.to(receiverVideoCallId).emit('offer',data);
+        }
+        else{
+            console.log(`Receiver video call client with id ${receiverVideoCallId} is not exist`);
+        }
     });
     socket.on('answer', (data)=>{
-        console.log('Answer received:', data);
-        socket.broadcast.emit('answer',data);
+        const {answer,senderId,receiverId} = data;
+        const receiverVideoCallId = 'videocall' + receiverId;
+
+        if(users.has(receiverVideoCallId))
+        {
+            io.to(receiverVideoCallId).emit('answer',data);
+        }
+        else{
+            console.log(`Receiver video call client with id ${receiverVideoCallId} is not exist`);
+        }
+
     });
     socket.on('candidate', (data) =>{
        console.log('ICE Candidate received: ',data);
        socket.broadcast.emit('candidate',data);
+    });
+
+    socket.on('endCallMessage',(data) =>{
+        const {userId} = data;
+        const actualUserId = "user" + userId;
+
+        if(users.has(actualUserId))
+        {
+            const userSocketId = users.get(actualUserId);
+            io.to(userSocketId).emit('endCallMessage');
+            console.log('End call message sent from video call client to corresponding user client');
+        }
+        else{
+            console.log(`Receiver with id ${actualUserId} is not exist`);
+        }
     });
 });
 

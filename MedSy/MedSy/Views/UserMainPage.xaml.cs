@@ -80,5 +80,13 @@ namespace MedSy.Views
             mainPageViewModel.updateSelectedPage(selectedPage);
             content.Navigate(typeof(UserDashboard));
         }
+
+        private void MyConsultationClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string selectedPage = button.Tag.ToString();
+            mainPageViewModel.updateSelectedPage(selectedPage);
+            content.Navigate(typeof(MyConsultationsPage));
+        }
     }
 }

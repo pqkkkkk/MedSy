@@ -54,6 +54,11 @@ namespace MedSy.Services.User
             Models.User user = users.FirstOrDefault(u => u.username == username);
             return user;
         }
+        public Models.User getUserById(int id)
+        {
+            Models.User user = users.FirstOrDefault(u => u.id == id);
+            return user;
+        }
 
     }
 }

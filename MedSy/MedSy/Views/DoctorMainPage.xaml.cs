@@ -27,6 +27,7 @@ namespace MedSy.Views
     public sealed partial class DoctorMainPage : Page
     {
         private MainPageViewModel mainPageViewModel;
+        public Frame contentFrame => content;
         public DoctorMainPage()
         {
             this.InitializeComponent();

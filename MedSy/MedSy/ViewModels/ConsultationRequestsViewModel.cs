@@ -16,19 +16,42 @@ namespace MedSy.ViewModels
         public ObservableCollection<Models.Consultation> consultations { get; set; }
         public Models.Consultation selectedConsultation { get; set; }
         public string selectedStatus { get; set; }
+        public Models.Consultation nextConsultationToday { get; set; }
+        public Models.User nextConsultationUser { get; set; }
         public ConsultationRequestsViewModel()
         {
             selectedConsultation = null;
             selectedStatus = "All";
-            int doctorId = (Application.Current as App).locator.currentUser.id;
-
             getConsultations(null,null,null);
+            getNextConsultationTodayInfo();
         }
         public void getConsultations(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
-            int doctorId = (Application.Current as App).locator.currentUser.id;
-            consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetConsultations(doctorId, selectedStatus, date,startTime,endTime));
+            int userId = (Application.Current as App).locator.currentUser.id;
+            string userRole = (Application.Current as App).locator.currentUser.role;
+            consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetConsultations(userRole,userId, selectedStatus, date,startTime,endTime));
+        }
+        public void getNextConsultationTodayInfo()
+        {
+            int userId = (Application.Current as App).locator.currentUser.id;
+            string userRole = (Application.Current as App).locator.currentUser.role;
+            nextConsultationToday = (Application.Current as App).locator.consultationDao.GetNextConsultationToday(userRole, userId);
+
+            if (nextConsultationToday != null)
+            {
+                if (userRole == "patient")
+                    nextConsultationUser = (Application.Current as App).locator.userDao.getUserById(nextConsultationToday.doctorId);
+                else if (userRole == "doctor")
+                    nextConsultationUser = (Application.Current as App).locator.userDao.getUserById(nextConsultationToday.patientId);
+            }
+            if(nextConsultationUser == null)
+            {
+                nextConsultationUser = new Models.User()
+                {
+                    fullName = "None"
+                };
+            }
         }
         public void updateSelectedConsultation(Models.Consultation consultation)
         {
@@ -41,17 +64,12 @@ namespace MedSy.ViewModels
         public void searchAndFilterConsultations(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
-            int doctorId = (Application.Current as App).locator.currentUser.id;
-            consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetConsultations(doctorId, selectedStatus, date,startTime, endTime));
-        }
-        public Models.Consultation FindConsultationById(int consultationId)
-        {
-            return consultations.FirstOrDefault(c => c.id == consultationId);
+            int userId = (Application.Current as App).locator.currentUser.id;
+            string userRole = (Application.Current as App).locator.currentUser.role;
+            consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetConsultations(userRole,userId, selectedStatus, date,startTime, endTime));
         }
         public int acceptRequest()
         {
-            
-
             if(selectedConsultation != null)
             {
                 selectedConsultation.status = "Accepted";
@@ -61,30 +79,36 @@ namespace MedSy.ViewModels
         }
         public int rejectRequest()
         {
-            
-
             if (selectedConsultation != null)
             {
                 consultations.Remove(selectedConsultation);
                 updateSelectedConsultation(null);
                 return 1;
             }
-
             return 0;
         }
         public int cancelRequest()
         {
-            
-
             if (selectedConsultation != null)
             {
                 consultations.Remove(selectedConsultation);
                 updateSelectedConsultation(null);
                 return 1;
             }
-
             return 0;
         }
+        public int UpdateNextConsultationTodayToDone()
+        {
+            if(nextConsultationToday != null)
+            {
+                (Application.Current as App).locator.consultationDao.UpdateStatusToDone(nextConsultationToday);
+                nextConsultationUser = null;
+                getNextConsultationTodayInfo();
+                return 1;
+            }
+            return 0;
+        }
+        
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

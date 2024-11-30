@@ -22,9 +22,9 @@ namespace MedSy.Services.Consultation
                     status = "Accepted",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateOnly(2024, 11,13),
-                    startTime = new TimeOnly(5,00),
-                    endTime = new TimeOnly(6,00)
+                    date = new DateOnly(2024, 11,27),
+                    startTime = new TimeOnly(12,00),
+                    endTime = new TimeOnly(13,00)
                 },
                 new Models.Consultation()
                 {
@@ -76,7 +76,7 @@ namespace MedSy.Services.Consultation
                 },
                 new Models.Consultation()
                 {
-                    id = 5,
+                    id = 6,
                     patientId = 1,
                     doctorId = 3,
                     status = "Accepted",
@@ -88,7 +88,7 @@ namespace MedSy.Services.Consultation
                 },
                 new Models.Consultation()
                 {
-                    id = 5,
+                    id = 7,
                     patientId = 1,
                     doctorId = 3,
                     status = "Done",
@@ -98,15 +98,41 @@ namespace MedSy.Services.Consultation
                     startTime = new TimeOnly(5,00),
                     endTime = new TimeOnly(6,00)
                 },
+                new Models.Consultation()
+                {
+                    id = 8,
+                    patientId = 1,
+                    doctorId = 3,
+                    status = "Accepted",
+                    result = "",
+                    reason ="kkkkkkkk",
+                    date = new DateOnly(2024, 11,27),
+                    startTime = new TimeOnly(17,00),
+                    endTime = new TimeOnly(18,00)
+                },
 
             };
         }
-        public List<Models.Consultation> GetConsultations(int doctorId, string status, DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
+        public List<Models.Consultation> GetConsultations(string userRole,int userId, string status, DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
-            var result = from c in consultations
-                         where c.doctorId == doctorId
+            IEnumerable<Models.Consultation> result = Enumerable.Empty<Models.Consultation>();
+            if (userRole == "doctor")
+            {
+                result = (from c in consultations
+                          where c.doctorId == userId
+                          select c);
+            }
+            else if (userRole == "patient")
+            {
+                result = from c in consultations
+                         where c.patientId == userId
                          select c;
-
+            }
+            else
+            {
+                result = from c in consultations
+                         select c;
+            }
             if(status != null && status != "All")
             {
                 result = from c in result
@@ -132,7 +158,7 @@ namespace MedSy.Services.Consultation
                          where c.endTime <= endTime
                          select c;
             }
-
+         
             return result.ToList();
         }
         public List<Models.Consultation> GetConsultationsInAWeek(int doctorId, DateOnly? date)
@@ -152,8 +178,30 @@ namespace MedSy.Services.Consultation
             return null;
         }
 
+        public int UpdateStatusToDone(Models.Consultation selectedConsultation)
+        {
+            var consultationToUpdate = consultations.FirstOrDefault(c => c.id == selectedConsultation.id);
+
+            if(consultationToUpdate != null)
+            {
+                consultationToUpdate.status = "Done";
+                return 1;
+            }
+            return 0;
+        }
+        public Models.Consultation GetNextConsultationToday(string userRole, int userId)
+        {
+            var list = GetConsultations(userRole, userId, "Accepted", DateOnly.FromDateTime(DateTime.Now), null, null);
+            Models.Consultation result = null;
+            if(list.Count != 0)
+            {
+                list.OrderBy(c => c.startTime).ToList();
+                result = list.FirstOrDefault();
+            }
+            return result;
         public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, String form, String status, int patientId, int doctorId, String consultation_result, String reason) {
             return true;
+
         }
     }
 }
