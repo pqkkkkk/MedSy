@@ -1,6 +1,5 @@
-using MedSy.Models;
 using MedSy.ViewModels;
-using Microsoft.UI;
+using MedSy.Views.Doctor;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -13,37 +12,36 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace MedSy.Views.Doctor
+namespace MedSy.Views.User
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ConsultationRequestsPage : Page
+    public sealed partial class MyConsultationsPage : Page
     {
         private ConsultationRequestsViewModel consultationRequestsViewModel;
-        public ConsultationRequestsPage()
+        public MyConsultationsPage()
         {
             this.InitializeComponent();
             consultationRequestsViewModel = new ConsultationRequestsViewModel();
-            ConsultationRequestUC consultationRequestUC = new ConsultationRequestUC(consultationRequestsViewModel);
-            consultationRequestUC.CreateRoomClickedEvent += NavigateToOnlineConsultation;
-            root.Children.Add(consultationRequestUC);
+            MyConsultationUC myConsultationUC = new MyConsultationUC(consultationRequestsViewModel);
+            myConsultationUC.CreateRoomClickedEvent += NavigateToOnlineConsultation;
+            root.Children.Add(myConsultationUC);
         }
 
         private void ReturnConsultationRequestsClicked()
         {
             consultationRequestsViewModel.UpdateNextConsultationTodayToDone();
             root.Children.Clear();
-            ConsultationRequestUC consultationRequestUC = new ConsultationRequestUC(consultationRequestsViewModel);
-            consultationRequestUC.CreateRoomClickedEvent += NavigateToOnlineConsultation;
-            root.Children.Add(consultationRequestUC);
+            MyConsultationUC myConsultationUC = new MyConsultationUC(consultationRequestsViewModel);
+            myConsultationUC.CreateRoomClickedEvent += NavigateToOnlineConsultation;
+            root.Children.Add(myConsultationUC);
 
         }
         private void NavigateToOnlineConsultation()

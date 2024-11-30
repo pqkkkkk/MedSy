@@ -34,6 +34,7 @@
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Button x:Name="UserProfileButton" Click="UserProfileClick" Tag="UserProfile" Grid.Row="0"
@@ -64,7 +65,18 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="ChatButton" Click="ChatClick" Tag="Chat" Grid.Row="3"
+            <Button x:Name="MyConsultationButton" Click="MyConsultationClick" Tag="MyConsultation" Grid.Row="3"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <FontIcon
+                        FontFamily="{StaticResource FontAwesome}" 
+                        Glyph="&#xf073;" 
+                        FontSize="40"
+                        Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='MyConsultation',Mode=OneWay}"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="ChatButton" Click="ChatClick" Tag="Chat" Grid.Row="4"
                     HorizontalAlignment="Center">
                 <Grid>
                     <FontIcon
@@ -83,7 +95,7 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="PharmacyButton" Click="PharmacyClick" Tag="Pharmacy"  Grid.Row="4"
+            <Button x:Name="PharmacyButton" Click="PharmacyClick" Tag="Pharmacy"  Grid.Row="5"
                     HorizontalAlignment="Center">
                 <Grid>
                     <FontIcon
@@ -94,7 +106,7 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="MedicalNewsButton" Click="MedicalNewsClick" Tag="MedicalNews" Grid.Row="5"
+            <Button x:Name="MedicalNewsButton" Click="MedicalNewsClick" Tag="MedicalNews" Grid.Row="6"
                     HorizontalAlignment="Center">
                 <Grid>
                     <FontIcon 

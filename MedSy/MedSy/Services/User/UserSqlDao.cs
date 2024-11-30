@@ -128,5 +128,9 @@ namespace MedSy.Services.User
             return null; // Trả về đối tượng người dùng nếu tìm thấy, nếu không thì null
 
         }
+        public Models.User getUserById(int id)
+        {
+            return null;
+        }
     }
 }

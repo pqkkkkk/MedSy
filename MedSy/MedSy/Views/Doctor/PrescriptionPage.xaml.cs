@@ -31,7 +31,7 @@ namespace MedSy.Views.Doctor
         }
         private void test(object sender, RoutedEventArgs e)
         {
-            youtube.Close();
+            
         }
     }
 }

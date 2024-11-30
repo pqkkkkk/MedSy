@@ -33,7 +33,6 @@ namespace MedSy
     {
         public Locator locator { get; set; }
         private SignInWindow signInWindow;
-       
         public App()
         {
             this.InitializeComponent();

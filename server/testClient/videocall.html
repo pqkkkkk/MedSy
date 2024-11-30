@@ -1,26 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Online consultation</title>
-        <style>
-            video {
-                width: 45%;
-                margin: 10px;
-                border: 1px solid black;
-            }
-            h2{
-                text-align: center;
-            }
-        </style>
-    </head>
-    <body>
-        <h2>Online Consultation</h2>
-        <video id="localVideo" autoplay muted></video>
-        <video id="remoteVideo" autoplay></video>
-
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="videocall.js"></script>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Consultation</title>
+    <style>
+        body {
+            background: #d4f3ff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+            font-weight: bold;
+            font-size: 28px;
+            color: #336699;
+            margin-bottom: 20px;
+        }
+        .video-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        video {
+            width: 45%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .controls {
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #336699;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #254a73;
+        }
+    </style>
+</head>
+<body>
+<h2>Online Consultation</h2>
+<div class="video-container">
+    <video id="localVideo" autoplay muted></video>
+    <video id="remoteVideo" autoplay></video>
+</div>
+<div class="controls">
+    <button id="startCall">Start Video Call</button>
+    <button id="toggleMic">Turn Off Mic</button>
+    <button id="toggleCamera">Turn Off Camera</button>
+    <button id="endCall">End Call</button>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/videocall.js"></script>
+</body>
 </html>

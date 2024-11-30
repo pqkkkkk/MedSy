@@ -14,10 +14,12 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using Windows.UI;
+using Windows.UI.Text;
 using Microsoft.UI;
 using MedSy.ViewModels;
 using MedSy.Converter;
 using MedSy.Converter.WorkSchedule;
+using Microsoft.UI.Text;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -52,6 +54,7 @@ namespace MedSy.Views.Doctor
             }
             
             MarkerItemConverter markerItemConverter = new MarkerItemConverter();
+            Color textColor = Color.FromArgb(255, 51, 102, 153);
             for (int i = 0;i<25;i++)
             {
                 for(int j = 0;j<8;j++)
@@ -77,33 +80,32 @@ namespace MedSy.Views.Doctor
                         switch (j)
                         {
                             case 1:
-                                dayOfWeek = "Sunday";
+                                dayOfWeek = "Sun";
                                 break;
                             case 2:
-                                dayOfWeek = "Monday";
+                                dayOfWeek = "Mon";
                                 break;
                             case 3:
-                                dayOfWeek = "Tuesday";
+                                dayOfWeek = "Tue";
                                 break;
                             case 4:
-                                dayOfWeek = "Wednesday";
+                                dayOfWeek = "Wed";
                                 break;
                             case 5:
-                                dayOfWeek = "Thursday";
+                                dayOfWeek = "Thu";
                                 break;
                             case 6:
-                                dayOfWeek = "Friday";
+                                dayOfWeek = "Fri";
                                 break;
                             case 7:
-                                dayOfWeek = "Saturday";
+                                dayOfWeek = "Sat";
                                 break;
-
-
                         };
                         TextBlock textBlock = new TextBlock()
                         {
                             Text = dayOfWeek,
-                            Foreground = new SolidColorBrush(Colors.Black),
+                            FontWeight = FontWeights.Bold,
+                            Foreground = new SolidColorBrush(textColor),
                             HorizontalAlignment = HorizontalAlignment.Center,
                             VerticalAlignment = VerticalAlignment.Center
                         };
@@ -114,14 +116,22 @@ namespace MedSy.Views.Doctor
                         TextBlock textBlock = new TextBlock()
                         {
                             Text = (i - 1).ToString() + ":00",
-                            Foreground = new SolidColorBrush(Colors.Black),
+                            FontWeight = FontWeights.SemiBold,
+                            Foreground = new SolidColorBrush(textColor),
                             HorizontalAlignment = HorizontalAlignment.Center,
                             VerticalAlignment = VerticalAlignment.Top
                         };
                         border.Child = textBlock;
                     }
                     border.SetBinding(Border.BackgroundProperty, binding);
-                    
+
+                    DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+                    int dayOfWeekToday = (int)date.DayOfWeek;
+                    if (i == 0 && j == dayOfWeekToday + 1)
+                    {
+                        border.Background = new SolidColorBrush(Color.FromArgb(255, 217, 217, 217));
+                    }
+
                     Grid.SetColumn(border, j);
                     Grid.SetRow(border, i);
                     schedule.Children.Add(border);

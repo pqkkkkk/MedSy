@@ -24,20 +24,22 @@ namespace MedSy
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        public Frame contentFrame => content;
+        public Page currentPage { get; set; }
         public MainWindow(string roleOfUser)
         {
             this.InitializeComponent();
-
+            
             switch (roleOfUser)
             {
                 case "patient":
                     content.Navigate(typeof(UserMainPage));
+                    
                     break;
                 case "doctor":
                     content.Navigate(typeof(DoctorMainPage));
                     break;
             }
+            
         }
 
        

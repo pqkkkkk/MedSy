@@ -11,5 +11,6 @@ namespace MedSy.Services.User
     {
         public Models.User getUserByUsername(string username);
         public List<Models.User> getAllUsers();
+        public Models.User getUserById(int id);
     }
 }
