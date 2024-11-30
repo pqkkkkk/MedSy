@@ -177,6 +177,7 @@ namespace MedSy.Services.Consultation
 ;           }
             return null;
         }
+
         public int UpdateStatusToDone(Models.Consultation selectedConsultation)
         {
             var consultationToUpdate = consultations.FirstOrDefault(c => c.id == selectedConsultation.id);
@@ -198,6 +199,9 @@ namespace MedSy.Services.Consultation
                 result = list.FirstOrDefault();
             }
             return result;
+        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, String form, String status, int patientId, int doctorId, String consultation_result, String reason) {
+            return true;
+
         }
     }
 }

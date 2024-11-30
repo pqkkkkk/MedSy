@@ -12,5 +12,6 @@ namespace MedSy.Services.Consultation
         public List<Models.Consultation> GetConsultationsInAWeek(int doctorId,DateOnly? date);
         public int UpdateStatusToDone(Models.Consultation selectedConsultation);
         public Models.Consultation GetNextConsultationToday(string userRole, int userId);
+        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, String form, String status, int patientId, int doctorId, String consultation_result, String reason);
     }
 }

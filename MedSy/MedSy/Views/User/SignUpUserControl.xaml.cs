@@ -76,9 +76,25 @@ namespace MedSy.Views.User
         private async void Signup_Click(object sender, RoutedEventArgs e)
         {
             // Kiểm tra dữ liệu từ các ô nhập liệu
-            if (string.IsNullOrWhiteSpace(FullnameBox.Text) ||
-                string.IsNullOrWhiteSpace(EmailBox.Text) ||
-                string.IsNullOrWhiteSpace(PhoneNumberBox.Text) ||
+            if (!RegexExpressionCheck.IsValidEmail(EmailBox.Text))
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "email must have format: something@gmail.com",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+            }
+            else if (!RegexExpressionCheck.IsValidPhoneNumber(PhoneNumberBox.Text))
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "Phone number must have 10 numbers",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+            }
+            else if (string.IsNullOrWhiteSpace(FullnameBox.Text) ||
                 GenderBox.SelectedItem == null ||
                 BirthdayBox.Date == null)
             {

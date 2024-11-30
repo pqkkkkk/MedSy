@@ -16,6 +16,7 @@ using MedSy.Views.User;
 using MedSy.Services.User;
 using MedSy.Services;
 using MedSy.ViewModels;
+using MedSy.Helpers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -39,12 +40,30 @@ namespace MedSy.Views
 
         private async void onSignUpButton_Clicked(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(usernameBox.Text) || string.IsNullOrEmpty(passwordBox.Password))
+            if (!RegexExpressionCheck.IsValidRegisterPassword(passwordBox.Password))
             {
                 await new ContentDialog()
                 {
                     XamlRoot = this.Content.XamlRoot,
-                    Content = "Please enter username and password",
+                    Content = "Password must have at least 6 characters, 1 number \n and not have special character ",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+            }
+            else if(!RegexExpressionCheck.IsValidUsername(usernameBox.Text))
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "Username must have at least 6 characters \nand not special character",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+            }
+            else if(role.SelectedItem == null)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "please choose your role",
                     CloseButtonText = "OK"
                 }.ShowAsync();
             }

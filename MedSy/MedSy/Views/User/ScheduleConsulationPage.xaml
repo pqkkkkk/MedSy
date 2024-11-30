@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MedSy.Views.User.ScheduleConsulationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MedSy.Views.User"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <Style x:Key="CommonTextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="#666666"/>
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Margin" Value="0 0 30 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="#336699">
+        <Grid.RowDefinitions>
+                <RowDefinition Height="0.85*"></RowDefinition>
+                <RowDefinition Height="8*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="12*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!-- Nút Back -->
+            <Button Grid.Row="0" Grid.Column="0" CornerRadius="10" Width="50"
+                Name="BackDoctorInfor" Background="#D4F3FF" HorizontalAlignment="Right"
+                VerticalAlignment="Center" Margin="0 0 20 0" Click="BackButton_Click">
+                <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf060;" FontSize="20" Foreground="#336699" VerticalAlignment="Center"/>
+            </Button>
+
+            <!-- Header -->
+        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                FontSize="35" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 10 0 0">
+                <Run Text="Schedule" Foreground="#fff"/> <Run Text="Consulation" Foreground="#45CFDD"/>
+        </TextBlock>
+
+        <!-- Hiển thị thông tin -->
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!-- Hiển thị các thông tin của bệnh nhân -->
+                <TextBox Grid.Row="0" Grid.Column="0"
+                     Header="Your Fullname"
+                     Text="{x:Bind scheduleConsulationViewModel.selectedPatient.fullName}"
+                     Style="{StaticResource CommonTextBoxStyle}"/>
+
+                <TextBox Grid.Row="1" Grid.Column="0"
+                     Header="Your Gender"
+                     Text="{x:Bind scheduleConsulationViewModel.selectedPatient.gender}" 
+                     Style="{StaticResource CommonTextBoxStyle}">
+                </TextBox>
+
+                <TextBox Grid.Row="2" Grid.Column="0"
+                     Header="Your Email"
+                     Text="{x:Bind scheduleConsulationViewModel.selectedPatient.email}" 
+                     Style="{StaticResource CommonTextBoxStyle}"/>
+
+                <TextBox Grid.Row="3" Grid.Column="0"
+                     Header="Your Phone Number"
+                     Text="{x:Bind scheduleConsulationViewModel.selectedPatient.phoneNumber}" 
+                     Style="{StaticResource CommonTextBoxStyle}"/>
+
+                <TextBox Grid.Row="4" Grid.Column="0"
+                     Header="Insurance"
+                     Text="{x:Bind scheduleConsulationViewModel.selectedPatient.healthInsurance}" 
+                     Style="{StaticResource CommonTextBoxStyle}"/>
+
+                <!-- Thông tin lịch khám -->
+                <!-- Thông tin bác sĩ-->
+                <TextBox Grid.Row="0" Grid.Column="1"
+                     Header="Doctor"
+                     Text="{x:Bind scheduleConsulationViewModel.selectedDoctor.fullName}" 
+                     Style="{StaticResource CommonTextBoxStyle}"/>
+
+                <!-- Hình thức và ngày -->
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox Grid.Column="0" Name="formComboBox"
+                              CornerRadius="10" 
+                                VerticalAlignment="Center" 
+                              Header="Form"
+                              ItemsSource="{x:Bind scheduleConsulationViewModel.Form}"
+                              SelectedItem="{x:Bind scheduleConsulationViewModel.selectedForm, Mode=TwoWay}"
+                              PlaceholderText="Form"
+                              PlaceholderForeground="#666666"
+                              Background="#ffffff"
+                              FontSize="20"
+                              Foreground="#666666" Margin="0 0 10 0">
+                    </ComboBox>
+                        
+                    <CalendarDatePicker Name="ConsulationDate" Grid.Column="1"
+                                        Header="Day" PlaceholderText="Which Day?" 
+                                        Date="{x:Bind scheduleConsulationViewModel._consultationDate, Mode=TwoWay}"
+                                    CornerRadius="10" FontSize="20" VerticalAlignment="Center" Margin="0 0 10 0" 
+                                    Background="#fff" DateChanged="CalendarDatePicker_SelectedDateChanged" Height="75"
+                  DateFormat="{}{day.integer} {month.full} {year.full}">
+                    </CalendarDatePicker>
+             
+                </Grid>
+                <!-- Thời gian bắt đầu - Thời gian kết thúc -->
+            <Grid Grid.Row="2" Grid.Column="1" Margin="0 10 20 0" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <Viewbox Stretch="Uniform" Grid.Column="0">
+                    <TimePicker Name="ConsulationTimeStart" MinuteIncrement="30"
+                    Time="{x:Bind scheduleConsulationViewModel.selected_startTime, Mode=TwoWay}" 
+                    ClockIdentifier="24HourClock" Header="Time Start" Foreground="#666666"
+                                Margin="0 0 20 10"
+                    CornerRadius="10" FontSize="20" VerticalAlignment="Top" Background="#fff" Height="70">
+                    </TimePicker>
+                </Viewbox>
+
+                <Viewbox Stretch="Uniform"  Grid.Column="1">
+                    <TimePicker Name="ConsulationTimeEnd" MinuteIncrement="30"
+                            Time="{x:Bind scheduleConsulationViewModel.selected_endTime, Mode=TwoWay}" 
+                                 Margin="0 0 20 10"
+                            ClockIdentifier="24HourClock" Header="Time End" Foreground="#666666"
+                            CornerRadius="10" FontSize="20" VerticalAlignment="Top" Background="#fff" Height="70">
+                    </TimePicker>
+                </Viewbox>
+                </Grid>
+
+                <!-- Consulation Price -->
+                <TextBox Grid.Row="3" Grid.Column="1"
+                     Header="Consulation Price"
+                     Style="{StaticResource CommonTextBoxStyle}"
+                     Text="200.000 VND">
+                </TextBox>
+
+                <!-- Symptom -->
+                <TextBox x:Name="Reason" 
+                     Header="Write some your symptoms here"
+                     Grid.Row="4" Grid.Column="1" 
+                     Text="{x:Bind scheduleConsulationViewModel._reason, Mode=TwoWay}"
+                     PlaceholderText="Write some your symptoms here" 
+                     Style="{StaticResource CommonTextBoxStyle}"
+                     IsReadOnly="False"/>
+            </Grid>
+
+        <Button Grid.Row="2" Grid.Column="1" CornerRadius="10" Background="#D4F3FF" 
+                Content="Send request"
+                FontWeight="SemiBold"
+                FontSize="25"
+                Margin="10"
+                Foreground="#336699"
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                Click="ScheduleButton_Click"/>
+        </Grid>
+</Page>
