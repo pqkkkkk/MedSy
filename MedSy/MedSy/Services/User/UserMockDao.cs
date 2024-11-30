@@ -17,7 +17,7 @@ namespace MedSy.Services.User
             {
                 new Models.User()
                 {
-                    id = 1,
+                    id = 5,
                     fullName = "Pham Quoc Kiet",
                     username = "pqkiet854",
                     password = "pqkiet854",
@@ -26,7 +26,7 @@ namespace MedSy.Services.User
                 },
                 new Models.User()
                 {
-                    id = 2,
+                    id = 4,
                     fullName="John Doe",
                     username = "johndoe",
                     password = "pqkiet854",

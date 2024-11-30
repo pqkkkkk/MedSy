@@ -82,9 +82,9 @@ namespace MedSy.Views.User
 
         private void ScheduleButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserDashboard));
+            Frame.Navigate(typeof(ScheduleConsulationPage), DoctorViewModel.SelectedDoctor);
         }
-
+        
         private void ChatButton_Click(object sender, RoutedEventArgs e)
         {
 
