@@ -178,6 +178,21 @@ namespace MedSy.Services.Consultation
                 connection.Close(); 
             }
         }
+
+        public List<Models.Consultation> GetConsultations(string userRole, int userId, string status, DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateStatusToDone(Models.Consultation selectedConsultation)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Models.Consultation GetNextConsultationToday(string userRole, int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
