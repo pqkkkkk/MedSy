@@ -1,6 +1,7 @@
 ﻿using MedSy.Models;
 using MedSy.Services;
 using MedSy.Services.Consultation;
+using MedSy.Services.Drug;
 using MedSy.Services.Management;
 using MedSy.Services.Message;
 using MedSy.Services.User;
@@ -22,6 +23,7 @@ namespace MedSy.Helpers
         public IManagementDao managementDao { get; set; }
         public IUserDao userDao { get; set; }
         public IConsultationDao consultationDao { get; set; }
+        public IDrugDao drugDao { get; set; }
         public SocketService socketService { get; set; }
         public MainWindow mainWindow { get; set; }
         
