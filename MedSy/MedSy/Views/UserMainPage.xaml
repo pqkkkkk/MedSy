@@ -37,15 +37,19 @@
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button x:Name="UserProfileButton" Click="UserProfileClick" Tag="UserProfile" Grid.Row="0"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="UserProfileButton" Click="UserProfileClick" Tag="UserProfile" Grid.Row="0"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="My Profile">
                 <Grid>
                     <Image Source="ms-appx:///Assets/defaultavt.jpg" />
                 </Grid>
             </Button>
 
-            <Button x:Name="DashboardButton" Click="DashboardCLick" Tag="Dashboard" Grid.Row="1"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="DashboardButton" Click="DashboardCLick" Tag="Dashboard" Grid.Row="1"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="Dashboard">
                 <Grid>
                     <FontIcon FontFamily="{StaticResource FontGoogle}" 
                               Glyph="&#xe871;" 
@@ -54,8 +58,10 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="ConsultationButton" Click="ConsultationClick" Tag="Consultation" Grid.Row="2"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="ConsultationButton" Click="ConsultationClick" Tag="Consultation" Grid.Row="2"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="Schedule Consultation">
                 <Grid>
                     <FontIcon
                         FontFamily="{StaticResource FontAwesome}" 
@@ -65,8 +71,10 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="MyConsultationButton" Click="MyConsultationClick" Tag="MyConsultation" Grid.Row="3"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="MyConsultationButton" Click="MyConsultationClick" Tag="MyConsultation" Grid.Row="3"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="My Consultation">
                 <Grid>
                     <FontIcon
                         FontFamily="{StaticResource FontAwesome}" 
@@ -76,8 +84,10 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="ChatButton" Click="ChatClick" Tag="Chat" Grid.Row="4"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="ChatButton" Click="ChatClick" Tag="Chat" Grid.Row="4"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="Chat with doctor">
                 <Grid>
                     <FontIcon
                         FontFamily="{StaticResource FontAwesome}"
@@ -95,8 +105,10 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="PharmacyButton" Click="PharmacyClick" Tag="Pharmacy"  Grid.Row="5"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="PharmacyButton" Click="PharmacyClick" Tag="Pharmacy"  Grid.Row="5"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="Online Pharmacy">
                 <Grid>
                     <FontIcon
                         FontFamily="{StaticResource FontAwesome}"
@@ -106,8 +118,10 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="MedicalNewsButton" Click="MedicalNewsClick" Tag="MedicalNews" Grid.Row="6"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="MedicalNewsButton" Click="MedicalNewsClick" Tag="MedicalNews" Grid.Row="6"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="Medical news">
                 <Grid>
                     <FontIcon 
                          FontFamily="{StaticResource FontAwesome}"

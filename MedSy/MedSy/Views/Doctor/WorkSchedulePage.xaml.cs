@@ -125,8 +125,8 @@ namespace MedSy.Views.Doctor
                     }
                     border.SetBinding(Border.BackgroundProperty, binding);
 
-                    DateOnly date = DateOnly.FromDateTime(DateTime.Now);
-                    int dayOfWeekToday = (int)date.DayOfWeek;
+                    DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+                    int dayOfWeekToday = (int)today.DayOfWeek;
                     if (i == 0 && j == dayOfWeekToday + 1)
                     {
                         border.Background = new SolidColorBrush(Color.FromArgb(255, 217, 217, 217));
@@ -137,8 +137,6 @@ namespace MedSy.Views.Doctor
                     schedule.Children.Add(border);
                 }
             }
-
-            
         }
         private void selectDateClicked(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
         {

@@ -42,6 +42,15 @@ namespace MedSy.Services.User
                     avatarPath = "ms-appx:///Assets/doctoravt.jpg",
                     role = "doctor"
                 },
+                 new Models.User()
+                {
+                    id = 4,
+                    fullName = "Nguyen Van A",
+                    username = "nva",
+                    password = "pqkiet854",
+                    avatarPath = "ms-appx:///Assets/avt01.jpg",
+                    role = "patient"
+                },
 
             };
         }

@@ -23,8 +23,6 @@ namespace MedSy.ViewModels
         public ObservableCollection<Message> messages { get; set; }
         public ObservableCollection<User> connectingUsers { get; set; }
         public User selectedUser { get; set; }
-        
-
         public ChatViewModel()
         {
             var messageList = (Application.Current as App).locator.messageDao.getMessages(0,0);

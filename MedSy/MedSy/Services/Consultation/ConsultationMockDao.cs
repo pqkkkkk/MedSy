@@ -110,6 +110,30 @@ namespace MedSy.Services.Consultation
                     startTime = new TimeOnly(17,00),
                     endTime = new TimeOnly(18,00)
                 },
+                new Models.Consultation()
+                {
+                    id = 9,
+                    patientId = 4,
+                    doctorId = 2,
+                    status = "Done",
+                    result = "",
+                    reason ="kkkkkkkk",
+                    date = new DateOnly(2024, 11,27),
+                    startTime = new TimeOnly(12,00),
+                    endTime = new TimeOnly(13,00)
+                },
+                new Models.Consultation()
+                {
+                    id = 10,
+                    patientId = 4,
+                    doctorId = 3,
+                    status = "Done",
+                    result = "",
+                    reason ="kkkkkkkk",
+                    date = new DateOnly(2024, 11,27),
+                    startTime = new TimeOnly(12,00),
+                    endTime = new TimeOnly(13,00)
+                },
 
             };
         }

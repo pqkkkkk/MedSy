@@ -129,7 +129,7 @@ namespace MedSy.Services.Consultation
         {
             // Kết nối database
             var connectionString = """
-                Server = localhost;
+                Server = localhost:1433;
                 Database = medsy;
                 User ID = sa;
                 Password = SqlServer@123;

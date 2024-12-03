@@ -27,8 +27,9 @@
 
     <None Remove="Views\Doctor\ConsultationRequestsPage.xaml" />
     <None Remove="Views\Doctor\ConsultationRequestUC.xaml" />
+    <None Remove="Views\Doctor\DoctorChatPage.xaml" />
     <None Remove="Views\Doctor\OnlineConsultationUC.xaml" />
-    <None Remove="Views\Doctor\PrescriptionPage.xaml" />
+    <None Remove="Views\Doctor\PatientManagementPage.xaml" />
     <None Remove="Views\Doctor\WorkSchedulePage.xaml" />
 
     <None Remove="Views\SignInWindow.xaml" />
@@ -100,6 +101,12 @@
     <None Update="Assets\doctoravt.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\Doctor\DoctorChatPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Doctor\PatientManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
 
     <Page Update="Views\User\OnlineConsultationUC.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -118,9 +125,6 @@
     </Page>
     
     <Page Update="Views\Doctor\WorkSchedulePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Doctor\PrescriptionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Doctor\ConsultationRequestsPage.xaml">
@@ -161,9 +165,6 @@
     <Page Update="Views\User\UserChatPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Doctor\" />
   </ItemGroup>
 
   <!--

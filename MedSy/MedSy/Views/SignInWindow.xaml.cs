@@ -28,6 +28,7 @@ namespace MedSy.Views
     /// </summary>
     public sealed partial class SignInWindow : Window
     {
+        private ContentDialog loadingProgress;
         public List<Models.User> Users { get; set; }
         public SignInWindow()
         {
@@ -49,7 +50,23 @@ namespace MedSy.Views
                     (Application.Current as App).locator.currentUser = user;
 
                     int userId = (Application.Current as App).locator.currentUser.id;
-                    await (Application.Current as App).locator.socketService.connectAsync();
+
+                    (Application.Current as App).locator.socketService.isLoading += showLoadingProgressing;
+                    int connectionStatus = await (Application.Current as App).locator.socketService.connectAsync();
+                    bool isConnectedSocket = (Application.Current as App).locator.socketService.isConnected();
+                    showLoadingProgressing(false);
+                    if (connectionStatus == 0)
+                    {
+                        
+                        await new ContentDialog()
+                        {
+                            XamlRoot = this.Content.XamlRoot,
+                            Content = "Server is not available. Please try later",
+                            CloseButtonText = "OK"
+                        }.ShowAsync();
+                        return;
+                    }
+                
                     await (Application.Current as App).locator.socketService.register(userId);
 
                     string roleOfUser = (Application.Current as App).locator.currentUser.role;
@@ -78,11 +95,33 @@ namespace MedSy.Views
             }
         }
 
+       
         private void SignUpClicked(object sender, RoutedEventArgs e)
         {
             var signupWindow = new SignUpWindow();
             signupWindow.Activate();
             this.Close();
+        }
+        private async void showLoadingProgressing(bool isShow)
+        {
+            if (isShow)
+            {
+                loadingProgress = new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = new ProgressRing(),
+                };
+                await loadingProgress.ShowAsync();
+            }
+            else
+            {
+                if (loadingProgress != null)
+                {
+                    loadingProgress.Hide();
+                    loadingProgress = null;
+                }
+            }
+
         }
     }
 }

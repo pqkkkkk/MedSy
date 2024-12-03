@@ -64,6 +64,8 @@ namespace MedSy.ViewModels
         public bool CreateConsultation()
         {
             IConsultationDao dao = (Application.Current as App).locator.consultationDao;
+
+            (Application.Current as App).locator.socketService.sendNewCRMessage(selectedDoctor.id, currentUser.id);
             return dao.createConsultation(DateOnly.FromDateTime(_consultationDate.Value.DateTime), TimeOnly.FromTimeSpan(selected_startTime), TimeOnly.FromTimeSpan(selected_endTime), selectedForm, _status, selectedPatient.id, selectedDoctor.id, "", _reason);
         }
     }

@@ -16,8 +16,10 @@
         <converter:EnableButtonsForDoneCRConverter x:Key="EnableButtonsForDoneCRConverter"/>
         <converter:selectedStatusBgConverter x:Key="selectedStatusBgConverter"/>
         <converter:IdToFullnameConverter x:Key="IdToFullnameConverter"/>
+        <converter:NewCRTextConverter x:Key="NewCRTextConverter"/>
+        <converter:VisiableNewCRNotiConverter x:Key="VisiableNewCRNotiConverter"/>
     </UserControl.Resources>
-
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.2*"/>
@@ -180,29 +182,42 @@
                     Foreground="#336699" FontWeight="Bold" FontSize="25"
                     VerticalAlignment="Center"
                     Margin="20,10,30,0"/>
-                    <Button 
-                    VerticalAlignment="Center"
-                    x:Name="NotificationButton"
-                    Background="#ffffff"
-                    Grid.Row="3"
-                    Margin="0,0,10,0">
+                    <Button
+                        VerticalAlignment="Center"
+                        x:Name="NotificationButton"
+                        Background="#ffffff"
+                        Grid.Row="3"
+                        Margin="0,0,10,0">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="{x:Bind consultationRequestsViewModel.CRNotification, Converter={StaticResource NewCRTextConverter}, Mode=OneWay}"/>
+                            </MenuFlyout>
+                        </Button.Flyout>
                         <Grid>
                             <FontIcon
-                            Foreground="#336699"
-                            FontFamily="{StaticResource FontAwesome}" 
-                            Glyph="&#xf0f3;"/>
+                                Foreground="#336699"
+                                FontFamily="{StaticResource FontAwesome}" 
+                                Glyph="&#xf0f3;"/>
+                            <Ellipse 
+                                Visibility="{x:Bind consultationRequestsViewModel.CRNotification, Converter={StaticResource VisiableNewCRNotiConverter},Mode=OneWay}"
+                                Width="8"
+                                Height="8"
+                                Fill="Red"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Margin="0,0,5,0"/>
                         </Grid>
                     </Button>
                     <Button
-                    VerticalAlignment="Center"
-                    x:Name="refreshPageButton"
-                    Background="#ffffff"
-                    Grid.Row="3">
+                        VerticalAlignment="Center"
+                        x:Name="refreshPageButton"
+                        Background="#ffffff"
+                        Grid.Row="3">
                         <Grid>
                             <FontIcon
-                            Foreground="#336699"
-                            FontFamily="{StaticResource FontAwesome}" 
-                            Glyph="&#xf2f9;"/>
+                                Foreground="#336699"
+                                FontFamily="{StaticResource FontAwesome}" 
+                                Glyph="&#xf2f9;"/>
                         </Grid>
                     </Button>
                 </StackPanel>

@@ -174,5 +174,6 @@ namespace MedSy.Views.Doctor
             dateFilter.Date = null;
 
         }
+
     }
 }

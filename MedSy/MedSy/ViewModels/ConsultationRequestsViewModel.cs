@@ -18,10 +18,14 @@ namespace MedSy.ViewModels
         public string selectedStatus { get; set; }
         public Models.Consultation nextConsultationToday { get; set; }
         public Models.User nextConsultationUser { get; set; }
+        public int CRNotification { get; set; }
         public ConsultationRequestsViewModel()
         {
             selectedConsultation = null;
             selectedStatus = "All";
+            CRNotification = 0;
+            (Application.Current as App).locator.socketService.newCRReceived += OnCRNotification;
+            (Application.Current as App).locator.socketService.acceptedCRNotiReceived += OnCRNotification;
             getConsultations(null,null,null);
             getNextConsultationTodayInfo();
         }
@@ -108,7 +112,20 @@ namespace MedSy.ViewModels
             }
             return 0;
         }
-        
+        public void OnCRNotification()
+        {
+            (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                CRNotification = 1;
+            });
+        }
+        public void OffCRNotification()
+        {
+            (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                CRNotification = 0;
+            });
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
