@@ -213,6 +213,7 @@
                         Grid.Row="2"
                         Orientation="Horizontal">
                         <Button
+                            Click="EditPrescription_Click"
                             Background="#d4f3ff">
                             <TextBlock 
                                 Grid.Column="0"
