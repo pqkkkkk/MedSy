@@ -45,5 +45,10 @@ namespace MedSy.Views.Doctor
             int consultationId = int.Parse(consultationIdString);
             patientManagementViewModel.UpdateSelectedConsultation(consultationId);
         }
+
+        private void EditPrescription_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(PrescriptionPage));
+        }
     }
 }
