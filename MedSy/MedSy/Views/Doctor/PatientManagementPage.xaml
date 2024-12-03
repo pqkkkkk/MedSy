@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MedSy.Views.Doctor.PatientManagementPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MedSy.Views.Doctor"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:models="using:MedSy.Models"
+    xmlns:converter="using:MedSy.Converter.PatientManagement"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <converter:VisiableConsultationsConverter x:Key="VisiableConsultationsConverter"/>
+    </Page.Resources>
+    <Grid
+        Background="#d4f3ff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.9*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <TextBlock
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="Patient Management"
+            FontSize="30"
+            Foreground="#336699" FontWeight="Bold"/>
+        <Line 
+            Grid.Row="1"
+            Stroke="#666666"
+            X1="0" X2="1000"
+            StrokeThickness="2"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center"/>
+        <Grid
+            Margin="0,15,0,0"
+            Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid
+                Margin="20,40,0,0"
+                Grid.Column="0"
+                x:Name="patientList">
+                <ScrollViewer>
+                    <ItemsControl 
+                        ItemsSource="{x:Bind patientManagementViewModel.patients}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:PatientManagementItem">
+                                <StackPanel
+                                    Margin="0,0,0,2">
+                                    <Button
+                                        CornerRadius="10"
+                                        Background="#ffffff">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <FontIcon
+                                                Grid.Column="0"
+                                                FontFamily="{StaticResource FontAwesome}"
+                                                Glyph="&#xf078;"
+                                                Foreground="#c1c1c1"
+                                                FontSize="20"/>
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Foreground="Black"
+                                                FontSize="20"
+                                                Text="{x:Bind patient.fullName, Mode=OneWay}"
+                                                FontWeight="Bold"
+                                                Margin="5"
+                                                Tapped="OnPatientItemTapped"/>
+                                        </Grid>
+                                    </Button>
+                                    <ItemsControl
+                                        Margin="0,5,0,0"
+                                        ItemsSource="{x:Bind consultations}"
+                                        Visibility="{x:Bind isExpanded, Converter={StaticResource VisiableConsultationsConverter},Mode=OneWay}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Consultation">
+                                                <StackPanel
+                                                    ToolTipService.ToolTip="Click to view detail"
+                                                    Tag="{x:Bind id}"
+                                                    Tapped="OnConsultationTapped"
+                                                    CornerRadius="5"
+                                                    HorizontalAlignment="Stretch"
+                                                    Background="#c1c1c1"
+                                                    Margin="10,0,250,4"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock
+                                                        Margin="2"
+                                                        Foreground="Black"
+                                                        FontSize="15"
+                                                        FontWeight="SemiBold"
+                                                        Text="Consultation"/>
+                                                    <TextBlock 
+                                                        Margin="2"
+                                                        Text="{x:Bind id}"
+                                                        FontSize="15"
+                                                        FontWeight="SemiBold"
+                                                        Foreground="Black"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+            <ScrollViewer
+                Grid.Column="1">
+                <Grid
+                    CornerRadius="50,0,0,50"
+                    Background="#336699">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="8*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="0"
+                        FontSize="30"
+                        FontWeight="Bold"
+                        Margin="20,20,0,0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Text="Consultation Detail"/>
+                    <StackPanel
+                        Margin="20"
+                        Grid.Row="1"
+                        Orientation="Vertical"
+                        x:Name="detail">
+                        <Button
+                            Margin="0,0,0,10"
+                            x:Name="consultationDate"
+                            Background="#d4f3ff">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock 
+                                    Grid.Column="0"
+                                    Margin="0,0,20,0"
+                                    Text="Date"
+                                    FontSize="20"
+                                    FontWeight="SemiBold"
+                                    Foreground="Black"/>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    FontWeight="SemiBold"
+                                    FontSize="20"
+                                    Foreground="Black"
+                                    Text="{x:Bind patientManagementViewModel.selectedConsultation.date, Mode=OneWay}"/>
+                            </Grid>
+                        </Button>
+                        <Button
+                            Margin="00,0,0,10"
+                            x:Name="consultationReason"
+                            Background="#d4f3ff">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="Symptom"
+                                    FontSize="20"
+                                    Margin="0,0,20,0"
+                                    FontWeight="SemiBold"
+                                    Foreground="Black"/>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    FontSize="20"
+                                    FontWeight="SemiBold"
+                                    Foreground="Black"
+                                    Text="{x:Bind patientManagementViewModel.selectedConsultation.reason, Mode=OneWay}"/>
+                            </Grid>
+                        </Button>
+                        <Button
+                            Margin="00,0,0,10"
+                            x:Name="consultationResult"
+                            Background="#d4f3ff">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock 
+                                    Margin="0,0,20,0"
+                                    Grid.Column="0"
+                                    Text="Diagnosis"
+                                    FontWeight="SemiBold"
+                                    Foreground="Black"/>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    FontWeight="SemiBold"
+                                    Foreground="Black"
+                                    Text="{x:Bind patientManagementViewModel.selectedConsultation.result, Mode=OneWay}"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel
+                        Margin="20,0,0,30"
+                        Grid.Row="2"
+                        Orientation="Horizontal">
+                        <Button
+                            Background="#d4f3ff">
+                            <TextBlock 
+                                Grid.Column="0"
+                                Text="Edit this consultation"
+                                FontWeight="Bold"
+                                Foreground="#336699"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>

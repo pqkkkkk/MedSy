@@ -37,17 +37,23 @@
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button x:Name="UserProfileButton" Click="UserProfileClick"
-                    Tag="UserProfile" Grid.Row="0"
-                    HorizontalAlignment="Center">
-                <Grid>
-                    <Image Source="ms-appx:///Assets/defaultavt.jpg" />
+            <Button 
+                x:Name="UserProfileButton" Click="UserProfileClick"
+                Tag="UserProfile" Grid.Row="0"
+                ToolTipService.ToolTip="My Profile"
+                HorizontalAlignment="Center">
+                <Grid
+                    CornerRadius="20">
+                    <Image
+                        Source="ms-appx:///Assets/doctoravt.jpg" />
                 </Grid>
             </Button>
 
-            <Button x:Name="DashboardButton" Click="DashboardCLick"
-                    Tag="Dashboard" Grid.Row="1"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="DashboardButton" Click="DashboardCLick"
+                Tag="Dashboard" Grid.Row="1"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="Dashboard">
                 <Grid>
                     <FontIcon
                         FontFamily="{StaticResource FontGoogle}" 
@@ -57,9 +63,11 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="ConsultationRequestButton" Click="ConsultationRequestClick"
-                    Tag="ConsultationRequest" Grid.Row="2"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="ConsultationRequestButton" Click="ConsultationRequestClick"
+                Tag="ConsultationRequest" Grid.Row="2"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="Online Consultation Management">
                 <Grid>
                     <FontIcon
                         FontFamily="{StaticResource FontAwesome}" 
@@ -69,9 +77,11 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="ChatButton" Click="ChatClick"
-                    Tag="Chat" Grid.Row="3"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="ChatButton" Click="ChatClick"
+                Tag="Chat" Grid.Row="3"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="Chat with patient">
                 <Grid>
                     <FontIcon
                         FontFamily="{StaticResource FontAwesome}"
@@ -90,9 +100,11 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="workScheduleButton" Click="workScheduleClick"
-                    Tag="workSchedule"  Grid.Row="4"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="workScheduleButton" Click="workScheduleClick"
+                Tag="workSchedule"  Grid.Row="4"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="My Work Schedule">
                 <Grid>
                     <FontIcon
                 FontFamily="{StaticResource FontAwesome}"
@@ -102,9 +114,11 @@
                 </Grid>
             </Button>
 
-            <Button x:Name="MedicalNewsButton" Click="MedicalNewsClick"
-                    Tag="MedicalNews" Grid.Row="5"
-                    HorizontalAlignment="Center">
+            <Button 
+                x:Name="MedicalNewsButton" Click="MedicalNewsClick"
+                Tag="MedicalNews" Grid.Row="5"
+                HorizontalAlignment="Center"
+                ToolTipService.ToolTip="Medical News">
                 <Grid>
                     <FontIcon 
                  FontFamily="{StaticResource FontAwesome}"

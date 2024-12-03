@@ -18,6 +18,14 @@ namespace MedSy.Services.Management
             {
                 new Models.Management()
                 {
+                    id = 1,
+                    doctorId = 2,
+                    patientId = 4,
+                    doctorNewMessage = false,
+                    patientNewMessage = false,
+                },
+                new Models.Management()
+                {
                     id = 3,
                     doctorId = 2,
                     patientId = 1,
@@ -38,18 +46,27 @@ namespace MedSy.Services.Management
         }
         public List<Models.User> getConnectingUsers(int currentUserId, string currentRole)
         {
-
-            var result = from m in managements
-                         join u in users on m.doctorId equals u.id
-                         where m.patientId == currentUserId
-                         select new Doctor()
-                         {
-                             id = u.id,
-                             username = u.username,
-                             avatarPath = u.avatarPath,
-                             newMessage = m.doctorNewMessage
-                         };
-
+            IEnumerable<Models.User> result = Enumerable.Empty<Models.User>();
+            if (currentRole == "doctor")
+            {
+                result = from m in managements
+                         join u in users on m.patientId equals u.id
+                         where m.doctorId == currentUserId
+                         select u;
+            }
+            else if (currentRole == "patient")
+            {
+                 result = from m in managements
+                            join u in users on m.doctorId equals u.id
+                            where m.patientId == currentUserId
+                            select new Doctor()
+                            {
+                                id = u.id,
+                                username = u.username,
+                                avatarPath = u.avatarPath,
+                                newMessage = m.doctorNewMessage
+                            };
+            }
             return result.ToList<Models.User>();
         }
         public void offNewMessageNotify(int currentUserId, int oppositeUserId, string currentRole)

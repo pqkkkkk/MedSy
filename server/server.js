@@ -19,6 +19,9 @@ app.get('/chat',(req,res) =>{
 app.get('/videocall',(req,res) =>{
     res.sendFile(path.join(__dirname,'testClient','videocall.html'));
 });
+app.get('/newCRTest',(req,res) =>{
+    res.sendFile(path.join(__dirname,'testClient','sendCRMessageTest.html'));
+});
 const users = new Map();
 
 io.on('connection', function(socket)
@@ -85,7 +88,6 @@ io.on('connection', function(socket)
        console.log('ICE Candidate received: ',data);
        socket.broadcast.emit('candidate',data);
     });
-
     socket.on('endCallMessage',(data) =>{
         const {userId} = data;
         const actualUserId = "user" + userId;
@@ -98,6 +100,35 @@ io.on('connection', function(socket)
         }
         else{
             console.log(`Receiver with id ${actualUserId} is not exist`);
+        }
+    });
+    // Notification about consultation request
+    socket.on('newCR',(data) =>{
+        const {senderId, receiverId} = data;
+        const actualReceiverId = "user" + receiverId;
+
+        if(users.has(actualReceiverId))
+        {
+            const actualReceiverSocketId = users.get(actualReceiverId);
+            io.to(actualReceiverSocketId).emit('newCR',data);
+            console.log('Consultation request notification sent');
+        }
+        else{
+            console.log(`Receiver with id ${actualReceiverId} is not available`);
+        }
+    });
+    socket.on('acceptedCRNoti',(data) =>{
+        const {senderId, receiverId} = data;
+        const actualReceiverId = "user" + receiverId;
+
+        if(users.has(actualReceiverId))
+        {
+            const actualReceiverSocketId = users.get(actualReceiverId);
+            io.to(actualReceiverSocketId).emit('acceptedCRNoti',data);
+            console.log('Accepted consultation request notification sent');
+        }
+        else{
+            console.log(`Receiver with id ${actualReceiverId} is not available`);
         }
     });
 });

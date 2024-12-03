@@ -21,26 +21,61 @@ namespace MedSy.Services
         public event offerEventHandler offerReceived;
         public delegate void newCREventHandler();
         public event newCREventHandler newCRReceived;
+        public delegate void isLoadingEventHandler(bool isShow);
+        public event isLoadingEventHandler isLoading;
         public SocketService()
         {
             socket = new SocketIOClient.SocketIO("http://localhost:5555");
         }
+        public bool isConnected()
+        {
+            return socket.Connected;
+        }
         public async Task<int> connectAsync()
         {
+            isLoading?.Invoke(true);
+
             var tcs = new TaskCompletionSource<int>();
 
-            socket.OnConnected +=  (sender, e) =>
+            try
             {
-                tcs.SetResult(1);
-                receiveMessage();
-                receiveEndCallMessage();
-            };
-            socket.OnError += (sender, e) =>
+                socket.OnConnected += (sender, e) =>
+                {
+                    tcs.SetResult(1);
+                    receiveMessage();
+                    receiveEndCallMessage();
+                    receiveNewCRMessage();
+                    receiveAcceptedCRNoti();
+                };
+                socket.OnError += (sender, e) =>
+                {
+                    if (!tcs.Task.IsCompleted)
+                    { 
+                        Console.WriteLine("Error: " + e);
+                        tcs.TrySetResult(0);
+                    }
+                    };
+                socket.OnDisconnected += (sender, e) =>
+                {
+                    if (!tcs.Task.IsCompleted)
+                    {
+                        Console.WriteLine("Error: " + e);
+                        tcs.TrySetResult(0);
+                    }
+                };
+                
+                socket.Options.Reconnection = false;
+                socket.Options.ConnectionTimeout = TimeSpan.FromSeconds(1);
+                await socket.ConnectAsync();
+            }
+            catch (Exception ex)
             {
-                tcs.SetResult(0);
-            };
+                Debug.WriteLine(ex.Message);
+                if (!tcs.Task.IsCompleted)
+                    tcs.SetResult(0);
+            }
 
-            await socket.ConnectAsync();
+
             return await tcs.Task;
         }
         public async Task register(int userId)
@@ -86,11 +121,16 @@ namespace MedSy.Services
             socket.On("acceptedCRNoti", response =>
             {
                 acceptedCRNotiReceived?.Invoke();
+                Debug.WriteLine("Received accepted CR notification");
             });
         }
         public async Task sendAcceptedCRNoti(int senderId,int receiverId)
         {
             await socket.EmitAsync("acceptedCRNoti", new {senderId,receiverId});
+        }
+        public void sendNewCRMessage(int senderId, int receiverId)
+        {
+            socket.EmitAsync("newCR", new { senderId, receiverId });
         }
         public void receiveNewCRMessage()
         {

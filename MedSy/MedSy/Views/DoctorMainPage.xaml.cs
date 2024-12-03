@@ -63,7 +63,7 @@ namespace MedSy.Views
             string selectedPage = button.Tag.ToString();
             mainPageViewModel.updateSelectedPage(selectedPage);
             mainPageViewModel.offNewMessageNotification();
-            content.Navigate(typeof(DoctorDashboard));
+            content.Navigate(typeof(DoctorChatPage));
         }
         private void workScheduleClick(object sender, RoutedEventArgs e)
         {
@@ -84,7 +84,7 @@ namespace MedSy.Views
             var button = sender as Button;
             string selectedPage = button.Tag.ToString();
             mainPageViewModel.updateSelectedPage(selectedPage);
-            content.Navigate(typeof(PrescriptionPage));
+            content.Navigate(typeof(PatientManagementPage));
         }
     }
 }

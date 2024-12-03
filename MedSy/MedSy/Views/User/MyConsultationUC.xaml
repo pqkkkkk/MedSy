@@ -15,6 +15,8 @@
         <converter:EnableButtonsForNewCRConverter x:Key="EnableButtonsForNewCRConverter"/>
         <converter:EnableButtonsForDoneCRConverter x:Key="EnableButtonsForDoneCRConverter"/>
         <converter:selectedStatusBgConverter x:Key="selectedStatusBgConverter"/>
+        <converter:VisiableNewCRNotiConverter x:Key="VisiableNewCRNotiConverter"/>
+        <converter:AcceptedCRNotiConverter x:Key="AcceptedCRNotiConverter"/>
     </UserControl.Resources>
     
     <Grid>
@@ -184,11 +186,24 @@
                         Background="#ffffff"
                         Grid.Row="3"
                         Margin="0,0,10,0">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="{x:Bind consultationRequestsViewModel.CRNotification, Converter={StaticResource AcceptedCRNotiConverter}, Mode=OneWay}"/>
+                            </MenuFlyout>
+                        </Button.Flyout>
                         <Grid>
                             <FontIcon
                                 Foreground="#336699"
                                 FontFamily="{StaticResource FontAwesome}" 
                                 Glyph="&#xf0f3;"/>
+                            <Ellipse 
+                                Visibility="{x:Bind consultationRequestsViewModel.CRNotification, Converter={StaticResource VisiableNewCRNotiConverter},Mode=OneWay}"
+                                Width="8"
+                                Height="8"
+                                Fill="Red"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Margin="0,0,5,0"/>
                         </Grid>
                     </Button>
                     <Button
