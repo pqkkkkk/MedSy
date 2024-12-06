@@ -41,6 +41,7 @@
     <None Remove="Views\User\MyConsultationsPage.xaml" />
     <None Remove="Views\User\MyConsultationUC.xaml" />
     <None Remove="Views\User\OnlineConsultationUC.xaml" />
+    <None Remove="Views\User\Pharmacy.xaml" />
     <None Remove="Views\User\SignUpUserControl.xaml" />
     <None Remove="Views\User\UserChatPage.xaml" />
   </ItemGroup>
@@ -102,6 +103,9 @@
     <None Update="Assets\doctoravt.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\User\Pharmacy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Doctor\PrescriptionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
