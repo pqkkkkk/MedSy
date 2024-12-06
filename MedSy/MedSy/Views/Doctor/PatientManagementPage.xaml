@@ -115,6 +115,8 @@
                 </ScrollViewer>
             </Grid>
             <ScrollViewer
+                x:Name="consultationDetail"
+                Visibility="Collapsed"
                 Grid.Column="1">
                 <Grid
                     CornerRadius="50,0,0,50"

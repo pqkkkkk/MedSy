@@ -325,7 +325,8 @@
                         Background="#ffffff"
                         Foreground="#336699">
                         <TextBlock
-                            FontWeight="SemiBold"
+                            Foreground="#336699"
+                            FontWeight="Bold"
                             Text="Join room">
                         </TextBlock>
                     </Button>

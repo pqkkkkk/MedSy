@@ -49,7 +49,7 @@ let peerConnection;
 let micEnabled = true;
 let cameraEnabled = true;
 
-const signalingSocket = io('http://localhost:5555');
+const signalingSocket = io('http://172.20.10.2:5555');
 
 signalingSocket.on('offer', async (offer) =>
 {``
@@ -74,8 +74,15 @@ async function initializePeerConnection() {
     peerConnection = new RTCPeerConnection(configuration);
 
     // Lấy video và audio từ thiết bị
-    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    localVideo.srcObject = localStream;
+    try {
+        localStream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
+        localVideo.srcObject = localStream;
+    }
+    catch(err)
+    {
+        console.log('Error occurred: ',err);
+        alert('Error occurred when accessing media devices');
+    }
 
     // Thêm track vào peerConnection
     localStream.getTracks().forEach((track) => {

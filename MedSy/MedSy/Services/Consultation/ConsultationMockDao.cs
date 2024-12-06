@@ -22,9 +22,9 @@ namespace MedSy.Services.Consultation
                     status = "Accepted",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateOnly(2024, 11,27),
-                    startTime = new TimeOnly(12,00),
-                    endTime = new TimeOnly(13,00)
+                    date = new DateOnly(2024, 12,3),
+                    startTime = new TimeOnly(13,00),
+                    endTime = new TimeOnly(14,00)
                 },
                 new Models.Consultation()
                 {

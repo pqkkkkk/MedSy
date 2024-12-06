@@ -1,11 +1,17 @@
 const express = require('express');
 const http = require('http');
+const fs = require('fs');
 const socketIo = require('socket.io');
 const path = require('path');
 
 const app = express();
+
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server,{
+    cors: {
+        origin: '*',
+    }
+});
 const port = 5555;
 
 // const db = require('./db.config'); // add this line when connecting the application with database
