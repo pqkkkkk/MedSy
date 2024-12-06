@@ -187,5 +187,96 @@ namespace MedSy.Services.Drug
 
         }
 
+        public Tuple<List<Models.Drug>, int> GetDrugs(int page, int rowsPerPage, string keyword, string drugType, double minPrice, double maxPrice)
+        {
+            var drugs = new List<Models.Drug>();
+            int totalItems = 0;
+
+            using (SqlConnection connection = ConnectSql())
+            {
+                connection.Open();
+
+                // Tạo điều kiện truy vấn
+                var whereClause = new List<string> { "1=1" };
+                var parameters = new List<SqlParameter>();
+
+                if (!string.IsNullOrWhiteSpace(keyword))
+                {
+                    whereClause.Add("name LIKE @keyword");
+                    parameters.Add(new SqlParameter("@keyword", $"%{keyword}%"));
+                }
+
+                if (!string.IsNullOrWhiteSpace(drugType) && drugType != "All")
+                {
+                    whereClause.Add("drug_type = @selectedType");
+                    parameters.Add(new SqlParameter("@selectedType", drugType));
+                }
+
+                if (minPrice > 0)
+                {
+                    whereClause.Add("price >= @minPrice");
+                    parameters.Add(new SqlParameter("@minPrice", minPrice));
+                }
+
+                if (maxPrice > 0)
+                {
+                    whereClause.Add("price <= @maxPrice");
+                    parameters.Add(new SqlParameter("@maxPrice", maxPrice));
+                }
+
+                string whereClauseString = string.Join(" AND ", whereClause);
+
+                // Truy vấn dữ liệu và tổng số bản ghi
+                string query = $@"
+                    WITH CTE_Drugs AS (
+                        SELECT *, COUNT(*) OVER() AS TotalRecords
+                        FROM drug
+                        WHERE {whereClauseString}
+                    )
+                    SELECT * 
+                    FROM CTE_Drugs
+                    ORDER BY name
+                    OFFSET @offset ROWS FETCH NEXT @rowsPerPage ROWS ONLY;
+                ";
+
+                parameters.Add(new SqlParameter("@offset", (page - 1) * rowsPerPage));
+                parameters.Add(new SqlParameter("@rowsPerPage", rowsPerPage));
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddRange(parameters.ToArray());
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            drugs.Add(new Models.Drug
+                            {
+                                drugId = reader.GetInt32(reader.GetOrdinal("Id")),
+                                name = reader.GetString(reader.GetOrdinal("name")),
+                                unit = reader.GetString(reader.GetOrdinal("unit")),
+                                price = reader.GetInt32(reader.GetOrdinal("price")),
+                                quantity = reader.GetInt32(reader.GetOrdinal("quantity")),
+                                manufacturing_date = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("manufacturing_date"))),
+                                expiry_date = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("expiry_date"))),
+                                drugTypeName = reader.GetString(reader.GetOrdinal("drug_type"))
+                            });
+
+                            // Lấy tổng số bản ghi từ cột "TotalRecords" (dòng đầu tiên là đủ)
+                            if (totalItems == 0)
+                            {
+                                totalItems = reader.GetInt32(reader.GetOrdinal("TotalRecords"));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new Tuple<List<Models.Drug>, int>(drugs, totalItems);
+        }
+
+
+
+
     }
 }
