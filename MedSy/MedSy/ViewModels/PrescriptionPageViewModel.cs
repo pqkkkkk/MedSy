@@ -15,7 +15,8 @@ namespace MedSy.ViewModels
     class PresciptionPageViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
+        public Models.Consultation selectedConsultation { get; set; }
+        public Models.User selectedUser { get; set; }
         public ObservableCollection<Drug> drugs { get; set; }
         public ObservableCollection<Drug> availableDrugs { get; set; }
 
@@ -37,7 +38,8 @@ namespace MedSy.ViewModels
             drugs = new ObservableCollection<Drug>(drugDao.getAllDrugs(Keyword, selectedType));
             availableDrugs = drugs;
             selecteddrugs ??= new ObservableCollection<Drug>();
-
+            selectedConsultation = new Consultation();
+            selectedUser = new User();
         }
 
         public void LoadData()

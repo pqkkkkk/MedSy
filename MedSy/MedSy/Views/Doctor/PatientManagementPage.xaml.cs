@@ -44,11 +44,16 @@ namespace MedSy.Views.Doctor
             string consultationIdString = (sender as StackPanel).Tag.ToString();
             int consultationId = int.Parse(consultationIdString);
             patientManagementViewModel.UpdateSelectedConsultation(consultationId);
+
+            if(consultationDetail.Visibility == Visibility.Collapsed)
+            {
+                consultationDetail.Visibility = Visibility.Visible;
+            }
         }
 
         private void EditPrescription_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(PrescriptionPage));
+            Frame.Navigate(typeof(PrescriptionPage), patientManagementViewModel.selectedConsultation);
         }
     }
 }

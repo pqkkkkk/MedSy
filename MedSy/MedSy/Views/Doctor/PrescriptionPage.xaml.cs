@@ -1,4 +1,5 @@
 using CommunityToolkit.WinUI.UI.Controls;
+using MedSy.Services.User;
 using MedSy.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -33,7 +34,17 @@ namespace MedSy.Views.Doctor
             prescriptionPageViewModel = new PresciptionPageViewModel();
             this.DataContext = prescriptionPageViewModel;
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
+            if(e.Parameter is Models.Consultation consultation)
+            {
+                prescriptionPageViewModel.selectedConsultation = consultation;
+                IUserDao userDao = (Application.Current as App).locator.userDao;
+                prescriptionPageViewModel.selectedUser = userDao.getUserById(consultation.patientId);
+            }
+        }
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
             prescriptionPageViewModel.search();
