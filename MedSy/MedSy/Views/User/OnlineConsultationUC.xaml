@@ -38,7 +38,7 @@
         Click="endOnlineConsultation">
             <TextBlock
             x:Name="endOCText"
-            Text="Return to consultation request page"
+            Text="Return to my consultation page"
             FontWeight="SemiBold"
             Foreground="#336699">
             </TextBlock>

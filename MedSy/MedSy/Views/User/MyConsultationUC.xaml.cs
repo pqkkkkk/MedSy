@@ -1,3 +1,4 @@
+using Google.Protobuf.Collections;
 using MedSy.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -31,7 +32,23 @@ namespace MedSy.Views.User
             this.InitializeComponent();
             this.consultationRequestsViewModel = consultationRequestsViewModel;
             this.DataContext = consultationRequestsViewModel;
-            addItemsToTimeFilter();
+            setupUI();
+        }
+        private void setupUI()
+        {
+            if (consultationRequestsViewModel.consultations.Count == 0)
+            {
+                emptyUCListMessage.Visibility = Visibility.Visible;
+                searchField.Visibility = Visibility.Collapsed;
+                mainField.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                emptyUCListMessage.Visibility = Visibility.Collapsed;
+                searchField.Visibility = Visibility.Visible;
+                mainField.Visibility = Visibility.Visible;
+                addItemsToTimeFilter();
+            }
         }
         private void addItemsToTimeFilter()
         {
@@ -106,41 +123,63 @@ namespace MedSy.Views.User
         }
         private async void joinRoomClicked(object sender, RoutedEventArgs e)
         {
-            TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
-            TimeOnly startTime = new TimeOnly(0, 0, 0);
-            TimeSpan timeDiff = startTime.ToTimeSpan().Subtract(now.ToTimeSpan());
-
-            if (consultationRequestsViewModel.nextConsultationToday != null)
-            {
-                startTime = consultationRequestsViewModel.nextConsultationToday.startTime;
-                timeDiff = startTime.ToTimeSpan().Subtract(now.ToTimeSpan());
-            }
-
             if (consultationRequestsViewModel.nextConsultationToday == null)
             {
                 await new ContentDialog()
                 {
                     XamlRoot = this.Content.XamlRoot,
-                    Title ="Unable join room",
+                    Title = "Unable join room",
                     Content = "There is no next consultation",
                     CloseButtonText = "OK"
                 }.ShowAsync();
 
                 return;
             }
-            else if(timeDiff.TotalMinutes > 10)
+            else
             {
-                await new ContentDialog()
-                {
-                    XamlRoot = this.Content.XamlRoot,
-                    Title = "Too Early",
-                    Content = "You can only join the room within 10 minutes of the start time.",
-                    CloseButtonText = "OK"
-                }.ShowAsync();
+                TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
+                TimeOnly startTime = new TimeOnly(0, 0, 0);
+                TimeOnly endTime = new TimeOnly(23, 59, 59);
+                TimeSpan timeDiff = startTime.ToTimeSpan().Subtract(now.ToTimeSpan());
+                startTime = consultationRequestsViewModel.nextConsultationToday.startTime;
+                endTime = consultationRequestsViewModel.nextConsultationToday.endTime;
+                timeDiff = startTime.ToTimeSpan().Subtract(now.ToTimeSpan());
 
-                return;
+
+                if (timeDiff.TotalMinutes > 10)
+                {
+                    await new ContentDialog()
+                    {
+                        XamlRoot = this.Content.XamlRoot,
+                        Title = "Too Early",
+                        Content = "You can only join the room within 10 minutes of the start time.",
+                        CloseButtonText = "OK"
+                    }.ShowAsync();
+
+                    return;
+                }
+                if (endTime < now)
+                {
+                    var dialog = new ContentDialog()
+                    {
+                        XamlRoot = this.Content.XamlRoot,
+                        Title = "Too Late",
+                        Content = "You can only join the room within the consultation time.",
+                        CloseButtonText = "Close and refresh page",
+
+                    };
+                    dialog.Closed += CloseTooLateDialog;
+                    await dialog.ShowAsync();
+                    return;
+                }
             }
             CreateRoomClickedEvent?.Invoke();
+        }
+        private void CloseTooLateDialog(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            consultationRequestsViewModel.updateAllMissedConsultations();
+            consultationRequestsViewModel.getConsultations(null, null, null);
+            consultationRequestsViewModel.getNextConsultationTodayInfo();
         }
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -161,6 +200,13 @@ namespace MedSy.Views.User
             endMinute.SelectedItem = endMinute.Items[59];
             dateFilter.PlaceholderText = "select a date";
             dateFilter.Date = null;
+        }
+
+        private void RefreshAll(object sender, RoutedEventArgs e)
+        {
+            consultationRequestsViewModel.updateAllMissedConsultations();
+            consultationRequestsViewModel.getConsultations(null, null, null);
+            consultationRequestsViewModel.getNextConsultationTodayInfo();
         }
     }
 }

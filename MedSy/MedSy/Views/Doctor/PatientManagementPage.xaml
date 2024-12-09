@@ -35,19 +35,46 @@
             StrokeThickness="2"
             VerticalAlignment="Top"
             HorizontalAlignment="Center"/>
+        <Viewbox
+            MaxWidth="1000"
+             Visibility="Collapsed"
+             x:Name="emptyPatientListMessage"
+             Grid.Row="2">
+            <StackPanel
+                Orientation="Vertical">
+                <FontIcon
+                     Grid.Column="0"
+                     FontFamily="{StaticResource FontAwesome}"
+                     Glyph="&#xf80d;"
+                     Foreground="#336699"
+                     Margin="0,0,0,10"
+                     FontSize="20"/>
+                <TextBlock
+                    Foreground="Black"
+                     Text="You don't manage any patient..."
+                     FontWeight="Bold"/>
+            </StackPanel>
+        </Viewbox>
         <Grid
+            Visibility="Collapsed"
+            x:Name="mainField"
             Margin="0,15,0,0"
             Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+           
             <Grid
-                Margin="20,40,0,0"
+                Margin="0,0,0,0"
                 Grid.Column="0"
                 x:Name="patientList">
-                <ScrollViewer>
-                    <ItemsControl 
+                <ScrollViewer
+                    Padding="10,20,0,0"
+                    CornerRadius="0,20,20,0"
+                    BorderBrush="#ffffff"
+                    BorderThickness="1">
+                    <ItemsControl
                         ItemsSource="{x:Bind patientManagementViewModel.patients}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:PatientManagementItem">
@@ -77,7 +104,8 @@
                                                 Tapped="OnPatientItemTapped"/>
                                         </Grid>
                                     </Button>
-                                    <ItemsControl
+                                    <Viewbox>
+                                        <ItemsControl
                                         Margin="0,5,0,0"
                                         ItemsSource="{x:Bind consultations}"
                                         Visibility="{x:Bind isExpanded, Converter={StaticResource VisiableConsultationsConverter},Mode=OneWay}">
@@ -107,7 +135,8 @@
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                        </ItemsControl>
+                                    </Viewbox>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -140,6 +169,7 @@
                         Orientation="Vertical"
                         x:Name="detail">
                         <Button
+                            CornerRadius="10"
                             Margin="0,0,0,10"
                             x:Name="consultationDate"
                             Background="#d4f3ff">
@@ -164,7 +194,8 @@
                             </Grid>
                         </Button>
                         <Button
-                            Margin="00,0,0,10"
+                            CornerRadius="10"
+                            Margin="0,0,0,10"
                             x:Name="consultationReason"
                             Background="#d4f3ff">
                             <Grid>
@@ -188,6 +219,7 @@
                             </Grid>
                         </Button>
                         <Button
+                            CornerRadius="10"
                             Margin="00,0,0,10"
                             x:Name="consultationResult"
                             Background="#d4f3ff">
@@ -215,13 +247,14 @@
                         Grid.Row="2"
                         Orientation="Horizontal">
                         <Button
+                            CornerRadius="10"
                             Click="EditPrescription_Click"
                             Background="#d4f3ff">
                             <TextBlock 
                                 Grid.Column="0"
                                 Text="Edit this consultation"
                                 FontWeight="Bold"
-                                Foreground="#336699"/>
+                                Foreground="Black"/>
                         </Button>
                     </StackPanel>
                 </Grid>

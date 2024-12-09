@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MedSyTesting (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "MedSyTesting (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

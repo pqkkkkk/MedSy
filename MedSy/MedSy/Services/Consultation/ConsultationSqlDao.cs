@@ -193,6 +193,11 @@ namespace MedSy.Services.Consultation
         {
             throw new NotImplementedException();
         }
+
+        public int UpdateAllMissedConsultations()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
