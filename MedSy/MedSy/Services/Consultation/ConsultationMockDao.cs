@@ -229,6 +229,20 @@ namespace MedSy.Services.Consultation
         {
             return true;
         }
+
+        public int UpdateStatus(Models.Consultation selectedConsultation, string status)
+        {
+            return 1;
+        }
+
+        public int DeleteConsultation(Models.Consultation selectedConsultation)
+        {
+            return 1;
+        }
+        public bool updateResult(int id, string result)
+        {
+            return true;
+        }
     }
 }
 

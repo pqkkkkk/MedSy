@@ -56,7 +56,7 @@ public partial class DoctorViewModel : INotifyPropertyChanged
     public void LoadFeedback()
     {
         Feedbacks = new ObservableCollection<Feedback>();
-        IFeedbackDao fb_dao = new FeedbackMockDao();
+        IFeedbackDao fb_dao = new FeedbackSqlDao();
         var fb = fb_dao.GetFeedback();
         foreach(var fb_item in fb)
         {

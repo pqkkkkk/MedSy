@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MedSy.Models;
+using MedSy.Services.Consultation;
 using MedSy.Services.Drug;
+using MedSy.Services.Prescription;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -28,6 +30,8 @@ namespace MedSy.ViewModels
         public string selectedType { get; set; }
         public Drug selectedDrug { get; set; }
         public Drug selecteddrugsItem { get; set; }
+        public Dictionary<Drug, string> DrugIndications { get; } = new();
+
         IDrugDao drugDao { get; set; }
         public PresciptionPageViewModel()
         {
@@ -112,9 +116,55 @@ namespace MedSy.ViewModels
             return true;
         }
 
-        public void update()
+        public int createPrescriptionAndUpdateQuantity()
         {
-            drugDao.updateQuantity(selectedDrug.quantity, selectedDrug.drugId);
+            if(selecteddrugs.Count() == 0)
+            {
+                return -1;
+            }
+            IPrescriptionDao dao = (Application.Current as App).locator.prescriptionDao;
+            // Tạo prescripption mới
+            if (dao.createPrescription(0, DateOnly.FromDateTime(DateTime.Now), selectedConsultation.id))
+            {
+                // nếu tạp thành công, lấy prescriptionId
+                int prescriptionId = dao.getPrescriptionId_ByConsultationId(selectedConsultation.id);
+                int total = 0;
+
+                // Với mỗi item trong danh sách thuốc đã được chọn, thêm một prescription_detail
+                foreach (var item in selecteddrugs)
+                {
+                    string indication = DrugIndications.TryGetValue(item, out var value) ? value : "No Indication";
+                    dao.insertIntoPrescriptionDetail(item.quantity, indication, prescriptionId, item.drugId);
+                    total += item.price;
+
+                    // cập nhật lại số lượng thuốc trong kho
+                    var currentDrug = drugs.FirstOrDefault(d => d.drugId == item.drugId);
+                    drugDao.updateQuantity(currentDrug.quantity, currentDrug.drugId);
+                }
+                if (dao.updateTotalPrice(total, prescriptionId) != 1) {
+                    return 0;
+                };
+                IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
+                consultationDao.updateResult(selectedConsultation.id,selectedConsultation.result);
+                return 1;
+            }
+            return 0;
+        
+        }
+
+
+
+        public void SaveIndicationForDrug(Drug drug, string indication)
+        {
+            if (DrugIndications.ContainsKey(drug))
+                DrugIndications[drug] = indication;
+            else
+                DrugIndications.Add(drug, indication);
+        }
+
+        public string GetIndicationForDrug(Drug drug)
+        {
+            return DrugIndications.ContainsKey(drug) ? DrugIndications[drug] : string.Empty;
         }
     }
 }
