@@ -9,41 +9,38 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using Microsoft.UI.Xaml;
 namespace MedSy.Services.Message
 {
     public class MessageSqlDao : IMessageDao
     {
+        private SqlConnection connection;
+        public MessageSqlDao()
+        {
+
+            connection = (Application.Current as App).locator.sqlConnection;
+        }
         public List<Models.Message> getMessages(int currentUserId, int oppositeUserId)
         {
             var result = new List<Models.Message>();
-
-            var connectionString = """
-                Server=localhost;
-                Database=medsy;
-                User=root;
-                Password=pqkiet854;
-                """;
-            var connection = new MySqlConnection(connectionString);
             connection.Open();
 
             var messageSql = $"""
-                SELECT content, senderId, receiverId
+                SELECT content, sender_Id, receiver_Id
                 FROM message
-                WHERE (senderId=@patientId and receiverId=@doctorId) 
-                      or (senderId=@doctorId and receiverId=@patientId)
+                WHERE (sender_Id=@patientId and receiver_Id=@doctorId) 
+                      or (sender_Id=@doctorId and receiver_Id=@patientId)
                 """;
-            var messageCommand = new MySqlCommand(messageSql, connection);
-            messageCommand.Parameters.Add("@patientId", MySqlDbType.Int64)
-                .Value = currentUserId;
-            messageCommand.Parameters.Add("doctorId", MySqlDbType.Int64)
-                .Value = oppositeUserId;
+            var messageCommand = new SqlCommand(messageSql, connection);
+            messageCommand.Parameters.AddWithValue("@patientId", currentUserId);
+            messageCommand.Parameters.AddWithValue("@doctorId", oppositeUserId);
 
             var reader = messageCommand.ExecuteReader();
             while(reader.Read())
             {
                 var message = new Models.Message();
-                message.senderId = (int)reader["senderId"];
-                message.receiverId = (int)reader["receiverId"];
+                message.senderId = (int)reader["sender_Id"];
+                message.receiverId = (int)reader["receiver_Id"];
                 message.content = (string)reader["content"];
                 result.Add(message);
             }
@@ -53,25 +50,16 @@ namespace MedSy.Services.Message
         }
         public int addMessage(int senderId, int receiverId, string content)
         {
-            var connectionString = """
-                Server=localhost;
-                Database=medsy;
-                User=root;
-                Password=pqkiet854;
-                """;
-            var connection = new MySqlConnection(connectionString);
+            
             connection.Open();
 
             var sql = $"""
-                INSERT INTO message(senderId,receiverId,content) VALUES (@si,@ri,@c)
+                INSERT INTO message(sender_Id,receiver_Id,content) VALUES (@si,@ri,@c)
                 """;
-            var messageCommand = new MySqlCommand(sql, connection);
-            messageCommand.Parameters.Add("@si", MySqlDbType.Int64)
-                .Value = senderId;
-            messageCommand.Parameters.Add("ri", MySqlDbType.Int64)
-                .Value = receiverId;
-            messageCommand.Parameters.Add("@c", MySqlDbType.String)
-                .Value = content;
+            var messageCommand = new SqlCommand(sql, connection);
+            messageCommand.Parameters.AddWithValue("@si", senderId);
+            messageCommand.Parameters.AddWithValue("ri", receiverId);
+            messageCommand.Parameters.AddWithValue("@c", content);
 
             int result = messageCommand.ExecuteNonQuery();
             

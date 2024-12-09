@@ -53,9 +53,13 @@ namespace MedSy.Views.User
      
         private async void sendDataToVideoCallClientAsync(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
         {
+            TimeOnly endTime = consultationRequestsViewModel.nextConsultationToday.endTime;
+            TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
+            int consultationDuration = (int)endTime.ToTimeSpan().Subtract(now.ToTimeSpan()).TotalSeconds;
             int senderId = (Application.Current as App).locator.currentUser.id;
-            int receiverId = consultationRequestsViewModel.nextConsultationToday.doctorId;
-            string script = $"window.receiveDataFromUserClient({senderId},{receiverId});";
+            int receiverId = consultationRequestsViewModel.nextConsultationToday.patientId;
+
+            string script = $"window.receiveDataFromUserClient({senderId},{receiverId},{consultationDuration});";
             await videlcall.ExecuteScriptAsync(script);
         }
     }

@@ -13,11 +13,76 @@
             <RowDefinition Height="8*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <WebView2
-            Grid.Row="0"
-            x:Name="videlcall"
-            Source="http://localhost:5555/videocall"
-            NavigationCompleted="sendDataToVideoCallClientAsync"/>
+        <Grid
+            x:Name="mainField"
+            Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <WebView2
+                Grid.Column="0"
+                x:Name="videlcall"
+                Source="http://localhost:5555/videocall"
+                NavigationCompleted="sendDataToVideoCallClientAsync"/>
+            
+            <Grid
+                x:Name="diagnosisField"
+                Grid.Column="1"
+                VerticalAlignment="Stretch"
+                Background="#c1c1c1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="8*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Viewbox
+                    Grid.Row="0"
+                    MaxWidth="200">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Foreground="#336699"
+                        FontWeight="Bold"
+                        Margin="0,0,0,20"
+                        Text="Write Diagnosis"/>
+                </Viewbox>
+                <ScrollViewer
+                    
+                    CornerRadius="10"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Grid.Row="1">
+                    <TextBox
+                        Foreground="#336699"
+                        TextWrapping="Wrap"
+                        Background="#ffffff"
+                        FontWeight="SemiBold"
+                        PlaceholderText="Type diagnosis for patient..."
+                        PlaceholderForeground="#c1c1c1"
+                        Margin="0,0,0,10">
+                    </TextBox>
+                </ScrollViewer>
+                <Viewbox
+                    Margin="0,0,0,10"
+                    Grid.Row="2"
+                    VerticalAlignment="Bottom"
+                    MaxHeight="100"
+                    MaxWidth="100">
+                    <Button
+                        CornerRadius="10"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Center"
+                        Background="#ffffff">
+                        <TextBlock
+                            Text="Save"
+                            FontWeight="SemiBold"
+                            Foreground="#336699">
+                        </TextBlock>
+                    </Button>
+                </Viewbox>
+            </Grid>
+            
+        </Grid>
         <TextBlock
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
@@ -43,5 +108,6 @@
                 Foreground="#336699">
             </TextBlock>
         </Button>
+        
     </Grid>
 </UserControl>

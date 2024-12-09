@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.UI.Xaml;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +11,27 @@ namespace MedSy.Services.Management
 {
     public class ManagementSqlDao : IManagementDao
     {
+        private SqlConnection connection;
+        public ManagementSqlDao()
+        {
+            connection = (Application.Current as App).locator.sqlConnection;
+        }
         public List<Models.User> getConnectingUsers(int currentUserId, string currentRole)
         {
             var result = new List<Models.User>();
 
-            var connectionString = """
-                Server=localhost;
-                Database=medsy;
-                User=root;
-                Password=pqkiet854;
-                """;
-            var connection = new MySqlConnection(connectionString);
+            
             connection.Open();
 
             if (currentRole == "patient")
             {
                 var sql = """
-                SELECT u.id as doctorId, u.avatarPath as doctorAvatar, m.doctorNewMessage as newMessage , u.username as username
-                FROM management m join systemuser u on m.doctorId = u.id
-                WHERE patientId = @cui
+                SELECT u.id as doctorId, m.doctor_New_Message as newMessage , u.username as username
+                FROM management m join users u on m.doctor_Id = u.id
+                WHERE patient_Id = @cui
                 """;
-                var command = new MySqlCommand(sql, connection);
-                command.Parameters.Add("@cui", MySqlDbType.Int64)
-                    .Value = currentUserId;
+                var command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@cui", currentUserId);
                 var reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -39,7 +39,6 @@ namespace MedSy.Services.Management
                     var doctor = new Models.Doctor();
                     doctor.id = (int)reader["doctorId"];
                     doctor.username = (string)reader["username"];
-                    doctor.avatarPath = (string)reader["doctorAvatar"];
                     doctor.newMessage = (bool)reader["newMessage"];
                     doctor.password = "";
 
@@ -50,13 +49,12 @@ namespace MedSy.Services.Management
             else if (currentRole == "doctor")
             {
                 var sql = """
-                SELECT u.id as patientId, u.avatarPath as patientAvatar, m.patientNewMessage as newMessage , u.username as username
-                FROM management m join systemuser u on m.patientId = u.id
-                WHERE doctorId = @cui
+                SELECT u.id as patientId, m.patient_New_Message as newMessage , u.username as username
+                FROM management m join users u on m.patient_Id = u.id
+                WHERE doctor_Id = @cui
                 """;
-                var command = new MySqlCommand(sql, connection);
-                command.Parameters.Add("@cui", MySqlDbType.Int64)
-                    .Value = currentUserId;
+                var command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@cui", currentUserId);
                 var reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -64,7 +62,6 @@ namespace MedSy.Services.Management
                     var patient = new Models.Patient();
                     patient.id = (int)reader["patientId"];
                     patient.username = (string)reader["username"];
-                    patient.avatarPath = (string)reader["patientAvatar"];
                     patient.newMessage = (bool)reader["newMessage"];
                     patient.password = "";
 
@@ -77,74 +74,53 @@ namespace MedSy.Services.Management
         }
         public void offNewMessageNotify(int currentUserId, int oppositeUserId, string currentRole)
         {
-            var connectionString = """
-                Server=localhost;
-                Database=medsy;
-                User=root;
-                Password=pqkiet854;
-                """;
-            var connection = new MySqlConnection(connectionString);
             connection.Open();
 
             if (currentRole == "patient")
             {
                 var sql = """
-                UPDATE management set doctorNewMessage = false where (patientId=@cui and doctorId=@oui)
+                UPDATE management set doctor_New_Message = 1 where (patient_Id=@cui and doctor_Id=@oui)
                 """;
-                var command = new MySqlCommand(sql, connection);
-                command.Parameters.Add("cui", MySqlDbType.Int64)
-                    .Value = currentUserId;
-                command.Parameters.Add("@oui", MySqlDbType.Int64)
-                    .Value = oppositeUserId;
+                var command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("cui", currentUserId);
+                command.Parameters.AddWithValue("@oui", oppositeUserId);
                 command.ExecuteNonQuery();
             }
             else
             {
                 var sql = """
-                UPDATE management set patientNewMessage = false where (patientId=@oui and doctorId=@cui)
+                UPDATE management set patient_New_Message = 0 where (patient_Id=@oui and doctor_Id=@cui)
                 """;
-                var command = new MySqlCommand(sql, connection);
-                command.Parameters.Add("@oui", MySqlDbType.Int64)
-                    .Value = oppositeUserId;
-                command.Parameters.Add("@cui", MySqlDbType.Int64)
-                    .Value = currentUserId;
+                var command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@oui", oppositeUserId);
+                command.Parameters.AddWithValue("@cui",currentUserId);
                 command.ExecuteNonQuery();
             }
             connection.Close();
         }
         public void onNewMessageNotify(int currentUserId, int oppositeUserId, string currentRole)
         {
-            var connectionString = """
-                Server=localhost;
-                Database=medsy;
-                User=root;
-                Password=pqkiet854;
-                """;
-            var connection = new MySqlConnection(connectionString);
+ 
             connection.Open();
 
             if (currentRole == "patient")
             {
                 var sql = """
-                UPDATE management set doctorNewMessage = true where (patientId=@cui and doctorId=@oui)
+                UPDATE management set doctor_New_Message = 1 where (patient_Id=@cui and doctor_Id=@oui)
                 """;
-                var command = new MySqlCommand(sql, connection);
-                command.Parameters.Add("cui", MySqlDbType.Int64)
-                    .Value = currentUserId;
-                command.Parameters.Add("@oui", MySqlDbType.Int64)
-                    .Value = oppositeUserId;
+                var command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("cui", currentUserId);
+                command.Parameters.AddWithValue("@oui", oppositeUserId);
                 command.ExecuteNonQuery();
             }
             else
             {
                 var sql = """
-                UPDATE management set patientNewMessage = true where (patientId=@oui and doctorId=@cui)
+                UPDATE management set patient_New_Message = 1 where (patient_Id=@oui and doctor_Id=@cui)
                 """;
-                var command = new MySqlCommand(sql, connection);
-                command.Parameters.Add("@oui", MySqlDbType.Int64)
-                    .Value = oppositeUserId;
-                command.Parameters.Add("@cui", MySqlDbType.Int64)
-                    .Value = currentUserId;
+                var command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@oui", oppositeUserId);
+                command.Parameters.AddWithValue("@cui", currentUserId);
                 command.ExecuteNonQuery();
             }
             connection.Close();
@@ -153,24 +129,17 @@ namespace MedSy.Services.Management
         {
             int result = 0;
 
-            var connectionString = """
-                Server=localhost;
-                Database=medsy;
-                User=root;
-                Password=pqkiet854;
-                """;
-            var connection = new MySqlConnection(connectionString);
+
             connection.Open();
 
             if (currentRole == "patient")
             {
                 var sql = """
                 SELECT count(*) as NewMessageCount FROM management m
-                where m.patientId = @cui and doctorNewMessage = true
+                where m.patient_Id = @cui and doctor_New_Message = 1
                 """;
-                var command = new MySqlCommand(sql, connection);
-                command.Parameters.Add("cui", MySqlDbType.Int64)
-                    .Value = currentUserId;
+                var command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("cui", currentUserId);
 
                 var reader = command.ExecuteReader();
                 while(reader.Read())
@@ -182,11 +151,10 @@ namespace MedSy.Services.Management
             {
                 var sql = """
                 SELECT count(*) as NewMessageCount FROM management m
-                where m.doctorId = @cui and patientNewMessage = true
+                where m.doctor_Id = @cui and patient_New_Message = true
                 """;
-                var command = new MySqlCommand(sql, connection);
-                command.Parameters.Add("@cui", MySqlDbType.Int64)
-                    .Value = currentUserId;
+                var command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@cui", currentUserId);
 
                 var reader = command.ExecuteReader();
                 while (reader.Read())

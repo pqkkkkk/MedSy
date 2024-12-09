@@ -29,8 +29,21 @@ namespace MedSy.Views.Doctor
         {
             this.InitializeComponent();
             patientManagementViewModel = new PatientManagementViewModel();
+            setUpUI();
         }
-
+        private void setUpUI()
+        {
+            if (patientManagementViewModel.patients.Count == 0)
+            {
+                emptyPatientListMessage.Visibility = Visibility.Visible;
+                mainField.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                mainField.Visibility = Visibility.Visible;
+                emptyPatientListMessage.Visibility = Visibility.Collapsed;
+            }
+        }
         private void OnPatientItemTapped(object sender, TappedRoutedEventArgs e)
         {
             if (sender is TextBlock textBlock && textBlock.DataContext is Models.PatientManagementItem item)

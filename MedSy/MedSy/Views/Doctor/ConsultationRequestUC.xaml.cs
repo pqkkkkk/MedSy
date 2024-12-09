@@ -30,7 +30,23 @@ namespace MedSy.Views.Doctor
             this.InitializeComponent();
             this.consultationRequestsViewModel = consultationRequestsViewModel;
             this.DataContext = consultationRequestsViewModel;
-            addItemsToTimeFilter();
+            setupUI();
+        }
+        private void setupUI()
+        {
+            if (consultationRequestsViewModel.consultations.Count == 0)
+            {
+                emptyUCListMessage.Visibility = Visibility.Visible;
+                searchField.Visibility = Visibility.Collapsed;
+                mainField.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                emptyUCListMessage.Visibility = Visibility.Collapsed;
+                searchField.Visibility = Visibility.Visible;
+                mainField.Visibility = Visibility.Visible;
+                addItemsToTimeFilter();
+            }
         }
         private void addItemsToTimeFilter()
         {
@@ -111,10 +127,6 @@ namespace MedSy.Views.Doctor
         {
             consultationRequestsViewModel.cancelRequest();
         }
-        private void createRoomClicked(object sender, RoutedEventArgs e)
-        {
-            CreateRoomClickedEvent?.Invoke();
-        }
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Models.Consultation consultation = requestList.SelectedItem as Models.Consultation;
@@ -128,16 +140,6 @@ namespace MedSy.Views.Doctor
         }
         private async void joinRoomClicked(object sender, RoutedEventArgs e)
         {
-            TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
-            TimeOnly startTime = new TimeOnly(0, 0, 0);
-            TimeSpan timeDiff = startTime.ToTimeSpan().Subtract(now.ToTimeSpan());
-
-            if (consultationRequestsViewModel.nextConsultationToday != null)
-            {
-                startTime = consultationRequestsViewModel.nextConsultationToday.startTime;
-                timeDiff = startTime.ToTimeSpan().Subtract(now.ToTimeSpan());
-            }
-
             if (consultationRequestsViewModel.nextConsultationToday == null)
             {
                 await new ContentDialog()
@@ -150,20 +152,54 @@ namespace MedSy.Views.Doctor
 
                 return;
             }
-            else if (timeDiff.TotalMinutes > 10)
+            else
             {
-                await new ContentDialog()
+                TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
+                TimeOnly startTime = new TimeOnly(0, 0, 0);
+                TimeOnly endTime = new TimeOnly(23, 59, 59);
+                TimeSpan timeDiff = startTime.ToTimeSpan().Subtract(now.ToTimeSpan());
+                startTime = consultationRequestsViewModel.nextConsultationToday.startTime;
+                endTime = consultationRequestsViewModel.nextConsultationToday.endTime;
+                timeDiff = startTime.ToTimeSpan().Subtract(now.ToTimeSpan());
+            
+            
+                if (timeDiff.TotalMinutes > 10)
                 {
-                    XamlRoot = this.Content.XamlRoot,
-                    Title = "Too Early",
-                    Content = "You can only join the room within 10 minutes of the start time.",
-                    CloseButtonText = "OK"
-                }.ShowAsync();
+                    await new ContentDialog()
+                    {
+                        XamlRoot = this.Content.XamlRoot,
+                        Title = "Too Early",
+                        Content = "You can only join the room within 10 minutes of the start time.",
+                        CloseButtonText = "OK"
+                    }.ShowAsync();
 
-                return;
+                    return;
+                }
+                if(endTime < now)
+                {
+                    var dialog = new ContentDialog()
+                    {
+                        XamlRoot = this.Content.XamlRoot,
+                        Title = "Too Late",
+                        Content = "You can only join the room within the consultation time.",
+                        CloseButtonText = "Close and refresh page",
+
+                    };
+                    dialog.Closed += CloseTooLateDialog;
+                    await dialog.ShowAsync();
+                    return;
+                }
             }
             CreateRoomClickedEvent?.Invoke();
         }
+
+        private void CloseTooLateDialog(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            consultationRequestsViewModel.updateAllMissedConsultations();
+            consultationRequestsViewModel.getConsultations(null, null, null);
+            consultationRequestsViewModel.getNextConsultationTodayInfo();
+        }
+
         private void refreshFilterClicked(object sender, RoutedEventArgs e)
         {
             startHour.SelectedItem = startHour.Items[0];
@@ -175,5 +211,11 @@ namespace MedSy.Views.Doctor
 
         }
 
+        private void RefreshAll(object sender, RoutedEventArgs e)
+        {
+            consultationRequestsViewModel.updateAllMissedConsultations();
+            consultationRequestsViewModel.getConsultations(null, null, null);
+            consultationRequestsViewModel.getNextConsultationTodayInfo();
+        }
     }
 }

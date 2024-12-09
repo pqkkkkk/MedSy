@@ -22,9 +22,9 @@ namespace MedSy.Services.Consultation
                     status = "Accepted",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateOnly(2024, 12,3),
-                    startTime = new TimeOnly(13,00),
-                    endTime = new TimeOnly(14,00)
+                    date = new DateOnly(2024, 12,9),
+                    startTime = new TimeOnly(16,00),
+                    endTime = new TimeOnly(17,00)
                 },
                 new Models.Consultation()
                 {
@@ -221,6 +221,7 @@ namespace MedSy.Services.Consultation
             {
                 list.OrderBy(c => c.startTime).ToList();
                 result = list.FirstOrDefault();
+
             }
             return result;
 
@@ -229,6 +230,7 @@ namespace MedSy.Services.Consultation
         {
             return true;
         }
+
 
         public int UpdateStatus(Models.Consultation selectedConsultation, string status)
         {
@@ -242,6 +244,16 @@ namespace MedSy.Services.Consultation
         public bool updateResult(int id, string result)
         {
             return true;
+        }
+
+        public int UpdateAllMissedConsultations()
+        {
+            var list = consultations.Where(c => c.date == DateOnly.FromDateTime(DateTime.Now) && c.endTime < TimeOnly.FromDateTime(DateTime.Now) && c.status == "Accepted").ToList();
+            foreach (var c in list)
+            {
+                c.status = "Missed";
+            }
+            return 1;
         }
     }
 }

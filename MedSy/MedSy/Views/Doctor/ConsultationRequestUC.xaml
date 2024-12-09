@@ -25,101 +25,120 @@
             <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
+        <Viewbox
+            MaxWidth="500"
+            Visibility="Collapsed"
+            HorizontalAlignment="Left"
+            x:Name="emptyUCListMessage"
+            Grid.Column="1">
+            <StackPanel
+                Orientation="Vertical">
+                <FontIcon
+                     Grid.Column="0"
+                     FontFamily="{StaticResource FontAwesome}"
+                     Glyph="&#xf80d;"
+                     Foreground="#336699"
+                     Margin="0,0,0,10"
+                     FontSize="20"/>
+                <TextBlock
+                    Foreground="Black"
+                    Text="You don't have any consultation request..."
+                    FontWeight="Bold"/>
+            </StackPanel>
+        </Viewbox>
         <!-- Search Field-->
-        <Grid 
-        Padding="5,0,0,0"
-        Margin="0,0,1,0"
-        Grid.Column="0" x:Name="searchField"
-        Background="#c1c1c1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="1*"></RowDefinition>
-            </Grid.RowDefinitions>
+        <StackPanel 
+            Visibility="Collapsed"
+            Orientation="Vertical"
+            Padding="5,0,0,0"
+            Margin="0,0,3,0"
+            Grid.Column="0" x:Name="searchField"
+            Background="#336699">
             <TextBlock
-            Grid.Column="0"
-            Grid.Row="0"
-            VerticalAlignment="Center"
-            Foreground="Black"
-            Text="From: "
-            Margin="0,0,5,0"/>
-            <StackPanel
-            Grid.Row="0"
-            Grid.Column="1"
-            x:Name="startTimeFilter"
-            Orientation="Horizontal"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center">
-                <ComboBox
-                PlaceholderText="00"
-                Foreground="Black"
-                PlaceholderForeground="Black"
-                Background="#ffffff"
-                x:Name="startHour">
-                </ComboBox>
-                <ComboBox
-                PlaceholderText="00"
-                Foreground="Black"
-                PlaceholderForeground="Black"
-                Background="#ffffff"
-                x:Name="startMinute">
-                </ComboBox>
-            </StackPanel>
-            <TextBlock
-                Grid.Column="0"
-                Grid.Row="1"
-                Margin="0,0,5,0"
                 VerticalAlignment="Center"
-                Foreground="Black"
-                Text="To: "/>
-            <StackPanel
-                Grid.Column="1"
-                Grid.Row="1"
-                x:Name="endTimeFilter"
-                Orientation="Horizontal"
-                VerticalAlignment="Center">
-                <ComboBox
-                    PlaceholderText="23"
-                    Foreground="Black"
-                    PlaceholderForeground="Black"
-                    Background="#ffffff"
-                    x:Name="endHour">
-                </ComboBox>
-                <ComboBox
-                    Foreground="Black"
-                    PlaceholderText="59"
-                    PlaceholderForeground="Black"
-                    Background="#ffffff"
-                    x:Name="endMinute">
-                </ComboBox>
-            </StackPanel>
+                Foreground="#ffffff"
+                FontWeight="Bold"
+                Text="Start "
+                Margin="0,0,5,5"/>
+            <Viewbox
+                MaxHeight="50"
+                HorizontalAlignment="Left"
+                MaxWidth="300">
+                    <StackPanel
+                        Margin="0,0,5,8"
+                        x:Name="startTimeFilter"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
+                        <ComboBox
+                            Foreground="Black"
+                            PlaceholderText="Hour"
+                            PlaceholderForeground="Black"
+                            Background="#ffffff"
+                            x:Name="startHour">
+                        </ComboBox>
+                        <ComboBox
+                            Foreground="Black"
+                            PlaceholderText="Minute"
+                            PlaceholderForeground="Black"
+                            Background="#ffffff"
+                            x:Name="startMinute">
+                        </ComboBox>
+                    </StackPanel>
+            </Viewbox>
             <TextBlock
-                Grid.Column="0"
-                Grid.Row="2"
+                Margin="0,0,5,5"
                 VerticalAlignment="Center"
-                Foreground="Black"
-                Text="Date" Margin="0,0,5,0"/>
+                Foreground="#ffffff"
+                FontWeight="Bold"
+                Text="End"/>
+            <Viewbox
+                MaxHeight="50"
+                HorizontalAlignment="Left"
+                MaxWidth="300">
+                <StackPanel
+                    Margin="0,0,5,8"
+                    x:Name="endTimeFilter"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+                    <ComboBox
+                        Foreground="Black"
+                        PlaceholderText="Hour"
+                        PlaceholderForeground="Black"
+                        Background="#ffffff"
+                        x:Name="endHour">
+                    </ComboBox>
+                    <ComboBox
+                        Foreground="Black"
+                        PlaceholderText="Minute"
+                        PlaceholderForeground="Black"
+                        Background="#ffffff"
+                        x:Name="endMinute">
+                    </ComboBox>
+                    </StackPanel>
+            </Viewbox>
+            <TextBlock
+                VerticalAlignment="Center"
+                Foreground="#ffffff"
+                FontWeight="Bold"
+                Text="Date" Margin="0,0,5,5"/>
+            <Viewbox
+                MaxHeight="50"
+                HorizontalAlignment="Left"
+                MaxWidth="300">
+                <StackPanel
+                    Margin="0,0,5,8"
+                    x:Name="Date"
+                    Orientation="Horizontal">
+                    <CalendarDatePicker
+                        x:Name="dateFilter"
+                        CornerRadius="5"
+                        Foreground="Black"
+                        Background="#ffffff"/>
+                </StackPanel>
+            </Viewbox>
             <StackPanel
-                x:Name="Date"
-                Orientation="Horizontal"
-                Grid.Column="1"
-                Grid.Row="2">
-                <CalendarDatePicker
-                    x:Name="dateFilter"
-                    CornerRadius="5"
-                    Foreground="Black"
-                    Background="#ffffff"/>
-            </StackPanel>
-    
-            
-            <StackPanel
-                Grid.Column="1"
+                Margin="0,10,0,0"
                 HorizontalAlignment="Left"
                 Orientation="Horizontal"
                 Grid.Row="4">
@@ -127,36 +146,34 @@
                     x:Name="searchButton"
                     Click="searchClicked"
                     Background="#ffffff"
-                    Grid.Row="3"
                     Margin="0,0,10,0"
-                    CornerRadius="20">
+                    CornerRadius="5">
                     <Grid>
                         <FontIcon
-                        Foreground="Black"
-                        FontFamily="{StaticResource FontAwesome}" 
-                        Glyph="&#xf002;"/>
+                            Foreground="Black"
+                            FontFamily="{StaticResource FontAwesome}" 
+                            Glyph="&#xf002;"/>
                     </Grid>
                 </Button>
                 <Button 
                     x:Name="refreshFilterButton"
                     Click="refreshFilterClicked"
                     Background="#ffffff"
-                    Grid.Row="3" 
-                    CornerRadius="20">
+                    CornerRadius="5">
                     <Grid>
                         <FontIcon
-                        Foreground="Black"
-                        FontFamily="{StaticResource FontAwesome}" 
-                        Glyph="&#xf2f9;"/>
+                            Foreground="Black"
+                            FontFamily="{StaticResource FontAwesome}" 
+                            Glyph="&#xf2f9;"/>
                     </Grid>
                 </Button>
+                </StackPanel>
             </StackPanel>
-
-
-        </Grid>
         <!-- Main Field-->
         <Grid
-        Grid.Column="1">
+            x:Name="mainField"
+            Visibility="Collapsed"
+            Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -178,10 +195,10 @@
                 HorizontalAlignment="Left"
                 Orientation="Horizontal">
                     <TextBlock
-                    x:Name="title" Text="Consultation Request"
-                    Foreground="#336699" FontWeight="Bold" FontSize="25"
-                    VerticalAlignment="Center"
-                    Margin="20,10,30,0"/>
+                        x:Name="title" Text="Consultation Request"
+                        Foreground="#336699" FontWeight="Bold" FontSize="25"
+                        VerticalAlignment="Center"
+                        Margin="20,10,30,0"/>
                     <Button
                         VerticalAlignment="Center"
                         x:Name="NotificationButton"
@@ -211,6 +228,7 @@
                     <Button
                         VerticalAlignment="Center"
                         x:Name="refreshPageButton"
+                        Click="RefreshAll"
                         Background="#ffffff"
                         Grid.Row="3">
                         <Grid>
@@ -231,132 +249,205 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <!-- Status options-->
-                <StackPanel 
-                VerticalAlignment="Top"
-                Margin="20,0,0,0"
-                Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="0">
+                <Viewbox
+                     Grid.Column="0">
+                    <StackPanel 
+                    VerticalAlignment="Top"
+                    Margin="20,0,0,0"
+                    Orientation="Horizontal" HorizontalAlignment="Left">
                     <Button
-                    Click="selectStatusClicked"
-                    Tag="All"
-                    Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='All'}"
-                    Margin="0,0,20,0">
+                        Click="selectStatusClicked"
+                        Tag="All"
+                        Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='All'}"
+                        Margin="0,0,10,0">
                         <TextBlock
                         Foreground="#336699"
                         Text="All"
                         FontWeight="SemiBold"/>
                     </Button>
                     <Button
-                    Click="selectStatusClicked"
-                    Tag="New"
-                    Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='New'}"
-                    Margin="0,0,20,0">
+                        Click="selectStatusClicked"
+                        Tag="New"
+                        Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='New'}"
+                        Margin="0,0,10,0">
                         <TextBlock
                         Foreground="#336699"
                         Text="New"
                         FontWeight="SemiBold"/>
                     </Button>
                     <Button
-                    Tag="Accepted"
-                    Click="selectStatusClicked"
-                    Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='Accepted'}"
-                    Margin="0,0,20,0">
+                        Tag="Accepted"
+                        Click="selectStatusClicked"
+                        Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='Accepted'}"
+                        Margin="0,0,10,0">
                         <TextBlock
-                        Foreground="#336699"
-                        Text="Accepted"
-                        FontWeight="SemiBold"/>
+                            Foreground="#336699"
+                            Text="Accepted"
+                            FontWeight="SemiBold"/>
                     </Button>
                     <Button
-                    Tag="Done"
-                    Click="selectStatusClicked"
-                    Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='Done'}"
-                    Margin="0,0,20,0">
+                        Tag="Missed"
+                        Click="selectStatusClicked"
+                        Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='Accepted'}"
+                        Margin="0,0,10,0">
                         <TextBlock
-                        Foreground="#336699"
-                        Text="Done"
-                        FontWeight="SemiBold"/>
+                            Foreground="#336699"
+                            Text="Missed"
+                            FontWeight="SemiBold"/>
+                    </Button>
+                    <Button
+                        Tag="Done"
+                        Click="selectStatusClicked"
+                        Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='Done'}"
+                        Margin="0,0,20,0">
+                        <TextBlock
+                            Foreground="#336699"
+                            Text="Done"
+                            FontWeight="SemiBold"/>
                     </Button>
                 </StackPanel>
+                </Viewbox>
                 <!-- Next consultation-->
                 <Grid
-                Padding="5"
-                Grid.Column="1"
-                Background="#c1c1c1"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Stretch">
+                    Padding="5"
+                    Grid.Column="1"
+                    Background="#c1c1c1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-
                     <Grid
-                    Grid.Column="0">
+                        Grid.Column="0">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"></RowDefinition>
                             <RowDefinition Height="1*"></RowDefinition>
                             <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock
-                        VerticalAlignment="Center"
-                        Grid.Row="0"
-                        Foreground="#336699"
-                        FontWeight="Bold"
-                        Text="Next consultation today">
+                            VerticalAlignment="Center"
+                            Grid.Row="0"
+                            Foreground="#336699"
+                            FontWeight="Bold"
+                            Text="Next consultation today">
                         </TextBlock>
-                        <StackPanel
-                        Grid.Row="1"
-                        Orientation="Horizontal">
+                        <Viewbox
+                            HorizontalAlignment="Left"
+                            Grid.Row="1">
+                            <StackPanel              
+                            Orientation="Horizontal">
                             <TextBlock 
-                            Text="Patient: "
-                            Margin="0,0,5,0"/>
+                                Text="Patient: "
+                                Margin="0,0,5,0"/>
                             <TextBlock 
-                            FontWeight="SemiBold"
-                            Text="{x:Bind consultationRequestsViewModel.nextConsultationUser.fullName, Mode=OneWay}"
-                            Margin="0,0,20,0"/>
+                                FontWeight="SemiBold"
+                                Text="{x:Bind consultationRequestsViewModel.nextConsultationUser.fullName, Mode=OneWay}"
+                                Margin="0,0,20,0"/>
                             <TextBlock 
-                            Text="Start at: "
-                            Margin="0,0,5,0"/>
+                                Text="Start at:"
+                                Margin="0,0,5,0"/>
                             <TextBlock 
-                            FontWeight="SemiBold"
-                            Text="{x:Bind consultationRequestsViewModel.nextConsultationToday.startTime, Mode=OneWay}"/>
+                                FontWeight="SemiBold"
+                                Text="{x:Bind consultationRequestsViewModel.nextConsultationToday.startTime, Mode=OneWay}"/>
                         </StackPanel>
+                        </Viewbox>
+                        <Viewbox
+                            HorizontalAlignment="Left"
+                            Grid.Row="2">
+                            <TextBlock
+                                FontWeight="SemiBold"
+                                Foreground="Red"
+                                Text="Online consultation closes automatically after end time"></TextBlock>
+                        </Viewbox>
                     </Grid>
 
                     <Button
-                    Margin="8,0,0,0"
-                    Grid.Column="1"
-                    Click="joinRoomClicked"
-                    Background="#ffffff"
-                    Foreground="#336699">
+                        Margin="8,0,0,0"
+                        Grid.Column="1"
+                        Click="joinRoomClicked"
+                        Background="#ffffff">
                         <TextBlock
-                        FontWeight="SemiBold"
-                        Text="Join room">
+                            Foreground="#336699"
+                            FontWeight="SemiBold"
+                            Text="Join room">
                         </TextBlock>
                     </Button>
                 </Grid>
             </Grid>
             <!-- Consultation requests-->
             <Grid
-            VerticalAlignment="Top"
-            Grid.Row="2" x:Name="requestField">
+                VerticalAlignment="Top"
+                Grid.Row="2" x:Name="requestField">
                 <controls:DataGrid
-            SelectionChanged="OnSelectionChanged"
-            x:Name="requestList" AutoGenerateColumns="False"
-            RowBackground="#ffffff"
-            SelectionMode="Single"
-            Foreground="#336699"
-            ItemsSource="{Binding consultations, Mode=OneWay}"
-            HeadersVisibility="Column"
-            GridLinesVisibility="All"
-            HorizontalGridLinesBrush="#336699"
-            VerticalGridLinesBrush="#336699"
-            VerticalScrollBarVisibility="Auto">
+                    IsReadOnly="True"
+                    SelectionChanged="OnSelectionChanged"
+                    x:Name="requestList" AutoGenerateColumns="False"
+                    RowBackground="#ffffff"
+                    SelectionMode="Single"
+                    Foreground="#336699"
+                    ItemsSource="{Binding consultations, Mode=OneWay}"
+                    HeadersVisibility="Column"
+                    GridLinesVisibility="All"
+                    HorizontalGridLinesBrush="#336699"
+                    VerticalGridLinesBrush="#336699"
+                    VerticalScrollBarVisibility="Auto">
                     <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn Header="Id" Binding="{Binding id}"/>
-                        <controls:DataGridTextColumn Header="Patient name" Binding="{Binding patientId, Converter={StaticResource IdToFullnameConverter}}"/>
-                        <controls:DataGridTextColumn Header="Status" Binding="{Binding status}"/>
-                        <controls:DataGridTextColumn Header="Reason" Binding="{Binding reason}"/>
-                        <controls:DataGridTextColumn Header="Date " Binding="{Binding date}"/>
-                        <controls:DataGridTextColumn Header="Start Time" Binding="{Binding startTime}"/>
-                        <controls:DataGridTextColumn Header="End Time" Binding="{Binding endTime}"/>
+                        <controls:DataGridTextColumn 
+                            Header="Patient name"
+                            Width="3*"
+                            Binding="{Binding patientId, Converter={StaticResource IdToFullnameConverter}}">
+                            <controls:DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </controls:DataGridTextColumn.ElementStyle>
+                        </controls:DataGridTextColumn>
+                        <controls:DataGridTextColumn
+                            Width="1.2*"
+                            Header="Status" Binding="{Binding status}">
+                            <controls:DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </controls:DataGridTextColumn.ElementStyle>
+                        </controls:DataGridTextColumn>
+                        <controls:DataGridTextColumn 
+                            Width="3*"
+                            Header="Reason" Binding="{Binding reason}">
+                            <controls:DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </controls:DataGridTextColumn.ElementStyle>
+                        </controls:DataGridTextColumn>
+                        <controls:DataGridTextColumn 
+                            Width="1.2*"
+                            Header="Date" Binding="{Binding date}">
+                            <controls:DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </controls:DataGridTextColumn.ElementStyle>
+                        </controls:DataGridTextColumn>
+                        <controls:DataGridTextColumn
+                            Width="1.2*"
+                            Header="Start Time" Binding="{Binding startTime}">
+                            <controls:DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </controls:DataGridTextColumn.ElementStyle>
+                        </controls:DataGridTextColumn>
+                        <controls:DataGridTextColumn
+                            Width="1.2*"
+                            Header="End Time" Binding="{Binding endTime}">
+                            <controls:DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </controls:DataGridTextColumn.ElementStyle>
+                        </controls:DataGridTextColumn>
                     </controls:DataGrid.Columns>
                 </controls:DataGrid>
             </Grid>

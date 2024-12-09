@@ -285,7 +285,10 @@ namespace MedSy.Services.Consultation
             return false;
 
         }
-
+        public int UpdateAllMissedConsultations()
+        {
+            throw new NotImplementedException();
+        }
 
     }
 

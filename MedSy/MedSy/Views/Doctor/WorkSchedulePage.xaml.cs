@@ -54,7 +54,10 @@ namespace MedSy.Views.Doctor
             }
             
             MarkerItemConverter markerItemConverter = new MarkerItemConverter();
+            DateBgConverter dateBgConverter = new DateBgConverter();
+            DateValueConverter dateValueConverter = new DateValueConverter();
             Color textColor = Color.FromArgb(255, 51, 102, 153);
+
             for (int i = 0;i<25;i++)
             {
                 for(int j = 0;j<8;j++)
@@ -101,15 +104,50 @@ namespace MedSy.Views.Doctor
                                 dayOfWeek = "Sat";
                                 break;
                         };
-                        TextBlock textBlock = new TextBlock()
+
+                        TextBlock dateStringValue = new TextBlock()
                         {
                             Text = dayOfWeek,
                             FontWeight = FontWeights.Bold,
                             Foreground = new SolidColorBrush(textColor),
                             HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Margin = new Thickness(0, 0, 0, 3)
+                        };
+
+                        TextBlock dateValue = new TextBlock()
+                        {
+                            FontWeight = FontWeights.SemiBold,
+                            Foreground = new SolidColorBrush(textColor),
+                            HorizontalAlignment = HorizontalAlignment.Center,
                             VerticalAlignment = VerticalAlignment.Center
                         };
-                        border.Child = textBlock;
+                        Binding dateValueBinding = new Binding()
+                        {
+                            Mode = BindingMode.OneWay,
+                            Source = workScheduleViewModel,
+                            Path = new PropertyPath("dateItems"),
+                            Converter = dateValueConverter,
+                            ConverterParameter = $"{j}"
+                        };
+                        dateValue.SetBinding(TextBlock.TextProperty, dateValueBinding);
+
+                        StackPanel stackPanel = new StackPanel()
+                        {
+                            Orientation = Orientation.Vertical
+                        };
+                        Binding dateBgBinding = new Binding()
+                        {
+                            Mode = BindingMode.OneWay,
+                            Source = workScheduleViewModel,
+                            Path = new PropertyPath("dateItems"),
+                            Converter = dateBgConverter,
+                            ConverterParameter = $"{j}"
+                        };
+                        stackPanel.SetBinding(StackPanel.BackgroundProperty, dateBgBinding);
+                        stackPanel.Children.Add(dateStringValue);
+                        stackPanel.Children.Add(dateValue);
+                        border.Child = stackPanel;
                     }
                     if(j == 0 && i > 0)
                     {
@@ -138,6 +176,7 @@ namespace MedSy.Views.Doctor
                 }
             }
         }
+       
         private void selectDateClicked(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
         {
             DateOnly date = DateOnly.FromDateTime(DateTime.Now);
@@ -151,6 +190,7 @@ namespace MedSy.Views.Doctor
             workScheduleViewModel.getConsultations(date);
             workScheduleViewModel.refreshMarker();
             workScheduleViewModel.updateMarker();
+            workScheduleViewModel.updateDateItems(date);
         }
     }
 }

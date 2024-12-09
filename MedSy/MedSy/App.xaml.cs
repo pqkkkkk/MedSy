@@ -25,6 +25,9 @@ using MedSy.Services.User;
 using MedSy.Services.Consultation;
 using MedSy.Services.Drug;
 using MedSy.Services.Prescription;
+using Microsoft.Data.SqlClient;
+using System.Diagnostics;
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -44,7 +47,15 @@ namespace MedSy
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             locator = new Locator();
-
+            (Application.Current as App).locator.databaseConnectionString = """
+                Server = localhost;
+                Database = medsy;
+                User ID = sa;
+                Password = SqlServer@123;
+                TrustServerCertificate = True;
+                """;
+            (Application.Current as App).locator.sqlConnection = new SqlConnection((Application.Current as App).locator.databaseConnectionString);
+            Debug.WriteLine("Connect to database successfully");
             (Application.Current as App).locator.userDao = new UserMockDao();
             (Application.Current as App).locator.managementDao = new ManagementMockDao();
             (Application.Current as App).locator.messageDao = new MessageMockDao();
