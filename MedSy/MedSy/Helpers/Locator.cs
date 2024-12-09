@@ -6,6 +6,7 @@ using MedSy.Services.Management;
 using MedSy.Services.Message;
 using MedSy.Services.User;
 using MedSy.ViewModels;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,9 @@ namespace MedSy.Helpers
 {
     public class Locator
     {
+        public string databaseConnectionString { get; set; }
+        public SqlConnection sqlConnection { get; set; }
         public User currentUser { get; set; }
-
         public List<User> users { get; set; } = new List<User>();
         public IMessageDao messageDao { get; set; }
         public IManagementDao managementDao { get; set; }

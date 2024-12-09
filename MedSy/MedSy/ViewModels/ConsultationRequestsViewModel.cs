@@ -57,6 +57,10 @@ namespace MedSy.ViewModels
                 };
             }
         }
+        public void updateAllMissedConsultations()
+        {
+            (Application.Current as App).locator.consultationDao.UpdateAllMissedConsultations();
+        }
         public void updateSelectedConsultation(Models.Consultation consultation)
         {
             selectedConsultation = consultation;

@@ -10,13 +10,17 @@ namespace MedSy.ViewModels
     {
         public ObservableCollection<Models.Consultation> consultations { get; set; }
         public ObservableCollection<ObservableCollection<Models.WorkScheduleMarkerItem>> marker { get; set; }
+        public ObservableCollection<Models.WorkScheduleDateItem> dateItems { get; set; }
         public WorkScheduleViewModel()
         {
             getConsultations(DateOnly.FromDateTime(DateTime.Now));
 
             marker = new ObservableCollection<ObservableCollection<Models.WorkScheduleMarkerItem>>();
+            dateItems = new ObservableCollection<Models.WorkScheduleDateItem>();
             createMarker();
             updateMarker();
+            createDateItems();
+            updateDateItems(DateOnly.FromDateTime(DateTime.Now));
         }
         public void getConsultations(DateOnly date)
         {
@@ -37,14 +41,9 @@ namespace MedSy.ViewModels
                     };
                     temp.Add(item);
                 }
-
-                marker.Add(temp);
-
-                
-            }
-            
-        }
-            
+                marker.Add(temp);               
+            }   
+        }      
         public void updateMarker()
         {
             for(int i =0;i<consultations.Count;i++)
@@ -58,7 +57,6 @@ namespace MedSy.ViewModels
             }
             NotifyPropertyChanged(nameof(marker));
         }
-        
         public void refreshMarker()
         {
             for (int i = 0; i < 25; i++)
@@ -67,8 +65,36 @@ namespace MedSy.ViewModels
                 {
                     marker[i][j].isMarked = false;
                 }
+            } 
+        }
+        public void createDateItems()
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                var dateItem = new Models.WorkScheduleDateItem();
+                dateItems.Add(dateItem);
             }
-            
+        }
+      
+        public void updateDateItems(DateOnly date)
+        {
+            int index = 0;
+            int dayOfWeek = (int)date.DayOfWeek;
+            DateOnly sunday = date.AddDays(-dayOfWeek);
+            DateOnly saturday = sunday.AddDays(6);
+
+            while(sunday <= saturday)
+            {
+                dateItems[index].dateValue = sunday.ToString("dd/MM/yyyy");
+                dateItems[index].isToday = false;
+
+                if (sunday == DateOnly.FromDateTime(DateTime.Now))
+                    dateItems[index].isToday = true;
+ 
+                sunday = sunday.AddDays(1);
+                index++;
+            }
+            NotifyPropertyChanged(nameof(dateItems));
         }
         private void NotifyPropertyChanged(string propertyName)
         {

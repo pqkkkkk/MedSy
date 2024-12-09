@@ -49,10 +49,10 @@ let peerConnection;
 let micEnabled = true;
 let cameraEnabled = true;
 
-const signalingSocket = io('http://172.20.10.2:5555');
+const signalingSocket = io('http://localhost:5555');
 
 signalingSocket.on('offer', async (offer) =>
-{``
+{
     await  peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
     const answer = await  peerConnection.createAnswer();
     await  peerConnection.setLocalDescription(answer);
@@ -101,7 +101,6 @@ async function initializePeerConnection() {
         }
     };
 }
-
 async function startVideoCall() {
     await  initializePeerConnection();
     const offer = await  peerConnection.createOffer();
@@ -113,12 +112,58 @@ async function startVideoCall() {
     });
 
 }
-function receiveDataFromUserClient(senderId, receiverId)
-{
+function endVideoCall(){
+    // Ngắt kết nối WebRTC
+    if (peerConnection) {
+        peerConnection.close();
+        peerConnection = null;
+    }
+    // Dừng stream video/audio
+    if (localStream) {
+        localStream.getTracks().forEach((track) => track.stop());
+        localStream = null;
+    }
+    // Gửi thông báo tới signaling server
+    signalingSocket.emit('endCallMessage', { userId: senderIdValue });
+    // Cập nhật giao diện người dùng
+    localVideo.srcObject = null;
+    remoteVideo.srcObject = null;
+    toggleMicButton.disabled = true;
+    toggleCameraButton.disabled = true;
+}
+function receiveDataFromUserClient(senderId, receiverId, consultationDuration) {
     senderIdValue = senderId;
     receiverIdValue = receiverId;
+    const consultationDurationValue = consultationDuration;
+
     signalingSocket.emit('register',{
         userId: senderIdValue,
         role : "videocall",
     });
+    startConsultationTimeRemaining(consultationDurationValue);
+}
+function formatTime(unit)
+{
+    return unit < 10 ? `0${unit}` : unit;
+}
+function startConsultationTimeRemaining(duration)
+{
+    const timerElement = document.getElementById('timer');
+    let timeRemaining = duration;
+
+    const countdownInterval = setInterval(() => {
+        const hours = Math.floor(timeRemaining / 3600);
+        const minutes = Math.floor((timeRemaining % 3600) / 60);
+        const seconds = timeRemaining % 60;
+
+        timerElement.textContent = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
+
+        if (timeRemaining <= 0) {
+            clearInterval(countdownInterval);
+            timerElement.textContent = "00:00:00";
+            endVideoCall();
+        }
+
+        timeRemaining--;
+    }, 1000);
 }

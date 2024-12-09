@@ -51,10 +51,35 @@
         button:hover {
             background-color: #254a73;
         }
+        .timer-container {
+            display: inline-block;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+        .timer {
+            font-size: 3rem;
+            color: #333;
+        }
+        .label {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #777;
+        }
     </style>
 </head>
 <body>
 <h2>Online Consultation</h2>
+<div class="timer-container">
+    <div class="timer" id="timer">
+        00:00:00
+    </div>
+    <div class="label">
+        Time Remaining
+    </div>
+</div>
 <div class="video-container">
     <video id="localVideo" autoplay muted></video>
     <video id="remoteVideo" autoplay></video>

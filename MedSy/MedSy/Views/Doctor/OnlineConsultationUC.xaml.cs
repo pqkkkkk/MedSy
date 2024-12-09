@@ -30,20 +30,18 @@ namespace MedSy.Views.Doctor
         {
             this.InitializeComponent();
             this.consultationRequestsViewModel = consultationRequestsViewModel;
-            //SetUpOnlineConsultationUrl();
             (Application.Current as App).locator.socketService.endCallMessageReceived += displayEndCallButton;
         }
         private void displayEndCallButton()
         {
             (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
             {
+                videlcall = null;
+                diagnosisField = null;
+                mainField.Children.Clear();
+
                 endOCButton.Visibility = Visibility.Visible;
                 endOCButton.IsEnabled = true;
-                if (videlcall != null)
-                {
-                    (videlcall.Parent as Grid).Children.Remove(videlcall);
-                    videlcall = null;
-                }
                 endOCMessage.Visibility = Visibility.Visible;
                 endOCText.Text = "Return to consultation request page";
             });
@@ -54,9 +52,13 @@ namespace MedSy.Views.Doctor
         }
         private async void sendDataToVideoCallClientAsync(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
         {
+            TimeOnly endTime = consultationRequestsViewModel.nextConsultationToday.endTime;
+            TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
+            int consultationDuration = (int)endTime.ToTimeSpan().Subtract(now.ToTimeSpan()).TotalSeconds;
             int senderId = (Application.Current as App).locator.currentUser.id;
             int receiverId = consultationRequestsViewModel.nextConsultationToday.patientId;
-            string script = $"window.receiveDataFromUserClient({senderId},{receiverId});";
+
+            string script = $"window.receiveDataFromUserClient({senderId},{receiverId},{consultationDuration});";
             await videlcall.ExecuteScriptAsync(script);
         }
     }
