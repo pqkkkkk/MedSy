@@ -9,6 +9,7 @@ namespace MedSy.Models
 {
     public class Feedback:INotifyPropertyChanged
     {
+        public int Id { get; set; }
         public int DoctorID { get; set; }
         public int PatientID { get; set; }
         public string Content {  get; set; }

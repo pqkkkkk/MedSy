@@ -231,6 +231,21 @@ namespace MedSy.Services.Consultation
             return true;
         }
 
+
+        public int UpdateStatus(Models.Consultation selectedConsultation, string status)
+        {
+            return 1;
+        }
+
+        public int DeleteConsultation(Models.Consultation selectedConsultation)
+        {
+            return 1;
+        }
+        public bool updateResult(int id, string result)
+        {
+            return true;
+        }
+
         public int UpdateAllMissedConsultations()
         {
             var list = consultations.Where(c => c.date == DateOnly.FromDateTime(DateTime.Now) && c.endTime < TimeOnly.FromDateTime(DateTime.Now) && c.status == "Accepted").ToList();

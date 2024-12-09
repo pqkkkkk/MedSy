@@ -213,7 +213,8 @@
                                         </Button>
                                     </Grid>
                                     <Border Grid.Column="2" HorizontalAlignment="Center">
-                                        <TextBox FontSize="16" Background="Transparent" BorderBrush="#666" BorderThickness="0 0 0 1"
+                                        <TextBox TextChanged="IndicationTextBox_TextChanged"
+                                            FontSize="16" Background="Transparent" BorderBrush="#666" BorderThickness="0 0 0 1"
                                                  VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"
                                                  Foreground="#666" FontWeight="SemiBold" TextAlignment="Center" />
                                     </Border>

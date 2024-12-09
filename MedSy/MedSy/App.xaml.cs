@@ -24,8 +24,10 @@ using Windows.Foundation.Collections;
 using MedSy.Services.User;
 using MedSy.Services.Consultation;
 using MedSy.Services.Drug;
+using MedSy.Services.Prescription;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -60,6 +62,7 @@ namespace MedSy
             (Application.Current as App).locator.consultationDao = new ConsultationMockDao();
             (Application.Current as App).locator.socketService = new SocketService();
             (Application.Current as App).locator.drugDao = new DrugSqlDao();
+            (Application.Current as App).locator.prescriptionDao = new PrescriptionSqlDao();
             signInWindow = new SignInWindow();
             signInWindow.Activate();
         }

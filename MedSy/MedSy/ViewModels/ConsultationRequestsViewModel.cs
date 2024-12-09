@@ -78,30 +78,35 @@ namespace MedSy.ViewModels
         }
         public int acceptRequest()
         {
-            if(selectedConsultation != null)
-            {
+           IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
+   
+           if(consultationDao.UpdateStatus(selectedConsultation, "Accepted") == 1){
+
                 selectedConsultation.status = "Accepted";
                 return 1;
             }
             return 0;
+
         }
         public int rejectRequest()
         {
-            if (selectedConsultation != null)
+            IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
+            if(consultationDao.DeleteConsultation(selectedConsultation) == 1)
             {
                 consultations.Remove(selectedConsultation);
-                updateSelectedConsultation(null);
                 return 1;
+
             }
             return 0;
         }
         public int cancelRequest()
         {
-            if (selectedConsultation != null)
+            IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
+            if (consultationDao.DeleteConsultation(selectedConsultation) == 1)
             {
                 consultations.Remove(selectedConsultation);
-                updateSelectedConsultation(null);
                 return 1;
+
             }
             return 0;
         }
@@ -109,7 +114,7 @@ namespace MedSy.ViewModels
         {
             if(nextConsultationToday != null)
             {
-                (Application.Current as App).locator.consultationDao.UpdateStatusToDone(nextConsultationToday);
+                (Application.Current as App).locator.consultationDao.UpdateStatus(nextConsultationToday,"Done");
                 nextConsultationUser = null;
                 getNextConsultationTodayInfo();
                 return 1;

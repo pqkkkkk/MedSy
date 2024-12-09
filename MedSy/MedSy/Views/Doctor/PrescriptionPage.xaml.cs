@@ -1,4 +1,5 @@
 using CommunityToolkit.WinUI.UI.Controls;
+using MedSy.Models;
 using MedSy.Services.User;
 using MedSy.ViewModels;
 using Microsoft.UI.Xaml;
@@ -82,10 +83,37 @@ namespace MedSy.Views.Doctor
             prescriptionPageViewModel.AddIntoSelectedDrugs();
         }
 
-        private void saveButton_Click(object sender, RoutedEventArgs e)
+        private async void saveButton_Click(object sender, RoutedEventArgs e)
         {
+            int res = prescriptionPageViewModel.createPrescriptionAndUpdateQuantity();
+            if (res == 1)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "prescribe successfully!",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+            }
+            else if (res == -1)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "There is nothing to save!",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
 
-            prescriptionPageViewModel.update();
+            }
+            else if(res == 0)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "There is something wrong in saving, try again!",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+            }
         }
 
         private async void minus_Click(object sender, RoutedEventArgs e)
@@ -129,6 +157,16 @@ namespace MedSy.Views.Doctor
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(PatientManagementPage));
+        }
+
+        private void IndicationTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox && textBox.DataContext is Drug drug)
+            {
+                string inputText = textBox.Text;
+
+                prescriptionPageViewModel.SaveIndicationForDrug(drug, inputText);
+            }
         }
     }
 }
