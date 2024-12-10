@@ -8,6 +8,12 @@
     - [Hướng dẫn chạy ứng dụng](#3-hướng-dẫn-chạy-ứng-dụng-ở-milestone-1)
     - [Số giờ làm việc](#4-số-giờ-làm-việc)
     - [Điểm tự đánh giá](#5-điểm-tự-đánh-giá)
+ - [Milestone 2](#iv-milestone-2)
+    - [Làm việc nhóm](#1-làm-việc-nhóm)
+    - [Các chức năng đã làm](#2-các-chức-năng-đã-làm)
+    - [Hướng dẫn chạy ứng dụng](#3-hướng-dẫn-chạy-ứng-dụng-ở-milestone-2)
+    - [Số giờ làm việc](#4-số-giờ-làm-việc)
+    - [Điểm tự đánh giá](#5-điểm-tự-đánh-giá)
 ## I. Thông tin nhóm
 - 22120174 - Phạm Quốc Kiệt
 - 22120353 - Nguyễn Quang Thông
@@ -183,4 +189,65 @@ node server.js
 | 2    | Tìm kiếm thông tin bác sĩ | 9.5 |
 | 3    | Tư vấn trực tuyến | 9.5 |
 | 4    | Đánh giá và phản hồi| 9.5 |
+| Điểm đánh giá chung | | 9.5 |
+
+## IV. Milestone 2
+### 1. Làm việc nhóm
+#### Phân công công việc
+
+### 2. Các chức năng đã làm
+#### a. Đặt lịch khám trực tuyến
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+#### b. Khám trực tuyến thông qua video
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+#### c. Lịch làm việc cá nhân hàng ngày hàng tuần
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+#### d. Phản hồi về lịch đặt khám của bệnh nhân
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+#### e. Quản lý bệnh án
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+#### f. Kê đơn thuốc cho bệnh nhân
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+### 3. Hướng dẫn chạy ứng dụng ở milestone 2
+
+
+### 4. Số giờ làm việc
+
+| STT | Tính năng | Mô tả | Số giờ làm việc |
+|-----------|-------|------------------|------------------|
+| 1    | Đặt lịch khám trực tuyến | Cho phép bệnh nhân đặt lịch khám ngoại trú thông qua ứng dụng | 1 |
+| 2    | Khám trực tuyến thông qua video | Cho phép khám bệnh trực tuyến thông qua ứng dụng | 2 |
+| 3    | Lịch làm việc cá nhân hàng ngày/ hàng tuần | Cho phép bác sĩ quản lý lịch trình làm việc trong ngày/tuần và theo dõi các lịch đặt khám của bệnh nhân | 2 |
+| 4    | Phản hồi về lịch đặt khám của bệnh nhân | Cho phép bác sĩ từ chối/ chấp nhận lịch khám của bệnh nhân | 1 |
+| 5    | Quản lý bệnh án | Cho phép bệnh nhân xem được các hồ sơ bệnh án đã khám của mình và cho phép bác sĩ quản lý hồ sơ bệnh án của bệnh nhân mà mình đã điều trị | 1 |
+| 6    | Kê đơn thuốc cho bệnh nhân | Dựa vào các chẩn đoán cho phép bác sĩ kê đơn thuốc phù hợp với bệnh nhân | 1 |
+| Tổng số giờ làm việc | | | 8 |
+
+### 5. Điểm tự đánh giá
+| STT | Tính năng | Điểm tự đánh giá |
+|------|-------|------------------|
+| 1    | Đặt lịch khám trực tuyến | 9.5 |
+| 2    | Khám trực tuyến thông qua video | | 9.5 |
+| 3    | Lịch làm việc cá nhân hàng ngày/ hàng tuần | 9.5 |
+| 4    | Phản hồi về lịch đặt khám của bệnh nhân | 9.5 |
+| 5    | Quản lý bệnh án | 9.5 |
+| 6    | Kê đơn thuốc cho bệnh nhân | 9.5 |
 | Điểm đánh giá chung | | 9.5 |
