@@ -9,11 +9,11 @@
     - [Số giờ làm việc](#4-số-giờ-làm-việc)
     - [Điểm tự đánh giá](#5-điểm-tự-đánh-giá)
  - [Milestone 2](#iv-milestone-2)
-    - [Làm việc nhóm](#1-làm-việc-nhóm)
-    - [Các chức năng đã làm](#2-các-chức-năng-đã-làm)
+    - [Làm việc nhóm](#1-làm-việc-nhóm-milestone2)
+    - [Các chức năng đã làm](#2-các-chức-năng-đã-làm-milestone2)
     - [Hướng dẫn chạy ứng dụng](#3-hướng-dẫn-chạy-ứng-dụng-ở-milestone-2)
-    - [Số giờ làm việc](#4-số-giờ-làm-việc)
-    - [Điểm tự đánh giá](#5-điểm-tự-đánh-giá)
+    - [Số giờ làm việc](#4-số-giờ-làm-việc-milestone2)
+    - [Điểm tự đánh giá](#5-điểm-tự-đánh-giá-milestone2)
 ## I. Thông tin nhóm
 - 22120174 - Phạm Quốc Kiệt
 - 22120353 - Nguyễn Quang Thông
@@ -192,10 +192,10 @@ node server.js
 | Điểm đánh giá chung | | 9.5 |
 
 ## IV. Milestone 2
-### 1. Làm việc nhóm
+### 1. Làm việc nhóm <a id="1-làm-việc-nhóm-milestone2"></a>
 #### Phân công công việc
 
-### 2. Các chức năng đã làm
+### 2. Các chức năng đã làm <a id="2-các-chức-năng-đã-làm-milestone2"></a>
 #### a. Đặt lịch khám trực tuyến
 ##### Điều kiện tiên quyết
 ##### Các bước kiểm thử
@@ -229,7 +229,7 @@ node server.js
 ### 3. Hướng dẫn chạy ứng dụng ở milestone 2
 
 
-### 4. Số giờ làm việc
+### 4. Số giờ làm việc <a id="4-số-giờ-làm-việc-milestone2"></a>
 
 | STT | Tính năng | Mô tả | Số giờ làm việc |
 |-----------|-------|------------------|------------------|
@@ -241,7 +241,7 @@ node server.js
 | 6    | Kê đơn thuốc cho bệnh nhân | Dựa vào các chẩn đoán cho phép bác sĩ kê đơn thuốc phù hợp với bệnh nhân | 1 |
 | Tổng số giờ làm việc | | | 8 |
 
-### 5. Điểm tự đánh giá
+### 5. Điểm tự đánh giá <a id="5-điểm-tự-đánh-giá-milestone2"></a>
 | STT | Tính năng | Điểm tự đánh giá |
 |------|-------|------------------|
 | 1    | Đặt lịch khám trực tuyến | 9.5 |
