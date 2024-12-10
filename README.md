@@ -228,7 +228,7 @@ chọn Day (ngày khám)
 ![alt text](./report_resource/Schedule_chooseDay.png)
 
 chọn Time start - Time end (thời gian bắt đầu - thời gian kết thúc) - Giả sử chọn thời gian bắt đầu là 12h, thời gian kết thúc là 13h
-![alt text](./report_resource/Schedule_Time.png)
+![alt text](./report_resource/Schedule_chooseTime.png)
 
 Viết biểu hiện, triệu chứng (nếu có) sau đó bấm nút Send request để gửi yêu cầu đặt lịch khám
 ![alt text](./report_resource/Schedule_writeSymptoms.png)
