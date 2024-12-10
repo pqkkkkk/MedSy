@@ -31,201 +31,213 @@
         </Style>
 
     </Page.Resources>
-
-    <Grid>
-
+    <Viewbox Stretch="Uniform" Margin="5">
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="15*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
         <!--Nút back-->
-        <Button Grid.Row="0" 
-            Name="BackDoctorInfor" Background="#336699" HorizontalAlignment="Right"
-            VerticalAlignment="Center" Margin="0 0 20 0" Click="BackDoctorInfor_Click">
-            <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf2f5;" FontSize="20" Foreground="White"/>
-        </Button>
-        
-        <Grid Grid.Column="0" Grid.Row="1" Background="#fff" Margin="15 0 15 15" CornerRadius="20">
+            <Button Grid.Row="0"
+                Name="BackDoctorInfor" Background="#336699" HorizontalAlignment="Right" CornerRadius="10"
+                VerticalAlignment="Center" Margin="0 0 20 10" Click="BackDoctorInfor_Click">
+                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf2f5;" FontSize="20" Foreground="White"/>
+            </Button>
+
+                <Grid Grid.Column="0" Grid.Row="1" Background="#fff" Margin="15 0 15 15" CornerRadius="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="5*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <!--Ảnh đại diện-->
-                <Grid Grid.Row="0" Margin="10" Background="#D4F3FF" CornerRadius="20">
+
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="5*"></RowDefinition>
+                        <RowDefinition Height="3*"></RowDefinition>
                         <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="6*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" MaxWidth="100" MaxHeight="100" CornerRadius="50">
-                        <Image Source="{x:Bind DoctorViewModel.SelectedDoctor.avatarPath}"/>
-                    </Border>
-                    <Grid Grid.Row="1" Background="#336699" MaxWidth="100" Margin="10" VerticalAlignment="Center">
+                    <!--Ảnh đại diện-->
+
+                    <Grid Grid.Row="0" Margin="10" Background="#D4F3FF" CornerRadius="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Viewbox Grid.Row="0">
+                            <Border MaxWidth="100" MaxHeight="100" CornerRadius="50">
+                                <Image Source="{x:Bind DoctorViewModel.SelectedDoctor.avatarPath}"/>
+                            </Border>
+                        </Viewbox>
+                        <Viewbox Grid.Row="1" Stretch="Uniform">
+                            <Grid  Background="#336699" MaxWidth="150" Margin="20" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <FontIcon Grid.Column="0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf005;" FontSize="30" Foreground="White" Margin="10 0 0 0"/>
+                                <TextBlock Grid.Column="1" Text="5.0" FontSize="30" Margin="10" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Viewbox>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <FontIcon Grid.Column="0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf005;" FontSize="20" Foreground="White"/>
-                        <TextBlock Grid.Column="1" Text="5.0" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Viewbox  Grid.Column="0" Stretch="Uniform">
+                            <Button Name="Schedule" Click="ScheduleButton_Click" Background="#ccc" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" MaxWidth="300">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon Grid.Column="0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf274;" FontSize="40" Foreground="#336699" VerticalAlignment="Center" Margin="10 10 10 10"/>
+                                    <TextBlock Grid.Column="1" Text="Schedule" FontSize="20" FontWeight="Bold" Foreground="#336699" VerticalAlignment="Center" Margin="10 10 10 10"/>
+                                </Grid>
+                            </Button>
+                        </Viewbox>
+
+                        <Viewbox Grid.Column="1" Stretch="Uniform" >
+                            <Button Name="Chat" Click="ChatButton_Click" Background="#ccc" HorizontalAlignment="Center" VerticalContentAlignment="Center" Margin="10" MaxWidth="300">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon Grid.Column="0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf075;" FontSize="40" Foreground="#336699" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Column="1" Text="Chat" FontSize="20" FontWeight="Bold" Foreground="#336699" VerticalAlignment="Center" Margin="10 10 10 10"/>
+                                </Grid>
+                            </Button>
+                        </Viewbox>
                     </Grid>
-
-                </Grid>
-
-                <Grid Grid.Row="1" Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-
-                    <Button  Grid.Column="0" Name="Schedule" Click="ScheduleButton_Click" Background="#ccc" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" MaxWidth="350">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <FontIcon Grid.Column="0" FontFamily="{StaticResource FontGoogle}" Glyph="&#xe179;" FontSize="40" Foreground="#336699" VerticalAlignment="Center" Margin="10 10 10 10"/>
-                            <TextBlock Grid.Column="1" Text="Schedule" FontSize="20" FontWeight="Bold" Foreground="#336699" VerticalAlignment="Center" Margin="10 10 10 10"/>
-                        </Grid>
-                    </Button>
-
-                    <Button Grid.Column="1" Name="Chat" Click="ChatButton_Click" Background="#ccc" HorizontalAlignment="Center" VerticalContentAlignment="Center" Margin="10" MaxWidth="350">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <FontIcon Grid.Column="0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf075;" FontSize="40" Foreground="#336699" VerticalAlignment="Center" Margin="10"/>
-                            <TextBlock Grid.Column="1" Text="Chat" FontSize="20" FontWeight="Bold" Foreground="#336699" VerticalAlignment="Center" Margin="10 10 10 10"/>
-                        </Grid>
-                    </Button>
-                </Grid>
-                <!--comment-->
-                <Grid x:Name="Comment" Grid.Row="2" Background="#336699" CornerRadius="20" Margin="10 0 0 10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5*"></RowDefinition>
-                        <RowDefinition Height="1*"></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <ListView Grid.Row="0" Background="#fff" Margin="10" CornerRadius="20"
+                    <!--comment-->
+                    <Grid Grid.Row="2" x:Name="Comment" Background="#336699" CornerRadius="20" Margin="10 0 0 10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        
+                        <ListView Grid.Row="0" Background="#fff" Margin="10 10 10 5" CornerRadius="20" CanBeScrollAnchor="True" MaxHeight="220" MaxWidth="560"
                     ItemsSource="{x:Bind DoctorViewModel.Feedbacks}"
                      ItemTemplate="{StaticResource CommentItemList}">
-                    </ListView>
+                        </ListView>
+                        
 
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBox x:Name="CommentBox" PlaceholderText="Comment here" Margin="10" Grid.Column="0"/>
-                        <Button Grid.Column="2" x:Name="CommentButton" Content="Comment" Background="#336699" Foreground="#fff" Margin="10" Click="CommentButton_Click"/>
-                        <RatingControl x:Name="CommentRating" Grid.Column="1" MaxRating="5" />
-                    </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="CommentBox" PlaceholderText="Comment here" Margin="10 5 10 10" CornerRadius="10" MaxHeight="40"/>
+                            <Viewbox Grid.Column="2">
+                                <Button x:Name="CommentButton" Background="#336699" Foreground="#fff"
+                                HorizontalAlignment="Center" CornerRadius="10" Margin="10" Click="CommentButton_Click">
+                                    <FontIcon Glyph="&#xf1d8;" FontFamily="{StaticResource FontAwesome}"/>
+                                </Button>
+                            </Viewbox>
+                            <Viewbox Grid.Column="1">
+                                <RatingControl x:Name="CommentRating" Grid.Column="1" MaxRating="5" HorizontalAlignment="Center"/>
+                            </Viewbox>
+                        </Grid>
 
-                    <ContentDialog
+                        <ContentDialog
                      x:Name="MissingInfoDialog"
                      Title="Thông báo"
                      Content="Vui lòng nhập bình luận và đánh giá trước khi gửi."
                      CloseButtonText="Đóng"
                      CloseButtonStyle="{StaticResource CustomButtonStyle}"
                      Background="#ffffff"
-                     Foreground="#336699"/> 
+                     Foreground="#336699"/>
 
+                    </Grid>
                 </Grid>
-            </Grid>
 
-            <Grid Grid.Column="1">
-                <Grid Margin="10">
+                <Grid Grid.Column="1">
                     <Grid x:Name="Information_in_detail" Grid.Column="0" Margin="10">
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <!--tên và công việc-->
-                        <Grid Grid.Row="0" VerticalAlignment="Center" Margin="10">
+                        <Grid VerticalAlignment="Center" Grid.Row="0" Margin="10">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="2*"></RowDefinition>
                                 <RowDefinition Height="1*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{x:Bind DoctorViewModel.SelectedDoctor.fullName}" Style="{StaticResource Format textblock in detailed doctor}" FontSize="50"></TextBlock>
+                            <TextBlock Grid.Row="0" Text="{x:Bind DoctorViewModel.SelectedDoctor.fullName}" Style="{StaticResource Format textblock in detailed doctor}" Margin="0 10 0 10" FontSize="50"></TextBlock>
                             <TextBlock Grid.Row="1" FontSize="25" Foreground="#333">
-                    <Run Text="Speicalist of"/> <Run Text="{x:Bind DoctorViewModel.SelectedDoctor.speciality}"/>
+                        <Run Text="Speicalist of"/> <Run Text="{x:Bind DoctorViewModel.SelectedDoctor.speciality}"/>
                             </TextBlock>
                         </Grid>
                         <!--Chuyên ngành-->
-                        <Grid  Grid.Row="1">
+                        <Grid Grid.Row="1" Margin="10 10 0 10" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"></RowDefinition>
                                 <RowDefinition Height="1*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Specialties: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
+                            <TextBlock Grid.Row="0" Text="Specialties: " Style="{StaticResource Format textblock in detailed doctor}" Margin="0 10 10 10" FontSize="35"></TextBlock>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"></ColumnDefinition>
                                     <ColumnDefinition Width="2*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Border Background="#ccc" CornerRadius="20">
-                                    <TextBlock Text="{x:Bind DoctorViewModel.SelectedDoctor.speciality}" FontSize="25" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{x:Bind DoctorViewModel.SelectedDoctor.speciality}" FontSize="25" Margin="0 10 10 10" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                                 </Border>
                             </Grid>
                         </Grid>
                         <!--Chuyên điều trị-->
-                        <Grid Grid.Row="2">
+                        <Grid Grid.Row="2" Margin="10 10 0 10" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"></RowDefinition>
                                 <RowDefinition Height="1*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Issues: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
-                            <Grid Grid.Row="1">
+                            <TextBlock Grid.Row="0" Text="Issues: " Style="{StaticResource Format textblock in detailed doctor}" Margin="0 10 10 10"></TextBlock>
+                            <Grid Grid.Row="1" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"></ColumnDefinition>
                                     <ColumnDefinition Width="2*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Border Background="#ccc" CornerRadius="20">
-                                    <TextBlock Text="{x:Bind DoctorViewModel.SelectedDoctor.speciality}" FontSize="25" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{x:Bind DoctorViewModel.SelectedDoctor.speciality}" FontSize="25" Margin="0 10 10 10" Foreground="#333" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                                 </Border>
                             </Grid>
                         </Grid>
                         <!-- Bằng cấp -->
-                        <Grid Grid.Row="3" VerticalAlignment="Center">
+                        <Grid Grid.Row="3" Margin="10 10 0 10" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
                                 <RowDefinition Height="1*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Qualification: " Style="{StaticResource Format textblock in detailed doctor}"></TextBlock>
-                            <TextBlock Grid.Row="1" FontSize="30" Foreground="#333" VerticalAlignment="Center" Margin="10 0 0 0">
+                            <TextBlock Grid.Row="0" Text="Qualification: " Style="{StaticResource Format textblock in detailed doctor}" Margin="0 10 0 10"></TextBlock>
+                            <TextBlock Grid.Row="1" FontSize="30" Foreground="#333" VerticalAlignment="Center">
                             <Run Text="Licenses:" FontWeight="Bold"/> Qualification of <Run Text="{x:Bind DoctorViewModel.SelectedDoctor.speciality}"/>
                             </TextBlock>
                         </Grid>
                         <!--Kinh nghiệm-->
-                        <Grid Grid.Row="4" VerticalAlignment="Center" >
+                        <Grid Grid.Row="4" Margin="10 10 0 10">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
                                 <RowDefinition Height="1*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Experience: " Style="{StaticResource Format textblock in detailed doctor}" Margin="10 -20 10 10"></TextBlock>
-                            <TextBlock Grid.Row="1" FontSize="30" Foreground="#333" VerticalAlignment="Center" Margin="10 0 0 0">
+                            <TextBlock Grid.Row="0" Text="Experience: " Style="{StaticResource Format textblock in detailed doctor}" Margin="0 10 0 10"></TextBlock>
+                            <TextBlock Grid.Row="1" FontSize="30" Foreground="#333" VerticalAlignment="Center">
                             <Run Text="Licenses:" FontWeight="Bold"/> of <Run Text="{x:Bind DoctorViewModel.SelectedDoctor.speciality}"/> (<Run Text="{x:Bind DoctorViewModel.SelectedDoctor.experienceYear}"/> <Run Text="years of experiences"/>)
                             </TextBlock>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-        
         <!--Phan ben phai-->
         
         <Frame Name="content"></Frame>
     </Grid>
-
+    </Viewbox>
 </Page>

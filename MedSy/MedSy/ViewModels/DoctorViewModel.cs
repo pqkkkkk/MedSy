@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using MedSy.Models;
 using MedSy.Services.Feedback;
 using Microsoft.UI.Xaml.Controls;
+using Windows.Devices.AllJoyn;
 namespace MedSy.ViewModels;
 public partial class DoctorViewModel : INotifyPropertyChanged
 {
@@ -33,14 +34,18 @@ public partial class DoctorViewModel : INotifyPropertyChanged
     }
 
     public string SelectedSpecialty { get; set; }
-    public int SelectedYearExperience { get; set; }
+    public string SelectedYearExperience { get; set; }
     public Doctor SelectedDoctor { get; set; }
 
     public void LoadData()
     {
         IDoctorDao doctor_dao = new DoctorMockDao();
+
+        string genderFilter = SelectedGender == "All" ? null : SelectedGender;
+        string specialtyFilter = SelectedSpecialty == "All" ? null : SelectedSpecialty;
+        int yearFilter = (SelectedYearExperience == "All" || string.IsNullOrEmpty(SelectedYearExperience)) ? -1: int.Parse(SelectedYearExperience);
         var (items,count) = doctor_dao.GetDoctors(
-            CurrentPage, RowsPerPage, Keyword, SelectedSpecialty, SelectedGender, SelectedYearExperience);
+            CurrentPage, RowsPerPage, Keyword, specialtyFilter, genderFilter, yearFilter);
 
         Doctors = new ObservableCollection<Doctor>(
             items);
@@ -67,6 +72,14 @@ public partial class DoctorViewModel : INotifyPropertyChanged
         }
     }
 
+    public void resetsort()
+    {
+        SelectedGender = null;
+        SelectedSpecialty = null;
+        Keyword= "";
+        SelectedYearExperience = null;
+        LoadData();
+    }
     public void reset()
     {
         Feedbacks.Clear();
@@ -87,16 +100,18 @@ public partial class DoctorViewModel : INotifyPropertyChanged
 
     // SORT
     // Gender value for sort
-    public List<string> Genders { get; set; } = new List<string> { "Male", "Female" };
+    public List<string> Genders { get; set; } = new List<string> { "Male", "Female", "All" };
     public string SelectedGender { get; set; }
     // Load unique value for experience Year and Specialty
     public List<string> UniqueSpecialties { get; private set; }
-    public List<int> UniqueExperienceYears { get; private set; }
+    public List<string> UniqueExperienceYears { get; private set; }
 
     private void LoadUniqueValues()
     {
         UniqueSpecialties = Doctors.Select(d => d.speciality).Distinct().ToList();
-        UniqueExperienceYears = Doctors.Select(d => d.experienceYear).Distinct().OrderBy(y => y).ToList();
+        UniqueSpecialties.Add("All");
+        UniqueExperienceYears = Doctors.Select(d => d.experienceYear.ToString()).Distinct().OrderBy(y => y).ToList();
+        UniqueExperienceYears.Add("All");
     }
 
 
@@ -129,7 +144,16 @@ public partial class DoctorViewModel : INotifyPropertyChanged
         CurrentPage = 1;
         LoadData();
     }
+    public List<string> GetSuggestions(string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+            return new List<string>();
 
+        return Doctors
+            .Where(d => d.fullName.Contains(query, StringComparison.OrdinalIgnoreCase))
+            .Select(d => d.fullName)
+            .ToList();
+    }
 
 }
 
