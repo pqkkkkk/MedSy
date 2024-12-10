@@ -198,8 +198,47 @@ node server.js
 ### 2. Các chức năng đã làm <a id="2-các-chức-năng-đã-làm-milestone2"></a>
 #### a. Đặt lịch khám trực tuyến
 ##### Điều kiện tiên quyết
+- Ứng dụng đã khởi động và đăng nhập thành công.
+- Dữ liệu bác sĩ có sẵn trong danh sách giả lập (sử dụng Mock Data).
+
 ##### Các bước kiểm thử
 ##### Demo
+1. Đăng nhập:
+- Nhập thông tin đăng nhập như bên dưới và bấm vào nút sign in
+     - Username: pqkiet854
+     - Password: pqkiet854
+![alt text](./report_resource/Login_Precondition.png)
+
+2. User Dashboard hiển thị lên, điều hướng qua trang Doctor_Infor (icon số 2 trên thanh navigate) để thực hiện việc xem danh sách bác sĩ:
+![alt text](./report_resource/UserDashboard.png)
+
+Trang Doctor_Infor hiện lên, chọn vào 1 bác sĩ bạn muốn khám (giả sử bác sĩ Le Van A):
+![alt text](./report_resource/Doctor_Infor_milestone2.png)
+
+Trang chi tiết bác sĩ hiện lên hiển thị các thông tin chi tiết của bác sĩ, chọn nút đặt lịch để tiến hành đặt lịch khám với bác sĩ này:
+ ![alt text](./report_resource/ClickSchedule.png)
+
+Trang đặt lịch hiện lên, hiển thị các thông tin chi tiết của người dùng và thông tin bác sĩ
+ ![alt text](./report_resource/Schedule.png)
+ 
+tiến hành thực hiện việc chọn Form (hình thức khám bệnh)
+![alt text](./report_resource/Schedule_chooseForm.png)
+
+chọn Day (ngày khám)
+![alt text](./report_resource/Schedule_chooseDay.png)
+
+chọn Time start - Time end (thời gian bắt đầu - thời gian kết thúc) - Giả sử chọn thời gian bắt đầu là 12h, thời gian kết thúc là 13h
+![alt text](./report_resource/Schedule_Time.png)
+
+Viết biểu hiện, triệu chứng (nếu có) sau đó bấm nút Send request để gửi yêu cầu đặt lịch khám
+![alt text](./report_resource/Schedule_writeSymptoms.png)
+
+Nếu thành công, sẽ hiện thông báo
+![alt text](./report_resource/Schedule_success.png)
+
+Ngược lại, trường hợp 1 trong các trường dữ liệu chưa được nhập, sẽ hiển thị thông báo tương ứng với trường đó (giả sử trong trường hợp bên dưới là form)
+![alt text](./report_resource/Schedule_MissingInformation.png)
+
 
 #### b. Khám trực tuyến thông qua video
 ##### Điều kiện tiên quyết
