@@ -293,7 +293,7 @@ node server.js
 | STT | Tính năng | Điểm tự đánh giá |
 |------|-------|------------------|
 | 1    | Đặt lịch khám trực tuyến | 9.5 |
-| 2    | Khám trực tuyến thông qua video | | 9.5 |
+| 2    | Khám trực tuyến thông qua video | 9.5 |
 | 3    | Lịch làm việc cá nhân hàng ngày/ hàng tuần | 9.5 |
 | 4    | Phản hồi về lịch đặt khám của bệnh nhân | 9.5 |
 | 5    | Quản lý bệnh án | 9.5 |
