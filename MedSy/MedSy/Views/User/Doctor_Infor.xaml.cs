@@ -44,11 +44,26 @@ namespace MedSy.Views
             }
         }
 
-        private void searchButton_Click(object sender, RoutedEventArgs e)
+        private async void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             DoctorViewModel.Search();
         }
 
+        private void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            var selectedItem = args.SelectedItem as Models.Doctor; 
+            DoctorViewModel.SelectedDoctor = selectedItem;
+            DoctorViewModel.Search();
+        }
+        
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                var suggestions = DoctorViewModel.GetSuggestions(sender.Text);
+                sender.ItemsSource = suggestions;
+            }
+        }
         private void previousButton_Click(object sender, RoutedEventArgs e)
         {
             DoctorViewModel.GoToPreviousPage();
@@ -84,6 +99,11 @@ namespace MedSy.Views
             {
                 
             };
+        }
+
+        private void RefreshAll(object sender, RoutedEventArgs e)
+        {
+            DoctorViewModel.resetsort();
         }
     }
 }

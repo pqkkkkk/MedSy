@@ -51,8 +51,8 @@
                 HorizontalAlignment="Center"
                 ToolTipService.ToolTip="Dashboard">
                 <Grid>
-                    <FontIcon FontFamily="{StaticResource FontGoogle}" 
-                              Glyph="&#xe871;" 
+                    <FontIcon FontFamily="{StaticResource FontAwesome}" 
+                              Glyph="&#xf015;" 
                               FontSize="40"
                               Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='Dashboard',Mode=OneWay}"/>
                 </Grid>
