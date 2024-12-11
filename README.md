@@ -197,9 +197,9 @@ node server.js
 #### Phân công công việc
 
 ### 2. Các chức năng đã làm <a id="2-các-chức-năng-đã-làm-milestone2"></a>
-Tai lieu kiem thu cac chuc nang co the xem tai day:
+Tài liệu kiểm thử các chức năng có thể xem tại đây: https://docs.google.com/document/d/1fEq2Dv1NQlSsvhUAGIAwUhzN_RiQyGIS/edit?usp=drive_link&ouid=103352419354890159322&rtpof=true&sd=true
 
-Video demo cac chuc nang co the xem tai day:
+Video demo các chức năng có thể xem tại đây:
 #### a. Đặt lịch khám trực tuyến
 #### b. Khám trực tuyến thông qua video
 #### c. Lịch làm việc cá nhân hàng ngày hàng tuần
@@ -211,12 +211,12 @@ Video demo cac chuc nang co the xem tai day:
 
 ### 3. Hướng dẫn chạy ứng dụng ở milestone 2
 1. Tải môi trường thực thi javascript NodeJS
-2. Chuyen den folder db_migration
+2. Chuyển đến folder db_migration
 ```bash
 cd db_migration
 ```
-3. Thiet lap cac thong so ket noi den database trong file .env
-4. Chay lenh sau de tao database va cac du lieu mau
+3. Thiết lập các thông số kết nối đến database trong file .env
+4. Chạy các lệnh sau để tạo database và dữ liệu mẫu
 ```bash
 knex migrate:latest
 ```
@@ -240,7 +240,7 @@ node server.js
 
 ![all text](./report_resource/Screenshot%202024-11-06%20185401.png)
 
-9. Chạy ứng dụng winui (folder MedSy) và đăng nhập với username và password đều là **"pqkiet854"** (vai tro la benh nhan) hoac username **"johndoe""** vaf password **"pqkiet854"** (vai tro la bac si) de vào cửa sổ chính
+9. Chạy ứng dụng winui (folder MedSy) và đăng nhập với username và password đều là **"pqkiet854"** (vai trò là bệnh nhân) hoặc username **"johndoe""** và password **"pqkiet854"** (vai trò bác sĩ) để vào cửa sổ chính.
 
 ### 4. Số giờ làm việc <a id="4-số-giờ-làm-việc-milestone2"></a>
 
