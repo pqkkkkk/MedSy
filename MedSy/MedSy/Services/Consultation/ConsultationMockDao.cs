@@ -22,9 +22,9 @@ namespace MedSy.Services.Consultation
                     status = "Accepted",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateOnly(2024, 12,9),
-                    startTime = new TimeOnly(16,00),
-                    endTime = new TimeOnly(17,00)
+                    date = new DateOnly(2024, 12,11),
+                    startTime = new TimeOnly(17,00),
+                    endTime = new TimeOnly(18,00)
                 },
                 new Models.Consultation()
                 {
@@ -254,6 +254,11 @@ namespace MedSy.Services.Consultation
                 c.status = "Missed";
             }
             return 1;
+        }
+
+        public List<Models.Consultation> GetAllDoneConsultationsByDoctorIdAndPatientId(int doctorId, int patientId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

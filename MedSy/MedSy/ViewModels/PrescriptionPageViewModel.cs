@@ -21,15 +21,13 @@ namespace MedSy.ViewModels
         public Models.User selectedUser { get; set; }
         public ObservableCollection<Drug> drugs { get; set; }
         public ObservableCollection<Drug> availableDrugs { get; set; }
-
-        public ObservableCollection<Drug> selecteddrugs { get; set; }
+        public ObservableCollection<PrescriptionDetail> prescriptionDetails { get; set; }
+        public PrescriptionDetail selectedPrescriptionDetail { get; set; }
+        public bool prescribed { get; set; }
         public ObservableCollection<string> types { get; set; }
-
         public string Keyword { get; set; } = "";
-
         public string selectedType { get; set; }
         public Drug selectedDrug { get; set; }
-        public Drug selecteddrugsItem { get; set; }
         public Dictionary<Drug, string> DrugIndications { get; } = new();
 
         IDrugDao drugDao { get; set; }
@@ -41,11 +39,33 @@ namespace MedSy.ViewModels
             selectedType = types.FirstOrDefault(name => name == "All");
             drugs = new ObservableCollection<Drug>(drugDao.getAllDrugs(Keyword, selectedType));
             availableDrugs = drugs;
-            selecteddrugs ??= new ObservableCollection<Drug>();
             selectedConsultation = new Consultation();
             selectedUser = new User();
+            prescriptionDetails = null;
         }
-
+        public void LoadPrescriptionDetails()
+        {
+            IPrescriptionDao prescriptionDao = (Application.Current as App).locator.prescriptionDao;
+            prescriptionDetails = new ObservableCollection<PrescriptionDetail>(prescriptionDao.getPrescriptionDetails(selectedConsultation.id));
+            if(prescriptionDetails.Count() == 0)
+            {
+                prescribed = false;
+            }
+            else
+            {
+                prescribed = true;
+            }
+        }
+        public void LoadDrugOfCorrespondingPrescriptionDetail()
+        {
+            IDrugDao drugDao = (Application.Current as App).locator.drugDao;
+            for (int i =0;i< prescriptionDetails.Count(); i++)
+            {
+                prescriptionDetails[i].drug = drugDao.getDrugById(prescriptionDetails[i].drug_id);
+                //prescriptionDetails[i].drug = drugs.FirstOrDefault(d => d.drugId == prescriptionDetails[i].drug_id);
+            }
+            
+        }
         public void LoadData()
         {
             if (selectedType == "All")
@@ -61,11 +81,18 @@ namespace MedSy.ViewModels
 
         public void AddIntoSelectedDrugs()
         {
-            var item = selecteddrugs.FirstOrDefault(i => i.name == selectedDrug.name);
+            var item = prescriptionDetails.FirstOrDefault(i => i.drug.name == selectedDrug.name);
             if (item == null)
             {
-                item = new Drug(selectedDrug);
-                selecteddrugs.Add(item);
+                item = new PrescriptionDetail()
+                {
+                    id = -1,
+                    quantity = 0,
+                    drug = selectedDrug,
+                    price = selectedDrug.price,
+                    usage = ""
+                };
+                prescriptionDetails.Add(item);
             }
             item.quantity++;
         }
@@ -77,20 +104,20 @@ namespace MedSy.ViewModels
 
         public bool minus_click()
         {
-            if (selecteddrugsItem == null)
+            if (selectedPrescriptionDetail == null)
             {
                 return false;
             }
-            var drugInDrugs = drugs.FirstOrDefault(d => d.name == selecteddrugsItem.name);
-
-            if (selecteddrugsItem.quantity == 1)
+            var drugInDrugs = drugs.FirstOrDefault(d => d.name == selectedPrescriptionDetail.drug.name);
+            selectedDrug = drugInDrugs;
+            if (selectedPrescriptionDetail.quantity == 1)
             {
-                selecteddrugs.Remove(selecteddrugsItem);
+                prescriptionDetails.Remove(selectedPrescriptionDetail);
             }
             else
             {
-                selecteddrugsItem.quantity--;
-                selecteddrugsItem.price -= drugInDrugs.price;
+                selectedPrescriptionDetail.quantity--;
+                selectedPrescriptionDetail.price -= drugInDrugs.price;
             };
             drugInDrugs.quantity++;
             return true;
@@ -98,19 +125,20 @@ namespace MedSy.ViewModels
 
         public bool plus_click()
         {
-            if (selecteddrugsItem == null)
+            if (selectedPrescriptionDetail == null)
             {
                 return false;
             }
-            var drugInDrugs = drugs.FirstOrDefault(d => d.name == selecteddrugsItem.name);
+            var drugInDrugs = drugs.FirstOrDefault(d => d.name == selectedPrescriptionDetail.drug.name);
+            selectedDrug = drugInDrugs;
             if (selectedDrug.quantity == 0)
             {
                 return false;
             }
             else
             {
-                selecteddrugsItem.quantity++;
-                selecteddrugsItem.price += drugInDrugs.price;
+                selectedPrescriptionDetail.quantity++;
+                selectedPrescriptionDetail.price += drugInDrugs.price;
             };
             drugInDrugs.quantity--;
             return true;
@@ -118,10 +146,11 @@ namespace MedSy.ViewModels
 
         public int createPrescriptionAndUpdateQuantity()
         {
-            if(selecteddrugs.Count() == 0)
+            if(prescriptionDetails.Count() == 0)
             {
                 return -1;
             }
+           
             IPrescriptionDao prescriptionDao = (Application.Current as App).locator.prescriptionDao;
             
             if (prescriptionDao.createPrescription(0, DateOnly.FromDateTime(DateTime.Now), selectedConsultation.id))
@@ -129,13 +158,13 @@ namespace MedSy.ViewModels
                 int prescriptionId = prescriptionDao.getPrescriptionId_ByConsultationId(selectedConsultation.id);
                 int total = 0;
 
-                foreach (var item in selecteddrugs)
+                foreach (var item in prescriptionDetails)
                 {
-                    string indication = DrugIndications.TryGetValue(item, out var value) ? value : "No Indication";
-                    prescriptionDao.insertIntoPrescriptionDetail(item.quantity, indication, prescriptionId, item.drugId);
+                   
+                    prescriptionDao.insertIntoPrescriptionDetail(item, prescriptionId);
                     total += item.price;
 
-                    var currentDrug = drugs.FirstOrDefault(d => d.drugId == item.drugId);
+                    var currentDrug = drugs.FirstOrDefault(d => d.drugId == item.drug.drugId);
                     drugDao.updateQuantity(currentDrug.quantity, currentDrug.drugId);
                 }
                 if (prescriptionDao.updateTotalPrice(total, prescriptionId) != 1) {
@@ -148,9 +177,6 @@ namespace MedSy.ViewModels
             return 0;
         
         }
-
-
-
         public void SaveIndicationForDrug(Drug drug, string indication)
         {
             if (DrugIndications.ContainsKey(drug))

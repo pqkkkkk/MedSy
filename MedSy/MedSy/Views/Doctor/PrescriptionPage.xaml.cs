@@ -33,6 +33,7 @@ namespace MedSy.Views.Doctor
         {
             this.InitializeComponent();
             prescriptionPageViewModel = new PresciptionPageViewModel();
+            
             this.DataContext = prescriptionPageViewModel;
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -44,6 +45,8 @@ namespace MedSy.Views.Doctor
                 prescriptionPageViewModel.selectedConsultation = consultation;
                 IUserDao userDao = (Application.Current as App).locator.userDao;
                 prescriptionPageViewModel.selectedUser = userDao.getUserById(consultation.patientId);
+                prescriptionPageViewModel.LoadPrescriptionDetails();
+                prescriptionPageViewModel.LoadDrugOfCorrespondingPrescriptionDetail();
             }
         }
         private void searchButton_Click(object sender, RoutedEventArgs e)
@@ -57,6 +60,17 @@ namespace MedSy.Views.Doctor
 
         private async void Add_Click(object sender, RoutedEventArgs e)
         {
+            if (prescriptionPageViewModel.prescribed == true)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "You prescribed for this patient. Cannot edit",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+                return;
+            }
+
             if (prescriptionPageViewModel.selectedDrug == null)
             {
                 await new ContentDialog()
@@ -68,7 +82,7 @@ namespace MedSy.Views.Doctor
                 return;
             }
 
-            if (prescriptionPageViewModel.selecteddrugs.FirstOrDefault(drug => drug.name == prescriptionPageViewModel.selectedDrug.name) != null)
+            if (prescriptionPageViewModel.prescriptionDetails.FirstOrDefault(prescriptionDetail => prescriptionDetail.drug.name == prescriptionPageViewModel.selectedDrug.name) != null)
             {
                 await new ContentDialog()
                 {
@@ -84,6 +98,16 @@ namespace MedSy.Views.Doctor
 
         private async void saveButton_Click(object sender, RoutedEventArgs e)
         {
+            if(prescriptionPageViewModel.prescribed == true)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "You prescribed for this patient. Cannot edit",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+                return;
+            }
             int res = prescriptionPageViewModel.createPrescriptionAndUpdateQuantity();
             if (res == 1)
             {
@@ -93,6 +117,8 @@ namespace MedSy.Views.Doctor
                     Content = "prescribe successfully!",
                     CloseButtonText = "OK"
                 }.ShowAsync();
+
+                Frame.Navigate(typeof(PatientManagementPage));
             }
             else if (res == -1)
             {
@@ -117,6 +143,16 @@ namespace MedSy.Views.Doctor
 
         private async void minus_Click(object sender, RoutedEventArgs e)
         {
+            if (prescriptionPageViewModel.prescribed == true)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "You prescribed for this patient. Cannot edit",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+                return;
+            }
             if (!prescriptionPageViewModel.minus_click())
             {
                 await new ContentDialog()
@@ -130,6 +166,16 @@ namespace MedSy.Views.Doctor
 
         private async void plus_Click(object sender, RoutedEventArgs e)
         {
+            if (prescriptionPageViewModel.prescribed == true)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "You prescribed for this patient. Cannot edit",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+                return;
+            }
             if (!prescriptionPageViewModel.plus_click())
             {
                 if (prescriptionPageViewModel.selectedDrug.quantity == 0)

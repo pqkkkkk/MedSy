@@ -30,7 +30,7 @@ namespace MedSy.ViewModels
             patients = new ObservableCollection<Models.PatientManagementItem>();
             foreach (var item in list)
             {
-                ObservableCollection<Models.Consultation> consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetConsultations(item.role, item.id, "Done", null, null, null));
+                ObservableCollection<Models.Consultation> consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetAllDoneConsultationsByDoctorIdAndPatientId(userId,item.id));
                 patients.Add(new Models.PatientManagementItem { patient = item, consultations = consultations, isExpanded = false });
             }
 

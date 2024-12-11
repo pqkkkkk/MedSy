@@ -207,6 +207,14 @@ namespace MedSy.Views.User
             consultationRequestsViewModel.updateAllMissedConsultations();
             consultationRequestsViewModel.getConsultations(null, null, null);
             consultationRequestsViewModel.getNextConsultationTodayInfo();
+            
+        }
+
+        private async void ViewDetailClick(object sender, RoutedEventArgs e)
+        {
+            consultationRequestsViewModel.LoadPrescriptionDetailsOfConsultation();
+            consultationRequestsViewModel.LoadDrugOfCorrespondingPrescriptionDetail();
+            await consultationDetail.ShowAsync();
         }
     }
 }
