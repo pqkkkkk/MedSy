@@ -43,14 +43,11 @@ public partial class DoctorViewModel : INotifyPropertyChanged
     {
 
         IUserDao userDao = (Application.Current as App).locator.userDao;
-        var (items,count) = userDao.GetDoctors(
-            CurrentPage, RowsPerPage, Keyword, SelectedSpecialty, SelectedGender, SelectedYearExperience);
-
-        IDoctorDao doctor_dao = new DoctorMockDao();
+        
         string genderFilter = SelectedGender == "All" ? null : SelectedGender;
         string specialtyFilter = SelectedSpecialty == "All" ? null : SelectedSpecialty;
         int yearFilter = (SelectedYearExperience == "All" || string.IsNullOrEmpty(SelectedYearExperience)) ? -1: int.Parse(SelectedYearExperience);
-        var (items,count) = doctor_dao.GetDoctors(
+        var (items,count) = userDao.GetDoctors(
             CurrentPage, RowsPerPage, Keyword, specialtyFilter, genderFilter, yearFilter);
 
         Doctors = new ObservableCollection<Doctor>(
