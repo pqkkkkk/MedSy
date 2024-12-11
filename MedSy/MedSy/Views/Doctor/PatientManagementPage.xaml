@@ -71,9 +71,7 @@
                 x:Name="patientList">
                 <ScrollViewer
                     Padding="10,20,0,0"
-                    CornerRadius="0,20,20,0"
-                    BorderBrush="#ffffff"
-                    BorderThickness="1">
+                    CornerRadius="0,20,20,0">
                     <ItemsControl
                         ItemsSource="{x:Bind patientManagementViewModel.patients}">
                         <ItemsControl.ItemTemplate>
@@ -215,6 +213,7 @@
                                     FontSize="20"
                                     FontWeight="SemiBold"
                                     Foreground="Black"
+                                    TextWrapping="Wrap"
                                     Text="{x:Bind patientManagementViewModel.selectedConsultation.reason, Mode=OneWay}"/>
                             </Grid>
                         </Button>
@@ -235,6 +234,7 @@
                                     FontWeight="SemiBold"
                                     Foreground="Black"/>
                                 <TextBlock
+                                    TextWrapping="Wrap"
                                     Grid.Column="1"
                                     FontWeight="SemiBold"
                                     Foreground="Black"
@@ -252,7 +252,7 @@
                             Background="#d4f3ff">
                             <TextBlock 
                                 Grid.Column="0"
-                                Text="Edit this consultation"
+                                Text="View this consultation"
                                 FontWeight="Bold"
                                 Foreground="Black"/>
                         </Button>

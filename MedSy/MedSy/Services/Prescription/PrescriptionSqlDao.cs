@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MedSy.Models;
+using MedSy.Services.Drug;
 using Microsoft.Data.SqlClient;
 using Microsoft.UI.Xaml;
 
@@ -50,19 +52,20 @@ namespace MedSy.Services.Prescription
             }
         }
 
-        public void insertIntoPrescriptionDetail(int quantity, string usage, int prescriptionId, int drugId)
+        public void insertIntoPrescriptionDetail(Models.PrescriptionDetail prescriptionDetail, int prescriptionId)
         {
             
             var query = $"""
-                        INSERT INTO prescription_detail (quantity, usage, prescription_id, drug_id)
-                        VALUES (@quantity, @usage, @prescriptionId, @drugId)
+                        INSERT INTO prescription_detail (quantity, usage, prescription_id, drug_id, price)
+                        VALUES (@quantity, @usage, @prescriptionId, @drugId, @price)
                         """;
 
             var command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@quantity", quantity);
-            command.Parameters.AddWithValue("@usage", usage);
+            command.Parameters.AddWithValue("@price", prescriptionDetail.price);
+            command.Parameters.AddWithValue("@quantity", prescriptionDetail.quantity);
+            command.Parameters.AddWithValue("@usage", prescriptionDetail.usage);
             command.Parameters.AddWithValue("@prescriptionId", prescriptionId);
-            command.Parameters.AddWithValue("@drugId", drugId);
+            command.Parameters.AddWithValue("@drugId", prescriptionDetail.drug.drugId);
 
             try
             {
@@ -137,5 +140,47 @@ namespace MedSy.Services.Prescription
             return rowsAffected;
         }
 
+        public List<PrescriptionDetail> getPrescriptionDetails(int consultationId)
+        {
+            List<Models.PrescriptionDetail> prescriptionDetails = new List<Models.PrescriptionDetail>();
+            var query = $"""
+                select pd.id as id, pd.quantity as quantity, pd.usage as usage, pd.prescription_id as prescription_id, pd.drug_id as drug_id, pd.price as price
+                FROM prescription_detail pd
+                JOIN prescription p on pd.prescription_id = p.id
+                JOIN consultation c on p.consultation_id = c.id
+                where c.id = @consultationId
+                """;
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@consultationId", consultationId);
+
+            try
+            {
+                connection.Open();
+                var reader = command.ExecuteReader();    
+                while (reader.Read())
+                {
+                    Models.PrescriptionDetail prescriptionDetail = new Models.PrescriptionDetail();
+                    prescriptionDetail.id = reader.GetInt32(reader.GetOrdinal("id"));
+                    prescriptionDetail.quantity = reader.GetInt32(reader.GetOrdinal("quantity"));
+                    prescriptionDetail.usage = reader.GetString(reader.GetOrdinal("usage"));
+                    prescriptionDetail.prescription_id = reader.GetInt32(reader.GetOrdinal("prescription_id"));
+                    prescriptionDetail.price = reader.GetInt32(reader.GetOrdinal("price"));
+                    prescriptionDetail.drug_id = reader.GetInt32(reader.GetOrdinal("drug_id"));
+                    prescriptionDetails.Add(prescriptionDetail);
+                }
+                    return prescriptionDetails;
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return prescriptionDetails;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            
+        }
     }
 }

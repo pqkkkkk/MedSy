@@ -14,9 +14,9 @@ exports.seed = async function(knex) {
       status: 'Accepted',
       consultation_result: '',  
       reason: 'kkkkkkkk',
-      date: '2024-12-03',
-      start_time: '13:00:00',
-      end_time: '14:00:00',
+      date: '2024-12-11',
+      start_time: '17:00:00',
+      end_time: '18:00:00',
       type: 'offline', 
     },
     {

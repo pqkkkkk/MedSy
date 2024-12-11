@@ -8,6 +8,9 @@ using MedSy.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppNotifications.Builder;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using Windows.Networking.Proximity;
+using Windows.System;
 
 namespace MedSy.Services.Consultation
 {
@@ -184,7 +187,7 @@ namespace MedSy.Services.Consultation
             var connection = new SqlConnection(connectionString);
             return connection;
         }
-        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, String form, String status, int patientId, int doctorId, String consultation_result, String reason)
+        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, string form, string status, int patientId, int doctorId, string consultation_result, string reason)
         {
             connection.Open();
 
@@ -223,7 +226,7 @@ namespace MedSy.Services.Consultation
         }
         public Models.Consultation GetNextConsultationToday(string userRole, int userId)
         {
-            var list = GetConsultations(userRole, userId, "Accepted", DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now), null);
+            var list = GetConsultations(userRole, userId, "Accepted", DateOnly.FromDateTime(DateTime.Now), null, null);
             Models.Consultation result = null;
             if (list.Count != 0)
             {
@@ -313,6 +316,54 @@ namespace MedSy.Services.Consultation
         public int UpdateStatusToDone(Models.Consultation selectedConsultation)
         {
             throw new NotImplementedException();
+        }
+
+        public List<Models.Consultation> GetAllDoneConsultationsByDoctorIdAndPatientId(int doctorId, int patientId)
+        {
+            consultations = new List<Models.Consultation>();
+            connection.Open();
+
+            var sql = """
+                SELECT * FROM consultation
+                WHERE doctor_id = @doctorId AND patient_id = @patientId and status = 'Done'
+                """;
+            var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@doctorId", doctorId);
+            command.Parameters.AddWithValue("@patientId", patientId);
+            try
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var consultation = new Models.Consultation
+                        {
+                            id = reader.GetInt32(reader.GetOrdinal("id")),
+                            date = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("date"))),
+                            startTime = TimeOnly.FromTimeSpan(reader.GetTimeSpan(reader.GetOrdinal("start_time"))),
+                            endTime = TimeOnly.FromTimeSpan(reader.GetTimeSpan(reader.GetOrdinal("end_time"))),
+                            form = reader.GetString(reader.GetOrdinal("type")),
+                            status = reader.GetString(reader.GetOrdinal("status")),
+                            patientId = reader.GetInt32(reader.GetOrdinal("patient_id")),
+                            doctorId = reader.GetInt32(reader.GetOrdinal("doctor_id")),
+                            result = (reader.IsDBNull(reader.GetOrdinal("consultation_result"))) ? "None" : reader.GetString(reader.GetOrdinal("consultation_result")),
+                            reason = reader.IsDBNull(reader.GetOrdinal("reason")) ? null : reader.GetString(reader.GetOrdinal("reason"))
+                        };
+                        if (consultation.result == "")
+                        {
+                            consultation.result = "None";
+                        }
+                        consultations.Add(consultation);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            connection.Close();
+            return consultations;
         }
     }
 

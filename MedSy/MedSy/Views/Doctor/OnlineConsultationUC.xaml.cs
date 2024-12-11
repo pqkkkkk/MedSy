@@ -37,7 +37,6 @@ namespace MedSy.Views.Doctor
             (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 videlcall = null;
-                diagnosisField = null;
                 mainField.Children.Clear();
 
                 endOCButton.Visibility = Visibility.Visible;

@@ -13,5 +13,6 @@ namespace MedSy.Services.Drug
         public List<string> getAllDrugType();
         public void updateQuantity(int quantity, int id);
         public Tuple<List<Models.Drug>, int> GetDrugs(int page, int rowsPerPage, string keyword, string drugType, double minPrice, double maxPrice);
+        public Models.Drug getDrugById(int id);
     }
 }

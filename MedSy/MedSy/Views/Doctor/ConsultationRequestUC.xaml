@@ -288,7 +288,7 @@
                     <Button
                         Tag="Missed"
                         Click="selectStatusClicked"
-                        Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='Accepted'}"
+                        Background="{x:Bind consultationRequestsViewModel.selectedStatus, Mode=OneWay, Converter={StaticResource selectedStatusBgConverter}, ConverterParameter='Missed'}"
                         Margin="0,0,10,0">
                         <TextBlock
                             Foreground="#336699"

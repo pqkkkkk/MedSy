@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,8 @@ namespace MedSy.Services.Prescription
     {
         public bool createPrescription(int totalprice, DateOnly createdDay, int consultationId);
         public int getPrescriptionId_ByConsultationId(int consultationId);
-        public void insertIntoPrescriptionDetail(int quantity, string usage, int prescriptionId, int drugId);
-
+        public void insertIntoPrescriptionDetail(Models.PrescriptionDetail prescriptionDetail, int prescriptionId);
+        public List<Models.PrescriptionDetail> getPrescriptionDetails(int consultationId);
         public int updateTotalPrice(int totalprice, int prescriptionId);
 
     }

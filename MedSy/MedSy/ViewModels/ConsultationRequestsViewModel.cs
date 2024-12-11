@@ -1,4 +1,7 @@
-﻿using MedSy.Services.Consultation;
+﻿using MedSy.Models;
+using MedSy.Services.Consultation;
+using MedSy.Services.Drug;
+using MedSy.Services.Prescription;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -15,6 +18,7 @@ namespace MedSy.ViewModels
     {
         public ObservableCollection<Models.Consultation> consultations { get; set; }
         public Models.Consultation selectedConsultation { get; set; }
+        public ObservableCollection<PrescriptionDetail> prescriptionDetails { get; set; }
         public string selectedStatus { get; set; }
         public Models.Consultation nextConsultationToday { get; set; }
         public Models.User nextConsultationUser { get; set; }
@@ -24,11 +28,27 @@ namespace MedSy.ViewModels
             selectedConsultation = null;
             selectedStatus = "All";
             CRNotification = 0;
+            prescriptionDetails = new ObservableCollection<PrescriptionDetail>();
             (Application.Current as App).locator.socketService.newCRReceived += OnCRNotification;
             (Application.Current as App).locator.socketService.acceptedCRNotiReceived += OnCRNotification;
             updateAllMissedConsultations();
             getConsultations(null,null,null);
             getNextConsultationTodayInfo();
+        }
+        public void LoadPrescriptionDetailsOfConsultation()
+        {
+            IPrescriptionDao prescriptionDao = (Application.Current as App).locator.prescriptionDao;
+            prescriptionDetails = new ObservableCollection<PrescriptionDetail>(prescriptionDao.getPrescriptionDetails(selectedConsultation.id));
+        }
+        public void LoadDrugOfCorrespondingPrescriptionDetail()
+        {
+            IDrugDao drugDao = (Application.Current as App).locator.drugDao;
+            for (int i = 0; i < prescriptionDetails.Count(); i++)
+            {
+                prescriptionDetails[i].drug = drugDao.getDrugById(prescriptionDetails[i].drug_id);
+                //prescriptionDetails[i].drug = drugs.FirstOrDefault(d => d.drugId == prescriptionDetails[i].drug_id);
+            }
+
         }
         public void getConsultations(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MedSy.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.UI.Xaml;
+using Mysqlx.Resultset;
 
 namespace MedSy.Services.Drug
 {
@@ -222,8 +223,48 @@ namespace MedSy.Services.Drug
             return new Tuple<List<Models.Drug>, int>(drugs, totalItems);
         }
 
+        public Models.Drug getDrugById(int id)
+        {
+            var result = new Models.Drug();
+            
+            var query = $"""SELECT * FROM drug WHERE id = @id""";
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@id", id);
+            string connectionString = (Application.Current as App).locator.databaseConnectionString;
+            try
+            {
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var drug = new Models.Drug
+                        {
+                            drugId = reader.GetInt32(reader.GetOrdinal("Id")),
+                            name = reader.GetString(reader.GetOrdinal("name")),
+                            unit = reader.GetString(reader.GetOrdinal("unit")),
+                            price = reader.GetInt32(reader.GetOrdinal("price")),
+                            quantity = reader.GetInt32(reader.GetOrdinal("quantity")),
+                            manufacturing_date = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("manufacturing_date"))),
+                            expiry_date = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("expiry_date"))),
+                            drugTypeName = reader.GetString(reader.GetOrdinal("drug_type"))
+                        };
+                        result = drug;
+                    }
+                }
+                
+                    return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+            }
 
-
-
+        }
     }
 }
