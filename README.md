@@ -207,7 +207,7 @@ node server.js
 #### f. Kê đơn thuốc cho bệnh nhân
 Tài liệu kiểm thử các chức năng có thể xem tại đây: https://docs.google.com/document/d/1fEq2Dv1NQlSsvhUAGIAwUhzN_RiQyGIS/edit?usp=drive_link&ouid=103352419354890159322&rtpof=true&sd=true
 
-Video demo các chức năng có thể xem tại đây:
+Video demo các chức năng có thể xem tại đây: https://drive.google.com/file/d/1YKPbvwHld7VH5gADfua1ei8gzgkhR794/view?usp=drive_link
 ### 3. Hướng dẫn chạy ứng dụng ở milestone 2
 1. Tải môi trường thực thi javascript NodeJS
 2. Chuyển đến folder db_migration
