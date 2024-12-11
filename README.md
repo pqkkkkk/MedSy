@@ -195,7 +195,6 @@ node server.js
 ## IV. Milestone 2
 ### 1. Làm việc nhóm <a id="1-làm-việc-nhóm-milestone2"></a>
 #### Phân công công việc
-#### Gitflow
 ### 2. Các chức năng đã làm <a id="2-các-chức-năng-đã-làm-milestone2"></a>
 Tài liệu kiểm thử các chức năng có thể xem tại đây: https://docs.google.com/document/d/1fEq2Dv1NQlSsvhUAGIAwUhzN_RiQyGIS/edit?usp=drive_link&ouid=103352419354890159322&rtpof=true&sd=true
 
