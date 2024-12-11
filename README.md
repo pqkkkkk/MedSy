@@ -195,19 +195,19 @@ node server.js
 ## IV. Milestone 2
 ### 1. Làm việc nhóm <a id="1-làm-việc-nhóm-milestone2"></a>
 #### Phân công công việc
+![all text](./report_resource/PhanCongCVMilestone2.png)
+#### Gitflow
+![all text](./report_resource/GitflowMilestone2.png)
 ### 2. Các chức năng đã làm <a id="2-các-chức-năng-đã-làm-milestone2"></a>
-Tài liệu kiểm thử các chức năng có thể xem tại đây: https://docs.google.com/document/d/1fEq2Dv1NQlSsvhUAGIAwUhzN_RiQyGIS/edit?usp=drive_link&ouid=103352419354890159322&rtpof=true&sd=true
-
-Video demo các chức năng có thể xem tại đây:
 #### a. Đặt lịch khám trực tuyến
 #### b. Khám trực tuyến thông qua video
 #### c. Lịch làm việc cá nhân hàng ngày hàng tuần
-
 #### d. Phản hồi về lịch đặt khám của bệnh nhân
 #### e. Quản lý bệnh án
 #### f. Kê đơn thuốc cho bệnh nhân
+Tài liệu kiểm thử các chức năng có thể xem tại đây: https://docs.google.com/document/d/1fEq2Dv1NQlSsvhUAGIAwUhzN_RiQyGIS/edit?usp=drive_link&ouid=103352419354890159322&rtpof=true&sd=true
 
-
+Video demo các chức năng có thể xem tại đây:
 ### 3. Hướng dẫn chạy ứng dụng ở milestone 2
 1. Tải môi trường thực thi javascript NodeJS
 2. Chuyển đến folder db_migration
