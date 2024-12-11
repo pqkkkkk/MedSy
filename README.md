@@ -205,7 +205,7 @@ node server.js
 #### d. Phản hồi về lịch đặt khám của bệnh nhân
 #### e. Quản lý bệnh án
 #### f. Kê đơn thuốc cho bệnh nhân
-Tài liệu kiểm thử các chức năng có thể xem tại đây: https://docs.google.com/document/d/1fEq2Dv1NQlSsvhUAGIAwUhzN_RiQyGIS/edit?usp=drive_link&ouid=103352419354890159322&rtpof=true&sd=true
+Tài liệu kiểm thử các chức năng có thể xem tại đây: https://docs.google.com/document/d/1RY0cHzI2d7jwbLXKoADU_ok9_psdyXdH/edit?usp=sharing&ouid=103352419354890159322&rtpof=true&sd=true
 
 Video demo các chức năng có thể xem tại đây: https://drive.google.com/file/d/1YKPbvwHld7VH5gADfua1ei8gzgkhR794/view?usp=drive_link
 ### 3. Hướng dẫn chạy ứng dụng ở milestone 2
