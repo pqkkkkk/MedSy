@@ -21,6 +21,7 @@
 - Áp dụng mô hình MVVM
 - WinUI 3
 - ExpressJS: xây dựng socket server phục vụ tính năng chat và videl call realtime
+- WebRTC: API phục vụ tính năng video call
 ## III. Milestone 1
 ### 1. Làm việc nhóm
 #### Phân công công việc
