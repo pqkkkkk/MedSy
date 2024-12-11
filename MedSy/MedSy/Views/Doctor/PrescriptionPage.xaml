@@ -256,7 +256,6 @@
                         Foreground="#fff" 
                         CornerRadius="10" 
                         FontSize="20"
-                        Margin="10"
                         Click="saveButton_Click" 
                         VerticalAlignment="Center" 
                         HorizontalAlignment="Center"/>

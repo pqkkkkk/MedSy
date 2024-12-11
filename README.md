@@ -8,6 +8,12 @@
     - [Hướng dẫn chạy ứng dụng](#3-hướng-dẫn-chạy-ứng-dụng-ở-milestone-1)
     - [Số giờ làm việc](#4-số-giờ-làm-việc)
     - [Điểm tự đánh giá](#5-điểm-tự-đánh-giá)
+ - [Milestone 2](#iv-milestone-2)
+    - [Làm việc nhóm](#1-làm-việc-nhóm-milestone2)
+    - [Các chức năng đã làm](#2-các-chức-năng-đã-làm-milestone2)
+    - [Hướng dẫn chạy ứng dụng](#3-hướng-dẫn-chạy-ứng-dụng-ở-milestone-2)
+    - [Số giờ làm việc](#4-số-giờ-làm-việc-milestone2)
+    - [Điểm tự đánh giá](#5-điểm-tự-đánh-giá-milestone2)
 ## I. Thông tin nhóm
 - 22120174 - Phạm Quốc Kiệt
 - 22120353 - Nguyễn Quang Thông
@@ -15,6 +21,7 @@
 - Áp dụng mô hình MVVM
 - WinUI 3
 - ExpressJS: xây dựng socket server phục vụ tính năng chat và videl call realtime
+- WebRTC: API phục vụ tính năng video call
 ## III. Milestone 1
 ### 1. Làm việc nhóm
 #### Phân công công việc
@@ -183,4 +190,113 @@ node server.js
 | 2    | Tìm kiếm thông tin bác sĩ | 9.5 |
 | 3    | Tư vấn trực tuyến | 9.5 |
 | 4    | Đánh giá và phản hồi| 9.5 |
+| Điểm đánh giá chung | | 9.5 |
+
+## IV. Milestone 2
+### 1. Làm việc nhóm <a id="1-làm-việc-nhóm-milestone2"></a>
+#### Phân công công việc
+
+### 2. Các chức năng đã làm <a id="2-các-chức-năng-đã-làm-milestone2"></a>
+#### a. Đặt lịch khám trực tuyến
+##### Điều kiện tiên quyết
+- Ứng dụng đã khởi động và đăng nhập thành công.
+- Dữ liệu bác sĩ có sẵn trong danh sách giả lập (sử dụng Mock Data).
+
+##### Các bước kiểm thử
+##### Demo
+1. Đăng nhập:
+- Nhập thông tin đăng nhập như bên dưới và bấm vào nút sign in
+     - Username: pqkiet854
+     - Password: pqkiet854
+ 
+![alt text](./report_resource/Login_Precondition.png)
+
+2. User Dashboard hiển thị lên, điều hướng qua trang Doctor_Infor (icon số 2 trên thanh navigate) để thực hiện việc xem danh sách bác sĩ:
+
+![alt text](./report_resource/UserDashboard.png)
+
+3. Trang Doctor_Infor hiện lên, chọn vào 1 bác sĩ bạn muốn khám (giả sử bác sĩ Le Van A):
+
+![alt text](./report_resource/Doctor_Infor_milestone2.png)
+
+4. Trang chi tiết bác sĩ hiện lên hiển thị các thông tin chi tiết của bác sĩ, chọn nút đặt lịch để tiến hành đặt lịch khám với bác sĩ này:
+
+![alt text](./report_resource/ClickSchedule.png)
+
+5. Trang đặt lịch hiện lên, hiển thị các thông tin chi tiết của người dùng và thông tin bác sĩ
+
+![alt text](./report_resource/Schedule.png)
+ 
+6. tiến hành thực hiện việc chọn Form (hình thức khám bệnh)
+
+![alt text](./report_resource/Schedule_chooseForm.png)
+
+7. chọn Day (ngày khám)
+
+![alt text](./report_resource/Schedule_chooseDay.png)
+
+8. chọn Time start - Time end (thời gian bắt đầu - thời gian kết thúc) - Giả sử chọn thời gian bắt đầu là 12h, thời gian kết thúc là 13h
+
+![alt text](./report_resource/Schedule_chooseTime.png)
+
+9. Viết biểu hiện, triệu chứng (nếu có) sau đó bấm nút Send request để gửi yêu cầu đặt lịch khám
+
+![alt text](./report_resource/Schedule_writeSymptoms.png)
+
+10. Nếu thành công, sẽ hiện thông báo
+![alt text](./report_resource/Schedule_success.png)
+
+11. Ngược lại, trường hợp 1 trong các trường dữ liệu chưa được nhập, sẽ hiển thị thông báo tương ứng với trường đó (giả sử trong trường hợp bên dưới là form)
+![alt text](./report_resource/Schedule_MissingInformation.png)
+
+
+#### b. Khám trực tuyến thông qua video
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+#### c. Lịch làm việc cá nhân hàng ngày hàng tuần
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+#### d. Phản hồi về lịch đặt khám của bệnh nhân
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+#### e. Quản lý bệnh án
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+#### f. Kê đơn thuốc cho bệnh nhân
+##### Điều kiện tiên quyết
+##### Các bước kiểm thử
+##### Demo
+
+### 3. Hướng dẫn chạy ứng dụng ở milestone 2
+
+
+### 4. Số giờ làm việc <a id="4-số-giờ-làm-việc-milestone2"></a>
+
+| STT | Tính năng | Mô tả | Số giờ làm việc |
+|-----------|-------|------------------|------------------|
+| 1    | Đặt lịch khám trực tuyến | Cho phép bệnh nhân đặt lịch khám ngoại trú thông qua ứng dụng | 1 |
+| 2    | Khám trực tuyến thông qua video | Cho phép khám bệnh trực tuyến thông qua ứng dụng | 2 |
+| 3    | Lịch làm việc cá nhân hàng ngày/ hàng tuần | Cho phép bác sĩ quản lý lịch trình làm việc trong ngày/tuần và theo dõi các lịch đặt khám của bệnh nhân | 2 |
+| 4    | Phản hồi về lịch đặt khám của bệnh nhân | Cho phép bác sĩ từ chối/ chấp nhận lịch khám của bệnh nhân | 1 |
+| 5    | Quản lý bệnh án | Cho phép bệnh nhân xem được các hồ sơ bệnh án đã khám của mình và cho phép bác sĩ quản lý hồ sơ bệnh án của bệnh nhân mà mình đã điều trị | 1 |
+| 6    | Kê đơn thuốc cho bệnh nhân | Dựa vào các chẩn đoán cho phép bác sĩ kê đơn thuốc phù hợp với bệnh nhân | 1 |
+| Tổng số giờ làm việc | | | 8 |
+
+### 5. Điểm tự đánh giá <a id="5-điểm-tự-đánh-giá-milestone2"></a>
+| STT | Tính năng | Điểm tự đánh giá |
+|------|-------|------------------|
+| 1    | Đặt lịch khám trực tuyến | 9.5 |
+| 2    | Khám trực tuyến thông qua video | 9.5 |
+| 3    | Lịch làm việc cá nhân hàng ngày/ hàng tuần | 9.5 |
+| 4    | Phản hồi về lịch đặt khám của bệnh nhân | 9.5 |
+| 5    | Quản lý bệnh án | 9.5 |
+| 6    | Kê đơn thuốc cho bệnh nhân | 9.5 |
 | Điểm đánh giá chung | | 9.5 |
