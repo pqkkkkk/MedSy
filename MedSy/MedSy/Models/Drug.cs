@@ -19,7 +19,6 @@ namespace MedSy.Models
         public DateOnly expiry_date { get; set; }
         public string drugTypeName { get; set; }
 
-        // Khởi tạo một drug với số lượng mặc định ban đầu là 0 khi add vào list các thuốc được kê đơn 
         public Drug(Drug drug)
         {
             this.drugId = drug.drugId;

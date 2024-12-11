@@ -122,26 +122,23 @@ namespace MedSy.ViewModels
             {
                 return -1;
             }
-            IPrescriptionDao dao = (Application.Current as App).locator.prescriptionDao;
-            // Tạo prescripption mới
-            if (dao.createPrescription(0, DateOnly.FromDateTime(DateTime.Now), selectedConsultation.id))
-            {
-                // nếu tạp thành công, lấy prescriptionId
-                int prescriptionId = dao.getPrescriptionId_ByConsultationId(selectedConsultation.id);
+            IPrescriptionDao prescriptionDao = (Application.Current as App).locator.prescriptionDao;
+            
+            if (prescriptionDao.createPrescription(0, DateOnly.FromDateTime(DateTime.Now), selectedConsultation.id))
+            { 
+                int prescriptionId = prescriptionDao.getPrescriptionId_ByConsultationId(selectedConsultation.id);
                 int total = 0;
 
-                // Với mỗi item trong danh sách thuốc đã được chọn, thêm một prescription_detail
                 foreach (var item in selecteddrugs)
                 {
                     string indication = DrugIndications.TryGetValue(item, out var value) ? value : "No Indication";
-                    dao.insertIntoPrescriptionDetail(item.quantity, indication, prescriptionId, item.drugId);
+                    prescriptionDao.insertIntoPrescriptionDetail(item.quantity, indication, prescriptionId, item.drugId);
                     total += item.price;
 
-                    // cập nhật lại số lượng thuốc trong kho
                     var currentDrug = drugs.FirstOrDefault(d => d.drugId == item.drugId);
                     drugDao.updateQuantity(currentDrug.quantity, currentDrug.drugId);
                 }
-                if (dao.updateTotalPrice(total, prescriptionId) != 1) {
+                if (prescriptionDao.updateTotalPrice(total, prescriptionId) != 1) {
                     return 0;
                 };
                 IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;

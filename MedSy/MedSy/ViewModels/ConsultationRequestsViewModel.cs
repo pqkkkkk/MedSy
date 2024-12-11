@@ -26,6 +26,7 @@ namespace MedSy.ViewModels
             CRNotification = 0;
             (Application.Current as App).locator.socketService.newCRReceived += OnCRNotification;
             (Application.Current as App).locator.socketService.acceptedCRNotiReceived += OnCRNotification;
+            updateAllMissedConsultations();
             getConsultations(null,null,null);
             getNextConsultationTodayInfo();
         }
@@ -59,7 +60,9 @@ namespace MedSy.ViewModels
         }
         public void updateAllMissedConsultations()
         {
-            (Application.Current as App).locator.consultationDao.UpdateAllMissedConsultations();
+            string userRole = (Application.Current as App).locator.currentUser.role;
+            int userId = (Application.Current as App).locator.currentUser.id;
+            (Application.Current as App).locator.consultationDao.UpdateAllMissedConsultations(userRole,userId);
         }
         public void updateSelectedConsultation(Models.Consultation consultation)
         {

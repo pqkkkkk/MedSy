@@ -12,6 +12,7 @@ namespace MedSy.Services.Management
         public List<Models.User> getConnectingUsers(int currentUserId, string currentRole);
         public void offNewMessageNotify(int currentUserId, int oppositeUserId, string currentRole);
         public void onNewMessageNotify(int currentUserId, int oppositeUserId, string currentRole);
+        public void onMySelfNewMessageNotify(int currentUserId, int oppositeUserId, string currentRole);
         public int checkNewMessage(int currentUserId, string currentRole);
     }
 }

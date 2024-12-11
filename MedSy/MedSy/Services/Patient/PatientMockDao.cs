@@ -25,7 +25,7 @@ namespace MedSy.Services.Patient
                     phoneNumber = "0354747227",
                     birthday = new DateTime(1998, 5, 15),
                     gender = "Male",
-                    healthInsurance = "123456789"
+                    healthInsurance = true
                 },
             };
             return Patients;

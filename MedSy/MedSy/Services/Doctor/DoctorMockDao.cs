@@ -37,8 +37,6 @@ public class DoctorMockDao : IDoctorDao
                 birthday = new DateTime(2004,2,2),
                 avatarPath="ms-appx:///Assets/doctoravt.jpg",
             },
-
-
             new Doctor { 
                 id = 3, 
                 fullName = "Nguyen Van C",
@@ -51,8 +49,6 @@ public class DoctorMockDao : IDoctorDao
                 birthday = new DateTime(2004,3,3),
                 avatarPath="ms-appx:///Assets/doctoravt.jpg",
             },
-
-
             new Doctor { 
                 id = 4, 
                 fullName = "Le Thi D", 

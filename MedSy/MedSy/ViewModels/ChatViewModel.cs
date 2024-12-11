@@ -91,6 +91,7 @@ namespace MedSy.ViewModels
             await socketService.sendMessage(message, senderId, receiverId);
             (Application.Current as App).locator.messageDao.addMessage(senderId, receiverId, message);
             messages.Add(new Message { content = message, senderId = senderId, receiverId = receiverId });
+            (Application.Current as App).locator.managementDao.onMySelfNewMessageNotify(senderId, receiverId, (Application.Current as App).locator.currentUser.role);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

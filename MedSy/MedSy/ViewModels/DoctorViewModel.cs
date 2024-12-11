@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MedSy.Models;
 using MedSy.Services.Feedback;
+using MedSy.Services.User;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 namespace MedSy.ViewModels;
 public partial class DoctorViewModel : INotifyPropertyChanged
@@ -38,8 +40,8 @@ public partial class DoctorViewModel : INotifyPropertyChanged
 
     public void LoadData()
     {
-        IDoctorDao doctor_dao = new DoctorMockDao();
-        var (items,count) = doctor_dao.GetDoctors(
+        IUserDao userDao = (Application.Current as App).locator.userDao;
+        var (items,count) = userDao.GetDoctors(
             CurrentPage, RowsPerPage, Keyword, SelectedSpecialty, SelectedGender, SelectedYearExperience);
 
         Doctors = new ObservableCollection<Doctor>(

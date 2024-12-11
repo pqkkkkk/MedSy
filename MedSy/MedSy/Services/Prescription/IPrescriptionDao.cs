@@ -13,5 +13,6 @@ namespace MedSy.Services.Prescription
         public void insertIntoPrescriptionDetail(int quantity, string usage, int prescriptionId, int drugId);
 
         public int updateTotalPrice(int totalprice, int prescriptionId);
+
     }
 }

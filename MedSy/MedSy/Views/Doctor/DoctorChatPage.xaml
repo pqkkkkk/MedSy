@@ -33,7 +33,7 @@
                     <ItemsControl 
                         x:Name="connectingUsersField" Margin="0,40,0,0" ItemsSource="{x:Bind chatViewModel.connectingUsers}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate  x:DataType="models:User">
+                            <DataTemplate x:DataType="models:User">
                                 <Border CornerRadius="10,10,10,10">
                                     <Button 
                                         x:Name="doctorInfor" Height="50" Margin="30,10,50,0" Click="switchToNewChatClick"
@@ -54,7 +54,7 @@
                                                 Source="{x:Bind avatarPath}" Margin="0,0,20,0"/>
                                             <TextBlock 
                                                 Grid.Row="0" Grid.Column="1" x:Name="doctorName" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                FontWeight="Bold" Text="{x:Bind username}" />
+                                                FontWeight="Bold" Text="{x:Bind fullName}" />
                                         </Grid>
                                     </Button>
                                 </Border>
@@ -92,7 +92,7 @@
                         <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <TextBlock 
-                        Grid.Row="0" Grid.Column="0" Text="{x:Bind chatViewModel.selectedUser.username, Mode=OneWay}"
+                        Grid.Row="0" Grid.Column="0" Text="{x:Bind chatViewModel.selectedUser.fullName, Mode=OneWay}"
                         FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,20,0"/>
                     <Image 
                         Grid.Row="0" Grid.Column="1" Margin="0,5,0,5"

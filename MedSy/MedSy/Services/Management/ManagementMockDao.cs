@@ -120,5 +120,10 @@ namespace MedSy.Services.Management
 
             return result;
         }
+
+        public void onMySelfNewMessageNotify(int currentUserId, int oppositeUserId, string currentRole)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
