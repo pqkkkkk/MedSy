@@ -195,7 +195,9 @@ node server.js
 ## IV. Milestone 2
 ### 1. Làm việc nhóm <a id="1-làm-việc-nhóm-milestone2"></a>
 #### Phân công công việc
-
+![all text](./report_resource/PhanCongCVMilestone2.png)
+#### Git flow
+![all text](./report_resource/GitflowMilestone2.png)
 ### 2. Các chức năng đã làm <a id="2-các-chức-năng-đã-làm-milestone2"></a>
 Tai lieu kiem thu cac chuc nang co the xem tai day:
 
