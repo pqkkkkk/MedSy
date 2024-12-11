@@ -36,14 +36,24 @@ namespace MedSy.ViewModels
 
         void LoadData()
         {
-            // Khởi tạo các đối số cần thiết và tìm bệnh nhân có id giống với id của current User
+            
 
             PatientMockDao patientDao = new PatientMockDao();
             patients = new ObservableCollection<Patient>(patientDao.GetAllPatient());
             if (currentUser != null && currentUser.role == "patient")
             {
-                // set bệnh nhân được chọn có id trùng với id của currentUser
-                selectedPatient = patients.FirstOrDefault(p => p.id == currentUser.id);
+                selectedPatient = new Patient()
+                {
+                    id = currentUser.id,
+                    username = currentUser.username,
+                    email = currentUser.email,
+                    fullName = currentUser.fullName,
+                    password = currentUser.password,
+                    phoneNumber = currentUser.phoneNumber,
+                    gender = currentUser.gender,
+                    address = currentUser.address,
+                    healthInsurance = true
+                };
             }
         }
         public ScheduleConsulationViewModel(Models.Doctor d)

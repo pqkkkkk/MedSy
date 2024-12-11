@@ -33,6 +33,7 @@ namespace MedSy.Views
         public SignInWindow()
         {
             this.InitializeComponent();
+            (Application.Current as App).locator.socketService.isLoading += showLoadingProgressing;
         }
         private async void SignInClicked(object sender, RoutedEventArgs e)
         {
@@ -48,13 +49,12 @@ namespace MedSy.Views
                 if (username == actualUsername && password == actualPassword)
                 {
                     (Application.Current as App).locator.currentUser = user;
-
                     int userId = (Application.Current as App).locator.currentUser.id;
 
-                    (Application.Current as App).locator.socketService.isLoading += showLoadingProgressing;
+                    
                     int connectionStatus = await (Application.Current as App).locator.socketService.connectAsync();
-                    bool isConnectedSocket = (Application.Current as App).locator.socketService.isConnected();
                     showLoadingProgressing(false);
+
                     if (connectionStatus == 0)
                     {
                         

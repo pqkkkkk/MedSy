@@ -27,43 +27,21 @@ namespace MedSy.Services
         {
             socket = new SocketIOClient.SocketIO("http://localhost:5555");
         }
-        public bool isConnected()
-        {
-            return socket.Connected;
-        }
         public async Task<int> connectAsync()
         {
             isLoading?.Invoke(true);
-
             var tcs = new TaskCompletionSource<int>();
 
             try
             {
-                socket.OnConnected += (sender, e) =>
-                {
-                    tcs.SetResult(1);
-                    receiveMessage();
-                    receiveEndCallMessage();
-                    receiveNewCRMessage();
-                    receiveAcceptedCRNoti();
-                };
-                socket.OnError += (sender, e) =>
-                {
-                    if (!tcs.Task.IsCompleted)
-                    { 
-                        Console.WriteLine("Error: " + e);
-                        tcs.TrySetResult(0);
-                    }
-                    };
-                socket.OnDisconnected += (sender, e) =>
-                {
-                    if (!tcs.Task.IsCompleted)
-                    {
-                        Console.WriteLine("Error: " + e);
-                        tcs.TrySetResult(0);
-                    }
-                };
-                
+                socket.OnConnected -= OnConnectedHandler;
+                socket.OnError -= OnErrorHandler;
+                socket.OnDisconnected -= OnDisconnectedHandler;
+
+                socket.OnConnected += OnConnectedHandler;
+                socket.OnError += OnErrorHandler;
+                socket.OnDisconnected += OnDisconnectedHandler;
+
                 socket.Options.Reconnection = false;
                 socket.Options.ConnectionTimeout = TimeSpan.FromSeconds(1);
                 await socket.ConnectAsync();
@@ -72,12 +50,40 @@ namespace MedSy.Services
             {
                 Debug.WriteLine(ex.Message);
                 if (!tcs.Task.IsCompleted)
-                    tcs.SetResult(0);
+                    tcs.TrySetResult(0);
             }
 
-
             return await tcs.Task;
+
+            void OnConnectedHandler(object sender, EventArgs e)
+            {
+                if (!tcs.Task.IsCompleted)
+                {
+                    tcs.TrySetResult(1);
+                    receiveMessage();
+                    receiveEndCallMessage();
+                    receiveNewCRMessage();
+                    receiveAcceptedCRNoti();
+                }
+            }
+            void OnErrorHandler(object sender, string e)
+            {
+                if (!tcs.Task.IsCompleted)
+                {
+                    Console.WriteLine("Error: " + e);
+                    tcs.TrySetResult(0);
+                }
+            }
+            void OnDisconnectedHandler(object sender, string e)
+            {
+                if (!tcs.Task.IsCompleted)
+                {
+                    Console.WriteLine("Disconnected: " + e);
+                    tcs.TrySetResult(0);
+                }
+            }
         }
+
         public async Task register(int userId)
         {
             string role = "user";

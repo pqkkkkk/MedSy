@@ -6,18 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using MedSy.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppNotifications.Builder;
 
 namespace MedSy.Services.Consultation
 {
     public class ConsultationSqlDao:IConsultationDao
     {
+        private SqlConnection connection;
         private List<Models.Consultation> consultations;
+        public ConsultationSqlDao()
+        {
+            connection = (Application.Current as App).locator.sqlConnection;
+        }
 
         public List<Models.Consultation> GetConsultations(string userRole, int userId, string status, DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             consultations = new List<Models.Consultation>();
-            var connection = ConnectSql();
+            
             connection.Open();
 
             var sqlQuery = new StringBuilder("SELECT * FROM consultation where 1=1");
@@ -85,10 +91,13 @@ namespace MedSy.Services.Consultation
                             status = reader.GetString(reader.GetOrdinal("status")),
                             patientId = reader.GetInt32(reader.GetOrdinal("patient_id")),
                             doctorId = reader.GetInt32(reader.GetOrdinal("doctor_id")),
-                            result = reader.IsDBNull(reader.GetOrdinal("consultation_result")) ? null : reader.GetString(reader.GetOrdinal("consultation_result")),
+                            result = (reader.IsDBNull(reader.GetOrdinal("consultation_result"))) ? "None" : reader.GetString(reader.GetOrdinal("consultation_result")),
                             reason = reader.IsDBNull(reader.GetOrdinal("reason")) ? null : reader.GetString(reader.GetOrdinal("reason"))
                         };
-
+                        if(consultation.result =="")
+                        {
+                            consultation.result = "None";
+                        }
                         consultations.Add(consultation);
                     }
                 }
@@ -106,12 +115,9 @@ namespace MedSy.Services.Consultation
             consultations = new List<Models.Consultation>();
             if (date.HasValue)
             {
-                // Tính toán ngày chủ nhật và ngày thứ bảy trong tuần của ngày đã cho
                 int dayOfWeek = (int)date.Value.DayOfWeek;
                 DateOnly sunday = date.Value.AddDays(-dayOfWeek);
                 DateOnly saturday = sunday.AddDays(6);
-
-                var connection = ConnectSql();
 
                 var sqlQuery = $"""
                     SELECT *
@@ -120,7 +126,6 @@ namespace MedSy.Services.Consultation
                     AND status = 'Accepted'
                     AND date >= @sunday AND date <= @saturday
                 """;
-
                 var command = new SqlCommand(sqlQuery, connection);
                 command.Parameters.AddWithValue("@doctorId", doctorId);
                 command.Parameters.AddWithValue("@sunday", sunday.ToString("yyyy-MM-dd"));
@@ -128,7 +133,7 @@ namespace MedSy.Services.Consultation
 
                 try
                 {
-                    connection.Open(); // Mở kết nối
+                    connection.Open();
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -147,7 +152,7 @@ namespace MedSy.Services.Consultation
                                 reason = reader.IsDBNull(reader.GetOrdinal("reason")) ? null : reader.GetString(reader.GetOrdinal("reason"))
                             };
 
-                            consultations.Add(consultation); // Thêm vào danh sách kết quả
+                            consultations.Add(consultation);
                         }
                     }
                 }
@@ -168,7 +173,6 @@ namespace MedSy.Services.Consultation
         }
         public SqlConnection ConnectSql()
         {
-            // Kết nối database
             var connectionString = """
                 Server = localhost;
                 Database = medsy;
@@ -180,10 +184,9 @@ namespace MedSy.Services.Consultation
             var connection = new SqlConnection(connectionString);
             return connection;
         }
-
         public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, String form, String status, int patientId, int doctorId, String consultation_result, String reason)
         {
-            var connection = ConnectSql();
+            connection.Open();
 
             var query = $"""
                 INSERT INTO consultation (date, start_time, end_time, type, status, patient_id, doctor_id, consultation_result, reason)
@@ -203,10 +206,10 @@ namespace MedSy.Services.Consultation
             command.Parameters.AddWithValue("@reason", string.IsNullOrEmpty(reason) ? DBNull.Value : reason);
             try
             {
-                connection.Open();
-                int result = command.ExecuteNonQuery(); // Thực thi câu lệnh INSERT
+                
+                int result = command.ExecuteNonQuery();
 
-                return true; 
+                return true;
             }
             catch (Exception ex)
             {
@@ -218,7 +221,6 @@ namespace MedSy.Services.Consultation
                 connection.Close(); 
             }
         }
-
         public Models.Consultation GetNextConsultationToday(string userRole, int userId)
         {
             var list = GetConsultations(userRole, userId, "Accepted", DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now), null);
@@ -230,10 +232,8 @@ namespace MedSy.Services.Consultation
             }
             return result;
         }
-
         public int UpdateStatus(Models.Consultation selectedConsultation, string status)
         {
-            var connection = ConnectSql();
             connection.Open();
 
             var query = $"""
@@ -247,10 +247,8 @@ namespace MedSy.Services.Consultation
             connection.Close();
             return rowsAffected;
         }
-
         public int DeleteConsultation(Models.Consultation selectedConsultation)
         {
-            var connection = ConnectSql();
             connection.Open();
 
             var query = $"""
@@ -264,10 +262,8 @@ namespace MedSy.Services.Consultation
             return rowsAffected;
 
         }
-
         public bool updateResult(int id, string result)
         {
-            var connection = ConnectSql();
             connection.Open();
 
             var query = $"""
@@ -285,11 +281,39 @@ namespace MedSy.Services.Consultation
             return false;
 
         }
-        public int UpdateAllMissedConsultations()
+        public int UpdateAllMissedConsultations(string userRole, int userId)
+        {
+            string sql = "";
+            if (userRole == "doctor")
+            {
+                sql = """
+                UPDATE consultation
+                SET status = 'Missed'
+                WHERE date = @currentDate AND end_time < @Now  AND status = 'Accepted' AND doctor_id = @userId
+                """;
+            }
+            else if (userRole == "patient")
+            {
+                sql = """
+                UPDATE consultation
+                SET status = 'Missed'
+                WHERE date = @currentDate AND end_time < @Now  AND status = 'Accepted' AND patient_id = @userId
+                """;
+            }
+            var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@currentDate", DateOnly.FromDateTime(DateTime.Now).ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@Now", TimeOnly.FromDateTime(DateTime.Now).ToString());
+            command.Parameters.AddWithValue("@userId", userId);
+
+            connection.Open();
+            int rowsAffected = command.ExecuteNonQuery();
+            connection.Close();
+            return rowsAffected;
+        }
+        public int UpdateStatusToDone(Models.Consultation selectedConsultation)
         {
             throw new NotImplementedException();
         }
-
     }
 
 }

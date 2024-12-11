@@ -279,7 +279,7 @@
 
                     <TextBox 
                         Grid.Row="2" PlaceholderText="Some Diagnosis" CornerRadius="20"
-                        Text="{x:Bind prescriptionPageViewModel.selectedConsultation.result,Mode=OneWay}"
+                        Text="{x:Bind prescriptionPageViewModel.selectedConsultation.result,Mode=TwoWay}"
                         Background="#D4F3FF" Margin="20 0 20 0"
                         FontSize="25" Foreground="#000" TextWrapping="Wrap" Height="300"
                         Header="Disagnosis" VerticalAlignment="Top" PlaceholderForeground="#666"/>

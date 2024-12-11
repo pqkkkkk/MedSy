@@ -4,51 +4,50 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('feedback').del()
-  await knex.raw('DBCC CHECKIDENT("feedback", RESEED, 0)');
-
+  await knex('feedback').del();
+  //await knex.raw('DBCC CHECKIDENT("feedback", RESEED, 0)');
   await knex('feedback').insert([
     {
-      patient_id: 1,
-      doctor_id: 2,
-      content: "Very professional doctor",
-      rating: 4.8,
+      Doctor_ID: 2,
+      Patient_ID : 1,
+      Content : "Good!",
+      Rating : 5,
     },
     {
-      patient_id: 1,
-      doctor_id: 3,
-      content: "Helpful and attentive",
-      rating: 4.5,
+      Doctor_ID : 2,
+      Patient_ID : 1,
+      Content : "So Good!",
+      Rating : 4,
     },
     {
-      patient_id: 4,
-      doctor_id: 2,
-      content: "Quick diagnosis",
-      rating: 4.7,
+      Doctor_ID : 2,
+      Patient_ID : 4,
+      Content : "Excellent service, highly recommend!",
+      Rating : 5,
     },
     {
-      patient_id: 4,
-      doctor_id: 3,
-      content: "Kind and patient",
-      rating: 5.0,
+      Doctor_ID : 2,
+      Patient_ID : 4,
+      Content : "Very knowledgeable and caring.",
+      Rating : 4,
     },
     {
-      patient_id: 1,
-      doctor_id: 2,
-      content: "Explained everything well",
-      rating: 4.6,
+      Doctor_ID : 3,
+      Patient_ID : 1,
+      Content : "Wait time was a bit long, but the doctor was great.",
+      Rating : 3,
     },
     {
-      patient_id: 4,
-      doctor_id: 3,
-      content: "Good!",
-      rating: 5.0,
+      Doctor_ID : 3,
+      Patient_ID : 1,
+      Content : "I felt very comfortable and well taken care of.",
+      Rating : 5,
     },
     {
-      patient_id: 1,
-      doctor_id: 3,
-      content: "Excellent!",
-      rating: 4.9,
+      Doctor_ID : 3,
+      Patient_ID : 4,
+      Content : "Not satisfied with the treatment.",
+      Rating : 2,
     },
   ]);
 };

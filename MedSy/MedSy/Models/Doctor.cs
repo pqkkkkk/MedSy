@@ -11,8 +11,9 @@ namespace MedSy.Models
     {
         public string speciality { get; set; }
         public int experienceYear { get; set; }
-        
-       
-       
+        public int consultation_price { get; set; }
+        public float rating { get; set; }
+
+
     }
 }

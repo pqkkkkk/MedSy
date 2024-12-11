@@ -246,7 +246,7 @@ namespace MedSy.Services.Consultation
             return true;
         }
 
-        public int UpdateAllMissedConsultations()
+        public int UpdateAllMissedConsultations(string userRole,int userId)
         {
             var list = consultations.Where(c => c.date == DateOnly.FromDateTime(DateTime.Now) && c.endTime < TimeOnly.FromDateTime(DateTime.Now) && c.status == "Accepted").ToList();
             foreach (var c in list)

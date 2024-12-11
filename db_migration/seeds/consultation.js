@@ -5,9 +5,8 @@
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
   await knex('consultation').del();
-
   // Reset identity column back to 0
-  await knex.raw('DBCC CHECKIDENT("consultation", RESEED, 0)');
+  //await knex.raw('DBCC CHECKIDENT("consultation", RESEED, 0)');
   await knex('consultation').insert([
     {
       patient_id: 1,

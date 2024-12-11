@@ -4,15 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using Microsoft.UI.Xaml;
 
 namespace MedSy.Services.Feedback;
 public class FeedbackSqlDao : IFeedbackDao
 {
+    private SqlConnection connection;
     private List<Models.Feedback> feedbacks;
+    public FeedbackSqlDao()
+    {
+        connection = (Application.Current as App).locator.sqlConnection;
+    }
     public List<Models.Feedback> GetFeedback()
     {
         feedbacks = new List<Models.Feedback>();
-        var connection = ConnectSql();
 
         connection.Open();
         var query = $"""
@@ -47,19 +52,6 @@ public class FeedbackSqlDao : IFeedbackDao
         return feedbacks;
     }
 
-    public SqlConnection ConnectSql()
-    {
-        // Kết nối database
-        var connectionString = """
-                Server = localhost;
-                Database = medsy;
-                User ID = sa;
-                Password = SqlServer@123;
-                TrustServerCertificate = True;
-                """;
-
-        var connection = new SqlConnection(connectionString);
-        return connection;
-    }
+    
 
 }

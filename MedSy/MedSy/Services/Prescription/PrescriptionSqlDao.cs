@@ -4,19 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using Microsoft.UI.Xaml;
 
 namespace MedSy.Services.Prescription
 {
     public class PrescriptionSqlDao:IPrescriptionDao
     {
+        private SqlConnection connection;
+        public PrescriptionSqlDao()
+        {
+            connection = (Application.Current as App).locator.sqlConnection;
+        }
         public bool createPrescription(int totalprice, DateOnly createdDay, int consultationId)
         {
-            var connection = ConnectSql();
+            
             connection.Open();
             try
             {
-
-
                 var query = $"""
                 INSERT INTO prescription(total_price, created_day, consultation_id) values (@totalprice, @createdDay, @consultationId)
                 """;
@@ -48,12 +52,11 @@ namespace MedSy.Services.Prescription
 
         public void insertIntoPrescriptionDetail(int quantity, string usage, int prescriptionId, int drugId)
         {
-            var connection = ConnectSql();
-
+            
             var query = $"""
-        INSERT INTO prescription_detail (quantity, usage, prescription_id, drug_id)
-        VALUES (@quantity, @usage, @prescriptionId, @drugId)
-        """;
+                        INSERT INTO prescription_detail (quantity, usage, prescription_id, drug_id)
+                        VALUES (@quantity, @usage, @prescriptionId, @drugId)
+                        """;
 
             var command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@quantity", quantity);
@@ -84,25 +87,8 @@ namespace MedSy.Services.Prescription
             }
 
         }
-        public SqlConnection ConnectSql()
-        {
-            // Kết nối database
-            var connectionString = """
-                Server = localhost;
-                Database = medsy;
-                User ID = sa;
-                Password = SqlServer@123;
-                TrustServerCertificate = True;
-                """;
-
-            var connection = new SqlConnection(connectionString);
-            return connection;
-
-        }
         public int getPrescriptionId_ByConsultationId(int consultationId)
         {
-            var connection = ConnectSql();
-
             var query = $"""
                 select id from prescription where consultation_id = @consultationId
                 """;
@@ -135,10 +121,8 @@ namespace MedSy.Services.Prescription
                 return -1;
             }
         }
-
         public int updateTotalPrice(int totalprice, int prescriptionId)
         {
-            var connection = ConnectSql();
             connection.Open();
 
             var query = $"""

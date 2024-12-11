@@ -9,6 +9,6 @@ namespace MedSy.Models
 {
     public class Patient : User
     {
-        public string healthInsurance { get; set; }
+        public bool healthInsurance { get; set; }
     }
 }

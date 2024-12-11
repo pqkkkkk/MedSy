@@ -5,19 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using MedSy.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.UI.Xaml;
 
 namespace MedSy.Services.Drug
 {
     public class DrugSqlDao : IDrugDao
     {
+        private SqlConnection connection;
         private List<Models.Drug> drugs;
         private List<string> types;
+        public DrugSqlDao()
+        {
+            connection = (Application.Current as App).locator.sqlConnection;
+        }
         public List<Models.Drug> getAllDrugs(string keyword, string drugType)
         {
             drugs = new List<Models.Drug>();
-            SqlConnection connection = ConnectSql();
             var query = new StringBuilder("SELECT * FROM drug WHERE 1=1");
-
 
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -28,9 +32,9 @@ namespace MedSy.Services.Drug
             {
                 query.Append(" AND drug_type = @drugType");
             }
+
             connection.Open();
             var command = new SqlCommand(query.ToString(), connection);
-
             if (!string.IsNullOrEmpty(keyword))
             {
                 command.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
@@ -73,9 +77,7 @@ namespace MedSy.Services.Drug
         public List<string> getAllDrugType()
         {
             types = new List<string>();
-            SqlConnection connection = ConnectSql();
             var query = $"""SELECT distinct drug_type FROM drug""";
-
             var command = new SqlCommand(query, connection);
 
             try
@@ -100,7 +102,6 @@ namespace MedSy.Services.Drug
 
         public void updateQuantity(int quantity, int id)
         {
-            SqlConnection connection = ConnectSql();
             var query = $"""
                 UPDATE drug
                 SET quantity = @quantity
@@ -111,38 +112,6 @@ namespace MedSy.Services.Drug
             command.Parameters.AddWithValue("@quantity", quantity);
             command.Parameters.AddWithValue("@id", id);
 
-
-            try
-            {
-                // Mở kết nối
-                connection.Open();
-
-                // Thực thi lệnh cập nhật
-                int rowsAffected = command.ExecuteNonQuery();
-
-                // Kiểm tra số hàng đã cập nhật
-                if (rowsAffected > 0)
-                {
-                    Console.WriteLine("Cập nhật thành công!");
-                }
-                else
-                {
-                    Console.WriteLine("Không tìm thấy bản ghi để cập nhật.");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi
-                Console.WriteLine("Đã xảy ra lỗi: " + ex.Message);
-            }
-            finally
-            {
-                // Đảm bảo kết nối luôn được đóng
-                if (connection.State == System.Data.ConnectionState.Open)
-                {
-                    connection.Close();
-                }
-            }
             try
             {
                 // Mở kết nối
@@ -169,109 +138,87 @@ namespace MedSy.Services.Drug
             }
 
         }
-
-
-        public SqlConnection ConnectSql()
-        {
-            // Kết nối database
-            var connectionString = """
-                Server = localhost;
-                Database = medsy;
-                User ID = sa;
-                Password = SqlServer@123;
-                TrustServerCertificate = True;
-                """;
-
-            var connection = new SqlConnection(connectionString);
-            return connection;
-
-        }
-
         public Tuple<List<Models.Drug>, int> GetDrugs(int page, int rowsPerPage, string keyword, string drugType, double minPrice, double maxPrice)
         {
             var drugs = new List<Models.Drug>();
             int totalItems = 0;
+            connection.Open();
 
-            using (SqlConnection connection = ConnectSql())
+            // Tạo điều kiện truy vấn
+            var whereClause = new List<string> { "1=1" };
+            var parameters = new List<SqlParameter>();
+
+            if (!string.IsNullOrWhiteSpace(keyword))
             {
-                connection.Open();
+                whereClause.Add("name LIKE @keyword");
+                parameters.Add(new SqlParameter("@keyword", $"%{keyword}%"));
+            }
 
-                // Tạo điều kiện truy vấn
-                var whereClause = new List<string> { "1=1" };
-                var parameters = new List<SqlParameter>();
+            if (!string.IsNullOrWhiteSpace(drugType) && drugType != "All")
+            {
+                whereClause.Add("drug_type = @selectedType");
+                parameters.Add(new SqlParameter("@selectedType", drugType));
+            }
 
-                if (!string.IsNullOrWhiteSpace(keyword))
+            if (minPrice > 0)
+            {
+                whereClause.Add("price >= @minPrice");
+                parameters.Add(new SqlParameter("@minPrice", minPrice));
+            }
+
+            if (maxPrice > 0)
+            {
+                whereClause.Add("price <= @maxPrice");
+                parameters.Add(new SqlParameter("@maxPrice", maxPrice));
+            }
+
+            string whereClauseString = string.Join(" AND ", whereClause);
+
+            // Truy vấn dữ liệu và tổng số bản ghi
+            string query = $@"
+                WITH CTE_Drugs AS (
+                    SELECT *, COUNT(*) OVER() AS TotalRecords
+                    FROM drug
+                    WHERE {whereClauseString}
+                )
+                SELECT * 
+                FROM CTE_Drugs
+                ORDER BY name
+                OFFSET @offset ROWS FETCH NEXT @rowsPerPage ROWS ONLY;
+            ";
+
+            parameters.Add(new SqlParameter("@offset", (page - 1) * rowsPerPage));
+            parameters.Add(new SqlParameter("@rowsPerPage", rowsPerPage));
+
+            using (var command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddRange(parameters.ToArray());
+
+                using (var reader = command.ExecuteReader())
                 {
-                    whereClause.Add("name LIKE @keyword");
-                    parameters.Add(new SqlParameter("@keyword", $"%{keyword}%"));
-                }
-
-                if (!string.IsNullOrWhiteSpace(drugType) && drugType != "All")
-                {
-                    whereClause.Add("drug_type = @selectedType");
-                    parameters.Add(new SqlParameter("@selectedType", drugType));
-                }
-
-                if (minPrice > 0)
-                {
-                    whereClause.Add("price >= @minPrice");
-                    parameters.Add(new SqlParameter("@minPrice", minPrice));
-                }
-
-                if (maxPrice > 0)
-                {
-                    whereClause.Add("price <= @maxPrice");
-                    parameters.Add(new SqlParameter("@maxPrice", maxPrice));
-                }
-
-                string whereClauseString = string.Join(" AND ", whereClause);
-
-                // Truy vấn dữ liệu và tổng số bản ghi
-                string query = $@"
-                    WITH CTE_Drugs AS (
-                        SELECT *, COUNT(*) OVER() AS TotalRecords
-                        FROM drug
-                        WHERE {whereClauseString}
-                    )
-                    SELECT * 
-                    FROM CTE_Drugs
-                    ORDER BY name
-                    OFFSET @offset ROWS FETCH NEXT @rowsPerPage ROWS ONLY;
-                ";
-
-                parameters.Add(new SqlParameter("@offset", (page - 1) * rowsPerPage));
-                parameters.Add(new SqlParameter("@rowsPerPage", rowsPerPage));
-
-                using (var command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddRange(parameters.ToArray());
-
-                    using (var reader = command.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        drugs.Add(new Models.Drug
                         {
-                            drugs.Add(new Models.Drug
-                            {
-                                drugId = reader.GetInt32(reader.GetOrdinal("Id")),
-                                name = reader.GetString(reader.GetOrdinal("name")),
-                                unit = reader.GetString(reader.GetOrdinal("unit")),
-                                price = reader.GetInt32(reader.GetOrdinal("price")),
-                                quantity = reader.GetInt32(reader.GetOrdinal("quantity")),
-                                manufacturing_date = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("manufacturing_date"))),
-                                expiry_date = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("expiry_date"))),
-                                drugTypeName = reader.GetString(reader.GetOrdinal("drug_type"))
-                            });
+                            drugId = reader.GetInt32(reader.GetOrdinal("Id")),
+                            name = reader.GetString(reader.GetOrdinal("name")),
+                            unit = reader.GetString(reader.GetOrdinal("unit")),
+                            price = reader.GetInt32(reader.GetOrdinal("price")),
+                            quantity = reader.GetInt32(reader.GetOrdinal("quantity")),
+                            manufacturing_date = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("manufacturing_date"))),
+                            expiry_date = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("expiry_date"))),
+                            drugTypeName = reader.GetString(reader.GetOrdinal("drug_type"))
+                        });
 
-                            // Lấy tổng số bản ghi từ cột "TotalRecords" (dòng đầu tiên là đủ)
-                            if (totalItems == 0)
-                            {
-                                totalItems = reader.GetInt32(reader.GetOrdinal("TotalRecords"));
-                            }
+                        // Lấy tổng số bản ghi từ cột "TotalRecords" (dòng đầu tiên là đủ)
+                        if (totalItems == 0)
+                        {
+                            totalItems = reader.GetInt32(reader.GetOrdinal("TotalRecords"));
                         }
                     }
                 }
             }
-
+            connection.Close();
             return new Tuple<List<Models.Drug>, int>(drugs, totalItems);
         }
 

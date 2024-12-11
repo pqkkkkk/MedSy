@@ -50,7 +50,6 @@ namespace MedSy.Views.Doctor
         {
             prescriptionPageViewModel.search();
         }
-
         private void TypeSortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             prescriptionPageViewModel.LoadData();

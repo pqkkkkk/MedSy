@@ -69,5 +69,9 @@ namespace MedSy.Services.User
             return user;
         }
 
+        public Tuple<List<Doctor>, int> GetDoctors(int page, int rowsPerPage, string keyword, string specialty, string gender, int experienceYear)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
