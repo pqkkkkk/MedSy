@@ -7,12 +7,14 @@ using MedSy.Models;
 using MedSy.Services.Drug;
 using Microsoft.Data.SqlClient;
 using Microsoft.UI.Xaml;
+using Windows.System;
 
 namespace MedSy.Services.Prescription
 {
     public class PrescriptionSqlDao:IPrescriptionDao
     {
         private SqlConnection connection;
+        public List<Models.Prescription> prescriptions { get; set; }
         public PrescriptionSqlDao()
         {
             connection = (Application.Current as App).locator.sqlConnection;
@@ -50,6 +52,81 @@ namespace MedSy.Services.Prescription
                     connection.Close();
                 }
             }
+        }
+        public List<Models.Prescription> GetPrescriptions(int userId)
+        {
+            prescriptions = new List<Models.Prescription>();
+            var query = $"""
+                select * from prescription p join consultation c on p.consultation_id = c.id
+                                             join users u on u.id = c.patient_id
+                Where u.id = @userId
+                """;
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@userId", userId);
+            try
+            {
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var prescription = new Models.Prescription()
+                        {
+                            prescriptionId = reader.GetInt32(reader.GetOrdinal("id")),
+                            created_day = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("created_day"))),
+                            totalPrice = reader.GetInt32(reader.GetOrdinal("total_price")),
+                            consultationId = reader.GetInt32(reader.GetOrdinal("consultation_id"))
+                        };
+                        prescriptions.Add(prescription);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            connection.Close();
+            return prescriptions;
+        }
+        public List<Models.PrescriptionDetail> getPrescriptionDetails_ByPrescriptionId(int prescriptionId)
+        {
+            List<PrescriptionDetail> prescriptionDetails = new List<PrescriptionDetail>();
+            var query = $"""
+                select * from prescription_detail where prescription_id = @prescriptionId
+                """;
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@prescriptionId", prescriptionId);
+
+            try
+            {
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var prescriptionDetail = new PrescriptionDetail()
+                        {
+                            id = reader.GetInt32(reader.GetOrdinal("id")),
+                            quantity = reader.GetInt32(reader.GetOrdinal("quantity")),
+                            usage = reader.GetString(reader.GetOrdinal("usage")),
+                            prescription_id = reader.GetInt32(reader.GetOrdinal("prescription_id")),
+                            price = reader.GetInt32(reader.GetOrdinal("price")),
+                            drug_id = reader.GetInt32(reader.GetOrdinal("drug_id"))
+                        };
+                        prescriptionDetails.Add(prescriptionDetail);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            connection.Close();
+            return prescriptionDetails;
         }
 
         public void insertIntoPrescriptionDetail(Models.PrescriptionDetail prescriptionDetail, int prescriptionId)

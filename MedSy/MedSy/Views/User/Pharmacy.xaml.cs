@@ -31,7 +31,8 @@ namespace MedSy.Views.User
             this.InitializeComponent();
             pharmacyViewModel = new PharmacyViewModel();
             this.DataContext = pharmacyViewModel;
-            
+            //PageComboBox.SelectedIndex = 1; // Pharmacy
+
         }
 
         private async void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
@@ -64,7 +65,19 @@ namespace MedSy.Views.User
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (sender is ComboBox comboBox)
+            {
+                int selectedIndex = comboBox.SelectedIndex;
 
+                if (selectedIndex == 0)
+                {
+                    Frame.Navigate(typeof(PrescriptionPaymentPage));
+                }
+                //else if (selectedIndex == 1)
+                //{
+                //    Frame.Navigate(typeof(Pharmacy));
+                //}
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
