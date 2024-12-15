@@ -28,12 +28,19 @@ namespace MedSy.Views
     {
         private MainPageViewModel mainPageViewModel;
         public Frame contentFrame => content;
+        public delegate void HasNewCREventHandler(int value);
+        public event HasNewCREventHandler HasNewCR;
+        public delegate void HasNewConsultationTodayEventHandler(int value);
+        public event HasNewConsultationTodayEventHandler HasNewConsultationToday;
         public DoctorMainPage()
         {
             this.InitializeComponent();
             content.Navigate(typeof(DoctorDashboard));
-
             mainPageViewModel = new MainPageViewModel();
+            HasNewConsultationToday += chatBot.HasNewConsultationTodayHandler;
+            HasNewCR += chatBot.HasNewCRHandler;
+            HasNewConsultationToday?.Invoke(mainPageViewModel.HasConsultationToday);
+            HasNewCR?.Invoke(mainPageViewModel.HasNewCR);
         }
         
         private void UserProfileClick(object sender, RoutedEventArgs e)

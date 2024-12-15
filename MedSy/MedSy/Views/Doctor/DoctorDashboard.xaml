@@ -49,7 +49,7 @@
                 </TextBlock>
             </Grid>
         </Border>
-
+        
         <!-- Setup bien quang cao -->
         <Border Grid.Row="1" Margin="30 10 30 0" Background="#ffffff" CornerRadius="10,10,10,10">
             <Grid>
