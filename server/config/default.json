@@ -1,0 +1,7 @@
+{
+  "vnp_TmnCode":"GES6ZBWP",
+  "vnp_HashSecret":"FQFS0YH47IK61N3FMUQ2EQ51ZI5NMR8L",
+  "vnp_Url":"https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
+  "vnp_Api":"https://sandbox.vnpayment.vn/merchant_webapi/api/transaction",
+  "vnp_ReturnUrl": "http://localhost:8888/vnpay_return"
+}
