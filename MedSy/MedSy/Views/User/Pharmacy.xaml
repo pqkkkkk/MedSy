@@ -175,7 +175,8 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <!-- ComboBox Your Prescription and Pharmacy -->
-                <ComboBox Grid.Column="0" 
+                <ComboBox Name="PageComboBox"
+                    Grid.Column="0" 
                     Height="40"
                     CornerRadius="20"
                     Background="#336699"
