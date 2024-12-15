@@ -14,6 +14,7 @@ namespace MedSy.Services.Prescription
         public void insertIntoPrescriptionDetail(Models.PrescriptionDetail prescriptionDetail, int prescriptionId);
         public List<Models.PrescriptionDetail> getPrescriptionDetails(int consultationId);
         public int updateTotalPrice(int totalprice, int prescriptionId);
-
+        public List<Models.PrescriptionDetail> getPrescriptionDetails_ByPrescriptionId(int prescriptionId);
+        public List<Models.Prescription> GetPrescriptions(int userId);
     }
 }
