@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Networking.Proximity;
 
 namespace MedSy.ViewModels
 {
@@ -14,6 +15,8 @@ namespace MedSy.ViewModels
     {
         private SocketService socketService;
         public bool IsNewMessage { get; set; }
+        public int HasNewCR { get; set; }
+        public int HasConsultationToday { get; set; }
         public string selectedPage { get; set; }
         
         public MainPageViewModel()
@@ -24,10 +27,27 @@ namespace MedSy.ViewModels
             int currentUserId = (Application.Current as App).locator.currentUser.id;
             string currentRole = (Application.Current as App).locator.currentUser.role;
             IsNewMessage = (Application.Current as App).locator.managementDao.checkNewMessage(currentUserId, currentRole) == 0 ? false : true;
-
+            HasNewCR = CheckNewCR();
+            HasConsultationToday = CheckConsultationToday();
             selectedPage = "Dashboard";
 
             
+        }
+        public int CheckNewCR()
+        {
+            string userRole = (Application.Current as App).locator.currentUser.role;
+            int userId = (Application.Current as App).locator.currentUser.id;
+            int newCRCount = (Application.Current as App).locator.consultationDao.GetConsultations(userRole, userId, "New", null, null, null).Count;
+
+            return newCRCount;
+        }
+        public int CheckConsultationToday()
+        {
+            string userRole = (Application.Current as App).locator.currentUser.role;
+            int userId = (Application.Current as App).locator.currentUser.id;
+            int consultationTodayCount = (Application.Current as App).locator.consultationDao.GetConsultations(userRole, userId, "Accepted", DateOnly.FromDateTime(DateTime.Now), null, null).Count;
+
+            return consultationTodayCount;
         }
         private void onNewMessageNotification(object sender, Tuple<string,int> data)
         {

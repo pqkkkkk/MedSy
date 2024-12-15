@@ -29,6 +29,7 @@ namespace MedSy.Helpers
         public IConsultationDao consultationDao { get; set; }
         public IPrescriptionDao prescriptionDao { get; set; }
         public SocketService socketService { get; set; }
+        public ChatBotService chatBotService { get; set; }
         public MainWindow mainWindow { get; set; }
         
         

@@ -1,11 +1,12 @@
+
 const express = require('express');
 const http = require('http');
 const fs = require('fs');
 const socketIo = require('socket.io');
 const path = require('path');
-
 const app = express();
-
+// const db = require('./db.config'); // add this line when connecting the application with database
+// const queries = require('./queries'); // add this line when connecting the application with database
 const server = http.createServer(app);
 const io = socketIo(server,{
     cors: {
@@ -13,12 +14,8 @@ const io = socketIo(server,{
     }
 });
 const port = 5555;
-
-// const db = require('./db.config'); // add this line when connecting the application with database
-// const queries = require('./queries'); // add this line when connecting the application with database
-
+app.use(express.json());
 app.use(express.static(path.join(__dirname,'testClient')));
-
 app.get('/chat',(req,res) =>{
     res.sendFile(path.join(__dirname,'testClient','client.html'));
 });
@@ -28,8 +25,99 @@ app.get('/videocall',(req,res) =>{
 app.get('/newCRTest',(req,res) =>{
     res.sendFile(path.join(__dirname,'testClient','sendCRMessageTest.html'));
 });
-const users = new Map();
+app.post('/create_payment_url', function (req, res, next) {
+    console.log(req.body);
+    //var ipAddr = req.headers['x-forwarded-for'] ||
+    //    req.connection.remoteAddress ||
+    //    req.socket.remoteAddress ||
+    //    req.connection.socket.remoteAddress;
+    var ipAddr = '127.0.0.1';
+    var config = require('config');
 
+    var tmnCode = config.get('vnp_TmnCode');
+    var secretKey = config.get('vnp_HashSecret');
+    var vnpUrl = config.get('vnp_Url');
+    var returnUrl = config.get('vnp_ReturnUrl');
+
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = String(date.getMonth() + 1).padStart(2, '0');
+    var day = String(date.getDate()).padStart(2, '0');
+    var hours = String(date.getHours()).padStart(2, '0');
+    var minutes = String(date.getMinutes()).padStart(2, '0');
+    var seconds = String(date.getSeconds()).padStart(2, '0');
+    var createDate = `${year}${month}${day}${hours}${minutes}${seconds}`;
+    var orderId = `${hours}${minutes}${seconds}`;
+    var amount = req.body.amount;
+    var bankCode = req.body.bankCode;
+
+    var orderInfo = req.body.orderDescription;
+    var orderType = req.body.orderType;
+    var locale = req.body.language;
+    if(locale === null || locale === ''){
+        locale = 'vn';
+    }
+    var currCode = 'VND';
+    var vnp_Params = {};
+    vnp_Params['vnp_Version'] = '2.1.0';
+    vnp_Params['vnp_Command'] = 'pay';
+    vnp_Params['vnp_TmnCode'] = tmnCode;
+    vnp_Params['vnp_Locale'] = locale;
+    vnp_Params['vnp_CurrCode'] = currCode;
+    vnp_Params['vnp_TxnRef'] = orderId;
+    vnp_Params['vnp_OrderInfo'] = orderInfo;
+    vnp_Params['vnp_OrderType'] = orderType;
+    vnp_Params['vnp_Amount'] = amount * 100;
+    vnp_Params['vnp_ReturnUrl'] = returnUrl;
+    vnp_Params['vnp_IpAddr'] = ipAddr;
+    vnp_Params['vnp_CreateDate'] = createDate;
+    if(bankCode !== null && bankCode !== ''){
+      vnp_Params['vnp_BankCode'] = bankCode;
+    }
+
+    vnp_Params = sortObject(vnp_Params);
+
+    var querystring = require('qs');
+    var signData = querystring.stringify(vnp_Params, { encode: false });
+    var crypto = require("crypto");
+    var hmac = crypto.createHmac("sha512", secretKey);
+    var signed = hmac.update(new Buffer.from(signData, 'utf-8')).digest("hex");
+    vnp_Params['vnp_SecureHash'] = signed;
+    vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
+
+    res.status(200).json({code: '00', data: vnpUrl});
+});
+
+app.get('/vnpay_return', function (req, res, next) {
+    var vnp_Params = req.query;
+
+    var secureHash = vnp_Params['vnp_SecureHash'];
+
+    delete vnp_Params['vnp_SecureHash'];
+    delete vnp_Params['vnp_SecureHashType'];
+
+    vnp_Params = sortObject(vnp_Params);
+
+    var config = require('config');
+    var tmnCode = config.get('vnp_TmnCode');
+    var secretKey = config.get('vnp_HashSecret');
+
+    var querystring = require('qs');
+    var signData = querystring.stringify(vnp_Params, { encode: false });
+    var crypto = require("crypto");
+    var hmac = crypto.createHmac("sha512", secretKey);
+    var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
+
+    if(secureHash === signed){
+        res.render('success', {code: vnp_Params['vnp_ResponseCode']});
+        res.sendFile(path.join(__dirname,'testClient','vnpayReturn.html'));
+    } else{
+        res.render('success', {code: '97'})
+    }
+});
+
+
+const users = new Map();
 io.on('connection', function(socket)
 {
     console.log("A user connected");
@@ -63,7 +151,6 @@ io.on('connection', function(socket)
         console.log('A user disconnected');
         users.delete(userId);
     });
-
     // Signaling server for video call
     socket.on('offer',(data) =>{
         const {offer,senderId, receiverId} = data;
@@ -142,3 +229,19 @@ io.on('connection', function(socket)
 server.listen(port,() =>{
     console.log(`Server is running on http://localhost:${port}`);
 })
+
+function sortObject(obj) {
+    let sorted = {};
+    let str = [];
+    let key;
+    for (key in obj){
+        if (obj.hasOwnProperty(key)) {
+            str.push(encodeURIComponent(key));
+        }
+    }
+    str.sort();
+    for (key = 0; key < str.length; key++) {
+        sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, "+");
+    }
+    return sorted;
+}
