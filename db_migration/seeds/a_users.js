@@ -147,5 +147,17 @@ exports.seed = async function(knex) {
       gender :"Female",
       role : "doctor"
     },
+    {
+      fullName :"admin",
+      username : "admin",
+      password : "admin",
+      avatar_Path : "ms-appx:///Assets/doctoravt.jpg",
+      phoneNumber : "0354747227",
+      email : "qthong2004@gmail.com",
+      address : "New York",
+      birthday : "2004-08-04",
+      gender :"Male",
+      role : "admin"
+    },
   ]);
 };

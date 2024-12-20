@@ -49,17 +49,17 @@ namespace MedSy
             locator = new Locator();
             (Application.Current as App).locator.databaseConnectionString = """
                 Server = localhost;
-                Database = medsytest;
+                Database = medsy;
                 User ID = sa;
                 Password = SqlServer@123;
                 TrustServerCertificate = True;
                 """;
             (Application.Current as App).locator.sqlConnection = new SqlConnection((Application.Current as App).locator.databaseConnectionString);
             Debug.WriteLine("Connect to database successfully");
-            (Application.Current as App).locator.userDao = new UserMockDao();
-            (Application.Current as App).locator.managementDao = new ManagementMockDao();
-            (Application.Current as App).locator.messageDao = new MessageMockDao();
-            (Application.Current as App).locator.consultationDao = new ConsultationMockDao();
+            (Application.Current as App).locator.userDao = new UserSqlDao();
+            (Application.Current as App).locator.managementDao = new ManagementSqlDao();
+            (Application.Current as App).locator.messageDao = new MessageSqlDao();
+            (Application.Current as App).locator.consultationDao = new ConsultationSqlDao();
             (Application.Current as App).locator.socketService = new SocketService();
             (Application.Current as App).locator.chatBotService = new ChatBotService();
             (Application.Current as App).locator.drugDao = new DrugSqlDao();

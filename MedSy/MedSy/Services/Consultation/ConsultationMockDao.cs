@@ -137,6 +137,18 @@ namespace MedSy.Services.Consultation
 
             };
         }
+        public Dictionary<string, int> GetPathologyCountByMonth(int month)
+        {
+            return new Dictionary<string, int>();
+        }
+        public Dictionary<int, int> countOnlineConsultationEachMonth(int year)
+        {
+            return new Dictionary<int, int>();
+        }
+        public List<string> getAllPathology()
+        {
+            return new List<string>();
+        }
         public List<Models.Consultation> GetConsultations(string userRole, int userId, string status, DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             IEnumerable<Models.Consultation> result = Enumerable.Empty<Models.Consultation>();
@@ -257,6 +269,11 @@ namespace MedSy.Services.Consultation
         }
 
         public List<Models.Consultation> GetAllDoneConsultationsByDoctorIdAndPatientId(int doctorId, int patientId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, string form, string status, int patientId, int doctorId, string consultation_result, string reason, string pathology)
         {
             throw new NotImplementedException();
         }

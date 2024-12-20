@@ -83,11 +83,23 @@
                      Text="{x:Bind scheduleConsulationViewModel.selectedPatient.phoneNumber}" 
                      Style="{StaticResource CommonTextBoxStyle}"/>
 
-                <TextBox Grid.Row="4" Grid.Column="0"
+                <!--<TextBox Grid.Row="4" Grid.Column="0"
                      Header="Insurance"
                      Text="{x:Bind scheduleConsulationViewModel.selectedPatient.healthInsurance}" 
-                     Style="{StaticResource CommonTextBoxStyle}"/>
-
+                     Style="{StaticResource CommonTextBoxStyle}"/>-->
+                <ComboBox 
+                    Grid.Row="4" Name="pathologyComboBox"
+                    CornerRadius="10" 
+                    VerticalAlignment="Center" 
+                    Header="Pathology"
+                    ItemsSource="{x:Bind scheduleConsulationViewModel.pathology}"
+                    SelectedItem="{x:Bind scheduleConsulationViewModel.selectedPathology, Mode=TwoWay}"
+                    PlaceholderText="Pathology"
+                    PlaceholderForeground="#666666"
+                    Background="#ffffff"
+                    FontSize="20"
+                    Foreground="#666666" Margin="0 0 10 0">
+                </ComboBox>
                 <!-- Thông tin lịch khám -->
                 <!-- Thông tin bác sĩ-->
                 <TextBox Grid.Row="0" Grid.Column="1"
@@ -132,18 +144,19 @@
                 </Grid.ColumnDefinitions>
                 
                 <Viewbox Stretch="Uniform" Grid.Column="0">
-                    <TimePicker Name="ConsulationTimeStart" MinuteIncrement="30"
+                    <TimePicker Name="ConsulationTimeStart" MinuteIncrement="0"
                     Time="{x:Bind scheduleConsulationViewModel.selected_startTime, Mode=TwoWay}" 
                     ClockIdentifier="24HourClock" Header="Time Start" Foreground="#666666"
                                 Margin="0 0 20 10"
+                                SelectedTimeChanged="selectedTime_Changed"
                     CornerRadius="10" FontSize="20" VerticalAlignment="Top" Background="#fff" Height="70">
                     </TimePicker>
                 </Viewbox>
 
                 <Viewbox Stretch="Uniform"  Grid.Column="1">
-                    <TimePicker Name="ConsulationTimeEnd" MinuteIncrement="30"
+                    <TimePicker Name="ConsulationTimeEnd" MinuteIncrement="0"
                             Time="{x:Bind scheduleConsulationViewModel.selected_endTime, Mode=TwoWay}" 
-                                 Margin="0 0 20 10"
+                                 Margin="0 0 20 10" IsEnabled="False"
                             ClockIdentifier="24HourClock" Header="Time End" Foreground="#666666"
                             CornerRadius="10" FontSize="20" VerticalAlignment="Top" Background="#fff" Height="70">
                     </TimePicker>
