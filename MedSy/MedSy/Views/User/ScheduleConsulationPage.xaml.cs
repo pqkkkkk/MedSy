@@ -78,6 +78,15 @@ namespace MedSy.Views.User
                     CloseButtonText = "OK"
                 }.ShowAsync();
             }
+            else if (pathologyComboBox.SelectedItem == null)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Content = "please choose your pathology",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+            }
             else if (scheduleConsulationViewModel.CreateConsultation())
             {
                 await new ContentDialog()
@@ -86,6 +95,7 @@ namespace MedSy.Views.User
                     Content = "Consultation was scheduled Successfully",
                     CloseButtonText = "OK"
                 }.ShowAsync();
+                Frame.GoBack();
             }
             else
             {
@@ -96,6 +106,11 @@ namespace MedSy.Views.User
                     CloseButtonText = "OK"
                 }.ShowAsync();
             }
+        }
+
+        private void selectedTime_Changed(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
+        {
+            scheduleConsulationViewModel.selected_endTime = scheduleConsulationViewModel.selected_startTime.Add(TimeSpan.FromHours(1));
         }
     }
 

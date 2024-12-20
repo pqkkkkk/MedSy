@@ -174,6 +174,85 @@ namespace MedSy.Services.Consultation
 
 
         }
+
+        public Dictionary<string, int> GetPathologyCountByMonth(int month)
+        {
+            var pathologyCount = new Dictionary<string, int>();
+
+            string query = @"
+            SELECT p.name, COUNT(c.id) AS Count
+            FROM pathology p LEFT JOIN consultation c
+            ON p.name = c.pathology AND MONTH(c.date) = @month
+            GROUP BY p.name";
+
+            try
+            {
+                connection.Open();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@month", month);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string pathology = reader.GetString(0);
+                            int count = reader.GetInt32(1);
+
+                            pathologyCount[pathology] = count;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            connection.Close();
+            return pathologyCount;
+        }
+
+        public Dictionary<int,int> countOnlineConsultationEachMonth(int year)
+        {
+            var OnlineConsultationEachMonth = new Dictionary<int, int>();
+            connection.Open();
+            var query = $"""
+                SELECT m.month, COUNT(c.id) AS count
+                FROM (VALUES 
+                      (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12)
+                     ) AS m(month)
+                LEFT JOIN consultation c
+                    ON MONTH(c.date) = m.month
+                    AND YEAR(c.date) = @year
+                    AND c.type = 'online'
+                GROUP BY m.month
+                ORDER BY m.month;
+                """;
+
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@year", year);
+            try
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int month = reader.GetInt32(0);
+                        int count = reader.GetInt32(1);
+
+                        OnlineConsultationEachMonth[month] = count;
+                    }
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return OnlineConsultationEachMonth;
+        }
         public SqlConnection ConnectSql()
         {
             var connectionString = """
@@ -187,13 +266,43 @@ namespace MedSy.Services.Consultation
             var connection = new SqlConnection(connectionString);
             return connection;
         }
-        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, string form, string status, int patientId, int doctorId, string consultation_result, string reason)
+
+        public List<string> getAllPathology()
+        {
+            connection.Open();
+            var query = $"""
+                select * from pathology
+                """;
+            var command = new SqlCommand(query, connection);
+            List<string> pathologies = new List<string>();
+            try
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        pathologies.Add(reader.GetString(reader.GetOrdinal("name")));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return pathologies;
+        }
+
+        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, string form, string status, int patientId, int doctorId, string consultation_result, string reason, string pathology)
         {
             connection.Open();
 
             var query = $"""
-                INSERT INTO consultation (date, start_time, end_time, type, status, patient_id, doctor_id, consultation_result, reason)
-                VALUES (@date, @startTime, @endTime, @form, @status, @patientId, @DoctorId, @consultation_result, @reason)
+                INSERT INTO consultation (date, start_time, end_time, type, status, patient_id, doctor_id, consultation_result, reason, pathology)
+                VALUES (@date, @startTime, @endTime, @form, @status, @patientId, @DoctorId, @consultation_result, @reason, @pathology)
                 """;
 
             var command = new SqlCommand(query, connection);
@@ -207,6 +316,8 @@ namespace MedSy.Services.Consultation
             command.Parameters.AddWithValue("@doctorId", doctorId);
             command.Parameters.AddWithValue("@consultation_result", string.IsNullOrEmpty(consultation_result) ? DBNull.Value : consultation_result);
             command.Parameters.AddWithValue("@reason", string.IsNullOrEmpty(reason) ? DBNull.Value : reason);
+            command.Parameters.AddWithValue("@pathology", pathology);
+
             try
             {
                 

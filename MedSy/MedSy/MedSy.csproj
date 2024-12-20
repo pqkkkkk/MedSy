@@ -37,6 +37,7 @@
 
     <None Remove="Views\SignInWindow.xaml" />
     <None Remove="Views\SignUpWindow.xaml" />
+    <None Remove="Views\StatisticPage.xaml" />
     <None Remove="Views\UserDashboard.xaml" />
     <None Remove="Views\UserMainPage.xaml" />
     <None Remove="Views\User\DoctorDetail.xaml" />
@@ -67,6 +68,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.0-rc4.5" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.32.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
@@ -109,6 +111,9 @@
     <None Update="Assets\doctoravt.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\StatisticPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\PaymentTest.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -188,6 +193,9 @@
     <Page Update="Views\User\UserChatPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
 
   <!--

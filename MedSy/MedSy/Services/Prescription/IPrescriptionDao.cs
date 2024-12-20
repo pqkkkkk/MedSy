@@ -16,5 +16,7 @@ namespace MedSy.Services.Prescription
         public int updateTotalPrice(int totalprice, int prescriptionId);
         public List<Models.PrescriptionDetail> getPrescriptionDetails_ByPrescriptionId(int prescriptionId);
         public List<Models.Prescription> GetPrescriptions(int userId);
+        public Dictionary<int, int> calculateRevenueEachMonth(int year);
+
     }
 }

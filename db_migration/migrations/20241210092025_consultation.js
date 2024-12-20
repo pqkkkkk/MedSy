@@ -15,6 +15,7 @@ exports.up = async function(knex) {
       doctor_id INT,
       consultation_result VARCHAR(100),
       reason VARCHAR(100),
+      pathology varchar(100),
     );
 `);
 };
