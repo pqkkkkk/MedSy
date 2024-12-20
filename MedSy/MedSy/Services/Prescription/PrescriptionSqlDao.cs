@@ -275,5 +275,34 @@ namespace MedSy.Services.Prescription
             connection.Close();
             return rowsAffected;
         }
+        public Dictionary<int,int> calculateRevenueEachMonth(int year)
+        {
+            connection.Open();
+            var revenue = new Dictionary<int, int>();
+            var query = $"""
+                select month(created_day) as month, sum(total_price) as total
+                from prescription
+                where year(created_day) = @year and status = 'Paid'
+                group by month(created_day)
+                """;
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@year", year);
+            try
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        revenue.Add(reader.GetInt32(reader.GetOrdinal("month")), reader.GetInt32(reader.GetOrdinal("total")));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            connection.Close();
+            return revenue;
+        }
     }
 }

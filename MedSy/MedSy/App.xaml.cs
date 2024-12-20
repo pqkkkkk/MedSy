@@ -50,7 +50,7 @@ namespace MedSy
             locator = new Locator();
             (Application.Current as App).locator.databaseConnectionString = """
                 Server = localhost;
-                Database = medsytest;
+                Database = medsy;
                 User ID = sa;
                 Password = SqlServer@123;
                 TrustServerCertificate = True;

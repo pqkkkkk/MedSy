@@ -14,9 +14,13 @@ namespace MedSy.Services.Consultation
         public int UpdateStatusToDone(Models.Consultation selectedConsultation);
         public int UpdateAllMissedConsultations(string userRole, int userId);
         public Models.Consultation GetNextConsultationToday(string userRole, int userId);
-        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, String form, String status, int patientId, int doctorId, String consultation_result, String reason);
+        public bool createConsultation(DateOnly? date, TimeOnly? startTime, TimeOnly? endTime, String form, String status, int patientId, int doctorId, String consultation_result, String reason, string pathology);
         public int UpdateStatus(Models.Consultation selectedConsultation, string status);
         public bool updateResult(int id, string result);
         public int DeleteConsultation(Models.Consultation selectedConsultation);
+        public Dictionary<string, int> GetPathologyCountByMonth(int month);
+        public Dictionary<int, int> countOnlineConsultationEachMonth(int year);
+
+        public List<string> getAllPathology();
     }
 }

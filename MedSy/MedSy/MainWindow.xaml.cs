@@ -38,6 +38,10 @@ namespace MedSy
                 case "doctor":
                     content.Navigate(typeof(DoctorMainPage));
                     break;
+
+                case "admin":
+                    content.Navigate(typeof(StatisticPage));
+                    break;
             }
             
         }
