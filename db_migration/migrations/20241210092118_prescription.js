@@ -8,7 +8,8 @@ exports.up = async function(knex) {
       id INT IDENTITY(1,1) PRIMARY KEY,
       total_price INT NOT NULL,
       created_day DATE NOT NULL,
-      consultation_id INT
+      consultation_id INT,
+      status varchar(10) not null
     );
 `);
 };

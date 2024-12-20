@@ -18,33 +18,42 @@ public class PrescriptionPaymentViewModel:INotifyPropertyChanged
     public Prescription selectedPrescription { get; set; }
     public List<Prescription> prescriptions { get; set; }
     public User currentUser { get; set; }
+    public string paymentUrl { get; set; }
     public PrescriptionPaymentViewModel()
     {
         currentUser = (Application.Current as App).locator.currentUser;
         prescriptions = new List<Prescription>();
-        selectedPrescription = new Prescription();
+        selectedPrescription = null;
+        paymentUrl = "";
         LoadData();
         LoadPrescriptionDetails();
     }
 
-    void LoadData()
+    public void LoadData()
     {
         IPrescriptionDao prescriptionDao = (Application.Current as App).locator.prescriptionDao;
-        prescriptions = prescriptionDao.GetPrescriptions(currentUser.id);
+        prescriptions = prescriptionDao.GetPrescriptions(currentUser.id,"unpaid");
     }
 
     public void LoadPrescriptionDetails()
     {
         IPrescriptionDao prescriptionDao = (Application.Current as App).locator.prescriptionDao;
-        prescriptionDetails = new ObservableCollection<PrescriptionDetail>(prescriptionDao.getPrescriptionDetails_ByPrescriptionId(selectedPrescription.prescriptionId));
-        
+        if(selectedPrescription != null)
+            prescriptionDetails = new ObservableCollection<PrescriptionDetail>(prescriptionDao.getPrescriptionDetails_ByPrescriptionId(selectedPrescription.prescriptionId));
+        else
+            prescriptionDetails = new ObservableCollection<PrescriptionDetail>();
+
         IDrugDao drugDao = (Application.Current as App).locator.drugDao;
         for (int i = 0; i < prescriptionDetails.Count(); i++)
         {
             prescriptionDetails[i].drug = drugDao.getDrugById(prescriptionDetails[i].drug_id);
             //prescriptionDetails[i].drug = drugs.FirstOrDefault(d => d.drugId == prescriptionDetails[i].drug_id);
         }
-
+    }
+    public void UpdatePrescriptionStatus()
+    {
+        IPrescriptionDao prescriptionDao = (Application.Current as App).locator.prescriptionDao;
+        prescriptionDao.UpdatePrescriptionStatus(selectedPrescription.prescriptionId);
     }
 }
 

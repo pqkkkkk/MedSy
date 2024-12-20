@@ -53,11 +53,14 @@
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="success-icon">✔</div>
-  <div class="title">Transaction Successful!</div>
-  <div class="message">Thank you for your purchase. Your transaction has been completed successfully.</div>
-  <a href="/" class="button">Go Back</a>
-</div>
+  <div class="container">
+    <div class="success-icon">✔</div>
+    <div class="title">Transaction Successful!</div>
+    <div class="message">Thank you for your purchase. Your transaction has been completed successfully.</div>
+    <button id="goBackButton" class="button" onclick="SendPaymentCompleteMessage()">Go Back</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="vnpay.js"></script>
 </body>
 </html>

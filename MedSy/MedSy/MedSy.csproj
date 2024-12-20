@@ -33,7 +33,6 @@
     <None Remove="Views\Doctor\PatientManagementPage.xaml" />
     <None Remove="Views\Doctor\PrescriptionPage.xaml" />
     <None Remove="Views\Doctor\WorkSchedulePage.xaml" />
-    <None Remove="Views\PaymentTest.xaml" />
 
     <None Remove="Views\SignInWindow.xaml" />
     <None Remove="Views\SignUpWindow.xaml" />
@@ -62,12 +61,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.Lottie" Version="8.1.240821" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="Fody" Version="6.8.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="LottieGen.MsBuild" Version="8.1.240821" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.0" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.32.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
@@ -109,9 +111,6 @@
     <None Update="Assets\doctoravt.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Update="Views\PaymentTest.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="Views\ChatBotUC.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

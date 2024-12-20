@@ -28,6 +28,7 @@ using MedSy.Services.Prescription;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -56,12 +57,14 @@ namespace MedSy
                 """;
             (Application.Current as App).locator.sqlConnection = new SqlConnection((Application.Current as App).locator.databaseConnectionString);
             Debug.WriteLine("Connect to database successfully");
-            (Application.Current as App).locator.userDao = new UserMockDao();
-            (Application.Current as App).locator.managementDao = new ManagementMockDao();
-            (Application.Current as App).locator.messageDao = new MessageMockDao();
-            (Application.Current as App).locator.consultationDao = new ConsultationMockDao();
+            (Application.Current as App).locator.userDao = new UserSqlDao();
+            (Application.Current as App).locator.managementDao = new ManagementSqlDao();
+            (Application.Current as App).locator.messageDao = new MessageSqlDao();
+            (Application.Current as App).locator.consultationDao = new ConsultationSqlDao();
             (Application.Current as App).locator.socketService = new SocketService();
             (Application.Current as App).locator.chatBotService = new ChatBotService();
+            (Application.Current as App).locator.paymentService = new PaymentService();
+            (Application.Current as App).locator.timerService = new TimerService();
             (Application.Current as App).locator.drugDao = new DrugSqlDao();
             (Application.Current as App).locator.prescriptionDao = new PrescriptionSqlDao();
             signInWindow = new SignInWindow();

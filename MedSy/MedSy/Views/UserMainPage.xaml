@@ -6,6 +6,7 @@
     xmlns:local="using:MedSy.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:lottie="using:CommunityToolkit.WinUI.Lottie"
     xmlns:converter="using:MedSy.Converter.Main"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -133,5 +134,29 @@
         </Grid>
 
         <Frame x:Name="content" Grid.Column="1"/>
+        <Button
+            Click="ChatBotClicked"
+            Grid.Column="1"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            x:Name="chatBotButton">
+            <Grid>
+                <AnimatedVisualPlayer
+                    x:Name="chatBotAnimation"
+                    AutoPlay="True"
+                    Stretch="Uniform"
+                    Width="150"
+                    Height="150">
+                    <lottie:LottieVisualSource UriSource="ms-appx:///Assets/Animation-1734405880078.json"/>
+                </AnimatedVisualPlayer>
+            </Grid>
+            <Button.Flyout>
+                <Flyout>
+                    <local:ChatBotUC
+                        ChatBotUpdate="ChatBotUpdateHandler"
+                        x:Name="chatBot"/>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
     </Grid>
 </Page>

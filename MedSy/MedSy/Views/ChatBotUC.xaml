@@ -6,9 +6,15 @@
     xmlns:local="using:MedSy.Views"
     xmlns:model="using:MedSy.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:converter="using:MedSy.Converter.ChatBot"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <converter:MessageAlignmentConverter x:Key="MessageAlignmentConverter"/>
+        <converter:MessageContainerBgConverter x:Key="MessageContainerBgConverter"/>
+        <converter:TextFgConverter x:Key="TextFgConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="8*"></RowDefinition>
@@ -21,24 +27,105 @@
                 ItemsSource="{x:Bind chatBotViewModel.messageList}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="model:Message">
-                        <StackPanel>
-                            <TextBlock Text="{x:Bind content}" />
-                        </StackPanel>
+                        <Border
+                            HorizontalAlignment="{x:Bind senderId, Converter={StaticResource MessageAlignmentConverter},Mode=OneWay}"
+                            Margin="5"
+                            CornerRadius="10"
+                            Padding="10"
+                            Background="{x:Bind senderId, Converter={StaticResource MessageContainerBgConverter},Mode=OneWay}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock
+                                        Foreground="{x:Bind senderId, Converter={StaticResource TextFgConverter}, Mode=OneWay}"
+                                        FontWeight="Bold"
+                                        Text="{x:Bind content}"
+                                        FontSize="14"
+                                        TextWrapping="Wrap"
+                                        Margin="0,5,0,0" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <StackPanel
-            Grid.Row="1"
-            Orientation="Horizontal">
-            <TextBox
-                x:Name="typeMessageBox"/>
+        <Grid
+            Margin="5"
+            Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ComboBox
+                ItemsSource="{x:Bind chatBotViewModel.questionOptionList}"
+                CornerRadius="10"
+                PlaceholderText="Select question"
+                PlaceholderForeground="#ffffff"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                FontWeight="Bold"
+                Foreground="#ffffff"
+                Grid.Column="0"
+                Background="#336699"
+                x:Name="questionOptions"
+                Margin="0,0,5,0">
+                <ComboBox.Resources>
+                    <SolidColorBrush x:Key="ComboBoxChevronForeground" Color="#336699" />
+                    <SolidColorBrush x:Key="ComboBoxChevronForegroundPointerOver" Color="Blue" />
+                    <SolidColorBrush x:Key="ComboBoxChevronForegroundPressed" Color="Green" />
+                </ComboBox.Resources>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="model:Message">
+                        <Border
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Margin="5"
+                            CornerRadius="10"
+                            Padding="10"
+                            Background="#336699">
+                            <TextBlock
+                                Foreground="#ffffff"
+                                FontWeight="Bold"
+                                Text="{x:Bind content}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="WrapWholeWords"
+                                Margin="0,5,0,0"/>
+                        </Border>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <Button
-                x:Name="sendMessageButton"
-                Click="sendMessageClick">
-                <TextBlock
-                    Text="Send"/>
+                CornerRadius="10"
+                Background="#ffffff"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Grid.Column="1"
+                Margin="0,0,5,0"
+                Click="SendQuestionClicked"
+                x:Name="sendButton">
+                <FontIcon
+                    Foreground="#336699"
+                    FontFamily="{StaticResource FontAwesome}" 
+                    Glyph="&#xf1d8;"/>
             </Button>
-        </StackPanel>
+            <Button
+                CornerRadius="10"
+                Background="#ffffff"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Grid.Column="2"
+                Click="RefreshConversationClicked"
+                x:Name="refreshConversationButton">
+                <FontIcon
+                    Foreground="#336699"
+                    FontFamily="{StaticResource FontAwesome}" 
+                    Glyph="&#xf01e;"/>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

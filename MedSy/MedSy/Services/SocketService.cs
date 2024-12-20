@@ -23,6 +23,8 @@ namespace MedSy.Services
         public event newCREventHandler newCRReceived;
         public delegate void isLoadingEventHandler(bool isShow);
         public event isLoadingEventHandler isLoading;
+        public delegate void PaymentCompleteMessageEventHandler();
+        public event PaymentCompleteMessageEventHandler paymentCompleteMessageReceived;
         public SocketService()
         {
             socket = new SocketIOClient.SocketIO("http://localhost:5555");
@@ -64,6 +66,7 @@ namespace MedSy.Services
                     receiveEndCallMessage();
                     receiveNewCRMessage();
                     receiveAcceptedCRNoti();
+                    receivePaymentCompleteMessage();
                 }
             }
             void OnErrorHandler(object sender, string e)
@@ -83,7 +86,6 @@ namespace MedSy.Services
                 }
             }
         }
-
         public async Task register(int userId)
         {
             string role = "user";
@@ -152,6 +154,12 @@ namespace MedSy.Services
                 offerReceived?.Invoke();
             });
         }
-
+        public void receivePaymentCompleteMessage()
+        {
+            socket.On("paymentCompleteMessage", response =>
+            {
+                paymentCompleteMessageReceived?.Invoke();
+            });
+        }
     }
 }

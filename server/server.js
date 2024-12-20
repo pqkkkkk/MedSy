@@ -5,8 +5,6 @@ const fs = require('fs');
 const socketIo = require('socket.io');
 const path = require('path');
 const app = express();
-// const db = require('./db.config'); // add this line when connecting the application with database
-// const queries = require('./queries'); // add this line when connecting the application with database
 const server = http.createServer(app);
 const io = socketIo(server,{
     cors: {
@@ -15,7 +13,7 @@ const io = socketIo(server,{
 });
 const port = 5555;
 app.use(express.json());
-app.use(express.static(path.join(__dirname,'testClient')));
+app.use('/testClient', express.static(path.join(__dirname, 'testClient')));
 app.get('/chat',(req,res) =>{
     res.sendFile(path.join(__dirname,'testClient','client.html'));
 });
@@ -47,7 +45,7 @@ app.post('/create_payment_url', function (req, res, next) {
     var minutes = String(date.getMinutes()).padStart(2, '0');
     var seconds = String(date.getSeconds()).padStart(2, '0');
     var createDate = `${year}${month}${day}${hours}${minutes}${seconds}`;
-    var orderId = `${hours}${minutes}${seconds}`;
+    var orderId = req.body.orderId + `${hours}${minutes}${seconds}`;
     var amount = req.body.amount;
     var bankCode = req.body.bankCode;
 
@@ -90,7 +88,7 @@ app.post('/create_payment_url', function (req, res, next) {
 
 app.get('/vnpay_return', function (req, res, next) {
     var vnp_Params = req.query;
-
+    console.log(vnp_Params);
     var secureHash = vnp_Params['vnp_SecureHash'];
 
     delete vnp_Params['vnp_SecureHash'];
@@ -106,13 +104,18 @@ app.get('/vnpay_return', function (req, res, next) {
     var signData = querystring.stringify(vnp_Params, { encode: false });
     var crypto = require("crypto");
     var hmac = crypto.createHmac("sha512", secretKey);
-    var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
+    var signed = hmac.update(new Buffer.from(signData, 'utf-8')).digest("hex");
 
+    const orderId = vnp_Params['vnp_TxnRef'];
+    const userId = orderId.split('_')[0];
+    const data = {userid : userId};
+    const queryString = new URLSearchParams(data).toString();
     if(secureHash === signed){
-        res.render('success', {code: vnp_Params['vnp_ResponseCode']});
-        res.sendFile(path.join(__dirname,'testClient','vnpayReturn.html'));
+        console.log('Return success');
+        res.redirect(`/testClient/vnpaySuccess.html?${queryString}`);
     } else{
-        res.render('success', {code: '97'})
+        console.log('Return failed');
+        res.redirect(`/testClient/vnpayFail.html?${queryString}`);
     }
 });
 
@@ -129,7 +132,6 @@ io.on('connection', function(socket)
         console.log(users.get(id))
         console.log(`A user with id: ${id} registered`);
     });
-
     socket.on('messageFromClient',function(data){
         console.log('Data received: ', data);
         let {message, senderId, receiverId} = data;
@@ -222,6 +224,21 @@ io.on('connection', function(socket)
         }
         else{
             console.log(`Receiver with id ${actualReceiverId} is not available`);
+        }
+    });
+    // Payment complete message
+    socket.on('paymentCompleteMessage',(data) =>{
+        const {userId} = data;
+        const actualUserId = "user" + userId;
+
+        if(users.has(actualUserId))
+        {
+            const userSocketId = users.get(actualUserId);
+            io.to(userSocketId).emit('paymentCompleteMessage');
+            console.log('Payment complete message sent');
+        }
+        else{
+            console.log(`Receiver with id ${actualUserId} is not exist`);
         }
     });
 });

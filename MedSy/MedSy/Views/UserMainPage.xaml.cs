@@ -25,12 +25,15 @@ namespace MedSy.Views
     public sealed partial class UserMainPage : Page
     {
         private MainPageViewModel mainPageViewModel;
+        public delegate void HasNewConsultationTodayEventHandler(int value);
+        public event HasNewConsultationTodayEventHandler HasNewConsultationToday;
         public UserMainPage()
         {
             this.InitializeComponent();
             content.Navigate(typeof(UserDashboard));
-            
             mainPageViewModel = new MainPageViewModel();
+            HasNewConsultationToday += chatBot.HasNewConsultationTodayHandler;
+            HasNewConsultationToday?.Invoke(mainPageViewModel.HasConsultationToday);
         }
         private void UserProfileClick(object sender, RoutedEventArgs e)
         {
@@ -78,7 +81,7 @@ namespace MedSy.Views
             var button = sender as Button;
             string selectedPage = button.Tag.ToString();
             mainPageViewModel.updateSelectedPage(selectedPage);
-            content.Navigate(typeof(PaymentTest));
+            content.Navigate(typeof(UserDashboard));
         }
 
         private void MyConsultationClick(object sender, RoutedEventArgs e)
@@ -87,6 +90,24 @@ namespace MedSy.Views
             string selectedPage = button.Tag.ToString();
             mainPageViewModel.updateSelectedPage(selectedPage);
             content.Navigate(typeof(MyConsultationsPage));
+        }
+
+        private void ChatBotClicked(object sender, RoutedEventArgs e)
+        {
+            (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                chatBotAnimation.AutoPlay = false;
+                chatBotAnimation.Pause();
+            });
+        }
+
+        private void ChatBotUpdateHandler()
+        {
+            (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                chatBotAnimation.AutoPlay = true;
+                chatBotAnimation.Resume();
+            });
         }
     }
 }
