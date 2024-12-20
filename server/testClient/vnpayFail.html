@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Transaction Successful</title>
+  <title>Transaction Failed</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,9 +22,9 @@
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    .success-icon {
+    .error-icon {
       font-size: 64px;
-      color: #4CAF50;
+      color: #f44336;
     }
     .title {
       font-size: 24px;
@@ -39,7 +39,7 @@
     .button {
       display: inline-block;
       text-decoration: none;
-      background: #4CAF50;
+      background: #f44336;
       color: #fff;
       padding: 10px 20px;
       border-radius: 5px;
@@ -48,16 +48,19 @@
       transition: background 0.3s ease;
     }
     .button:hover {
-      background: #45a049;
+      background: #d32f2f;
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="success-icon">✔</div>
-  <div class="title">Transaction Successful!</div>
-  <div class="message">Thank you for your purchase. Your transaction has been completed successfully.</div>
-  <a href="/" class="button">Go Back</a>
-</div>
+  <div class="container">
+    <div class="error-icon">✖</div>
+    <div class="title">Transaction Failed</div>
+    <div class="message">We’re sorry, but your transaction could not be completed. Please try again later or contact support.</div>
+    <button id="goBackButton" class="button" onclick="SendPaymentCompleteMessage()">Go Back</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="vnpay.js"></script>
 </body>
 </html>

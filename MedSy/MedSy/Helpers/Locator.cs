@@ -30,6 +30,8 @@ namespace MedSy.Helpers
         public IPrescriptionDao prescriptionDao { get; set; }
         public SocketService socketService { get; set; }
         public ChatBotService chatBotService { get; set; }
+        public PaymentService paymentService { get; set; }
+        public TimerService timerService { get; set; }
         public MainWindow mainWindow { get; set; }
         
         

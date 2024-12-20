@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction Successful</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      text-align: center;
+      background: #ffffff;
+      padding: 20px 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .success-icon {
+      font-size: 64px;
+      color: #4CAF50;
+    }
+    .title {
+      font-size: 24px;
+      margin: 10px 0;
+      color: #333;
+    }
+    .message {
+      font-size: 16px;
+      color: #555;
+      margin: 10px 0 20px 0;
+    }
+    .button {
+      display: inline-block;
+      text-decoration: none;
+      background: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="success-icon">✔</div>
+    <div class="title">Transaction Successful!</div>
+    <div class="message">Thank you for your purchase. Your transaction has been completed successfully.</div>
+    <button id="goBackButton" class="button" onclick="SendPaymentCompleteMessage()">Go Back</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="vnpay.js"></script>
+</body>
+</html>

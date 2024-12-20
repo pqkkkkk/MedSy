@@ -14,5 +14,6 @@ public class Prescription : INotifyPropertyChanged
 
     public DateOnly created_day { get; set; }
     public int consultationId { get; set; }
+    public string status { get; set; }
 }
 

@@ -1,20 +1,25 @@
-const mysql = require('mysql2');
+const sql = require('mssql');
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password : 'pqkiet854',
-    database : 'medsy'
-});
+const dbConfig = {
+    user: 'sa',
+    password: 'SqlServer@123',
+    server: 'localhost',
+    database: 'medsytest',
+    options: {
+        trustServerCertificate: true
+    },
+};
 
-db.connect((error) =>{
-    if(error)
-    {
-        console.log('Error connecting to MedSy database', error.message);
-        return;
+const connectDB = async () => {
+    try {
+        const pool = await sql.connect(dbConfig);
+        console.log('Connected to MedSy database successfully');
+        return pool;
+    } catch (error) {
+        console.log('Error connecting to MedSy database:', error.message);
     }
-});
+};
 
-console.log('Connect to MedSy database successfully');
-
-module.exports = db;
+module.exports ={
+    connectDB
+};

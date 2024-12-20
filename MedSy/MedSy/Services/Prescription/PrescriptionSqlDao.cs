@@ -26,14 +26,14 @@ namespace MedSy.Services.Prescription
             try
             {
                 var query = $"""
-                INSERT INTO prescription(total_price, created_day, consultation_id) values (@totalprice, @createdDay, @consultationId)
+                INSERT INTO prescription(total_price, created_day, consultation_id, status) values (@totalprice, @createdDay, @consultationId, @status)
                 """;
 
                 var command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@totalprice", totalprice);
                 command.Parameters.AddWithValue("@createdDay", createdDay.ToString("yyyy-MM-dd"));
                 command.Parameters.AddWithValue("@consultationId", consultationId);
-
+                command.Parameters.AddWithValue("@status", "unpaid");
                 var rowsAffected = command.ExecuteNonQuery();
                 connection.Close();
 
@@ -53,7 +53,7 @@ namespace MedSy.Services.Prescription
                 }
             }
         }
-        public List<Models.Prescription> GetPrescriptions(int userId)
+        public List<Models.Prescription> GetPrescriptions(int userId, string status)
         {
             prescriptions = new List<Models.Prescription>();
             var query = $"""
@@ -66,7 +66,7 @@ namespace MedSy.Services.Prescription
             try
             {
                 connection.Open();
-
+                
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -76,11 +76,14 @@ namespace MedSy.Services.Prescription
                             prescriptionId = reader.GetInt32(reader.GetOrdinal("id")),
                             created_day = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("created_day"))),
                             totalPrice = reader.GetInt32(reader.GetOrdinal("total_price")),
-                            consultationId = reader.GetInt32(reader.GetOrdinal("consultation_id"))
+                            consultationId = reader.GetInt32(reader.GetOrdinal("consultation_id")),
+                            status = reader.GetString(reader.GetOrdinal("status"))
                         };
                         prescriptions.Add(prescription);
                     }
                 }
+
+                prescriptions = prescriptions.Where(p => p.status == status).ToList();
 
             }
             catch (Exception ex)
@@ -128,7 +131,6 @@ namespace MedSy.Services.Prescription
             connection.Close();
             return prescriptionDetails;
         }
-
         public void insertIntoPrescriptionDetail(Models.PrescriptionDetail prescriptionDetail, int prescriptionId)
         {
             
@@ -216,7 +218,6 @@ namespace MedSy.Services.Prescription
             connection.Close();
             return rowsAffected;
         }
-
         public List<PrescriptionDetail> getPrescriptionDetails(int consultationId)
         {
             List<Models.PrescriptionDetail> prescriptionDetails = new List<Models.PrescriptionDetail>();
@@ -259,7 +260,21 @@ namespace MedSy.Services.Prescription
             }
             
         }
+        public int UpdatePrescriptionStatus(int prescriptionId)
+        {
+            connection.Open();
 
+            var query = $"""
+                UPDATE prescription set status = @status where id = @prescriptionId
+                """;
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@status", "paid");
+            command.Parameters.AddWithValue("@prescriptionId", prescriptionId);
+            int rowsAffected = command.ExecuteNonQuery();
+
+            connection.Close();
+            return rowsAffected;
+        }
         public Dictionary<int,int> calculateRevenueEachMonth(int year)
         {
             connection.Open();

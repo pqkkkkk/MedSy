@@ -15,7 +15,6 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -92,6 +91,25 @@ namespace MedSy.Views
             string selectedPage = button.Tag.ToString();
             mainPageViewModel.updateSelectedPage(selectedPage);
             content.Navigate(typeof(PatientManagementPage));
+        }
+
+        private void ChatBotClicked(object sender, RoutedEventArgs e)
+        {
+            (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                chatBotAnimation.AutoPlay = false;
+                chatBotAnimation.Pause();
+            });
+            
+        }
+
+        private void ChatBotUpdateHandler()
+        {
+            (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                chatBotAnimation.AutoPlay = true;
+                chatBotAnimation.Resume();
+            });
         }
     }
 }

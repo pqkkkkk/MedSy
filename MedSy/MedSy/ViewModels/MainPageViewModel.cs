@@ -18,7 +18,8 @@ namespace MedSy.ViewModels
         public int HasNewCR { get; set; }
         public int HasConsultationToday { get; set; }
         public string selectedPage { get; set; }
-        
+        public bool IsNewChatBotMessage { get; set; }
+
         public MainPageViewModel()
         {
             socketService = (Application.Current as App).locator.socketService;
@@ -28,6 +29,7 @@ namespace MedSy.ViewModels
             string currentRole = (Application.Current as App).locator.currentUser.role;
             IsNewMessage = (Application.Current as App).locator.managementDao.checkNewMessage(currentUserId, currentRole) == 0 ? false : true;
             HasNewCR = CheckNewCR();
+            IsNewChatBotMessage = true;
             HasConsultationToday = CheckConsultationToday();
             selectedPage = "Dashboard";
 
