@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using ABI.System;
 using MedSy.Models;
 using MedSy.Services.Consultation;
-using MedSy.Services.Patient;
 using MedSy.Services.User;
 using Microsoft.UI.Xaml;
 

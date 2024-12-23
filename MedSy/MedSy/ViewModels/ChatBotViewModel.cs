@@ -106,6 +106,13 @@ namespace MedSy.ViewModels
         }
         public void GetAnswer(string question)
         {
+            IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
+            consultationTodayList = new ObservableCollection<Consultation>(consultationDao.GetConsultations(currentUser.role, currentUser.id, "Accepted", DateOnly.FromDateTime(DateTime.Now), null, null));
+            nextConsultationToday = consultationDao.GetNextConsultationToday(currentUser.role, currentUser.id);
+            newCRList = new ObservableCollection<Consultation>(consultationDao.GetConsultations(currentUser.role, currentUser.id, "New", null, null, null));
+            HasNewCR = newCRList.Count;
+            HasConsultationToday = consultationTodayList.Count;
+
             messageList.Add(new Message
             {
                 content = question,

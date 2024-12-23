@@ -25,14 +25,23 @@ public class PrescriptionPaymentViewModel:INotifyPropertyChanged
         prescriptions = new List<Prescription>();
         selectedPrescription = null;
         paymentUrl = "";
-        LoadData();
+        LoadData("unpaid");
         LoadPrescriptionDetails();
     }
-
-    public void LoadData()
+    public void InitializeSelectedPrescription()
+    {
+        selectedPrescription = new Prescription()
+        {
+            totalPrice = 0,
+            created_day = DateOnly.FromDateTime(DateTime.Now),
+            consultationId = -1,
+            status = "",
+        };
+    }
+    public void LoadData(string prescriptionStatus)
     {
         IPrescriptionDao prescriptionDao = (Application.Current as App).locator.prescriptionDao;
-        prescriptions = prescriptionDao.GetPrescriptions(currentUser.id,"unpaid");
+        prescriptions = prescriptionDao.GetPrescriptions(currentUser.id,prescriptionStatus);
     }
 
     public void LoadPrescriptionDetails()

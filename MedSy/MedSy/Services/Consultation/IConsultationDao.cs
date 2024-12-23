@@ -20,7 +20,6 @@ namespace MedSy.Services.Consultation
         public int DeleteConsultation(Models.Consultation selectedConsultation);
         public Dictionary<string, int> GetPathologyCountByMonth(int month);
         public Dictionary<int, int> countOnlineConsultationEachMonth(int year);
-
         public List<string> getAllPathology();
     }
 }

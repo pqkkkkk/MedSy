@@ -73,7 +73,7 @@ namespace MedSy.Views
             var button = sender as Button;
             string selectedPage = button.Tag.ToString();
             mainPageViewModel.updateSelectedPage(selectedPage);
-            content.Navigate(typeof(Pharmacy));
+            content.Navigate(typeof(PrescriptionPaymentPage));
         }
 
         private void MedicalNewsClick(object sender, RoutedEventArgs e)
