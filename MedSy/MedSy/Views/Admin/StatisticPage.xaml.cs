@@ -32,16 +32,176 @@ namespace MedSy.Views
             this.DataContext = statisticViewModel;
         }
 
-        private void MonthChanged(object sender, SelectionChangedEventArgs e)
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            statisticViewModel.LoadPathologyStatistics();
+            Frame.GoBack();
         }
 
-        private void YearChanged(object sender, SelectionChangedEventArgs e)
+        private void YearPathologyRateChanged(object sender, SelectionChangedEventArgs e)
         {
-            statisticViewModel.LoadOnlineConsultationStatistics();
-            statisticViewModel.LoadRevenueStatistics();
+            if (WeekPathologyRateComboBox.SelectedItem != null)
+            {
+                statisticViewModel.LoadPathologyStatisticsByWeek(WeekPathologyRateComboBox.SelectedIndex + 1, MonthPathologyRateComboBox.SelectedIndex + 1, (int)YearPathologyRateComboBox.SelectedItem
+                );
+            }
+            else if (MonthPathologyRateComboBox.SelectedItem != null)
+            {
+                statisticViewModel.LoadPathologyStatisticsByMonth(MonthPathologyRateComboBox.SelectedIndex + 1, (int)YearPathologyRateComboBox.SelectedItem
+                );
+            }
+            else
+            {
+                statisticViewModel.LoadPathologyStatisticsByYear((int)YearPathologyRateComboBox.SelectedItem);
+            }
+        }
+        private void MonthPathologyRateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (WeekPathologyRateComboBox.SelectedItem != null)
+            {
+                statisticViewModel.LoadPathologyStatisticsByWeek(WeekPathologyRateComboBox.SelectedIndex + 1, MonthPathologyRateComboBox.SelectedIndex + 1, (int)YearPathologyRateComboBox.SelectedItem
+                );
+            }
+            else
+            {
+                if(MonthPathologyRateComboBox.SelectedItem != null)
+                {
+                    WeekPathologyRateComboBox.Visibility = Visibility.Visible;
+                    reset.Visibility = Visibility.Visible;
+                    statisticViewModel.LoadPathologyStatisticsByMonth(MonthPathologyRateComboBox.SelectedIndex + 1, (int)YearPathologyRateComboBox.SelectedItem);
+                }
+            }
         }
 
+        private void WeekPathologyRateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (WeekPathologyRateComboBox.SelectedItem != null)
+            {
+                statisticViewModel.LoadPathologyStatisticsByWeek(WeekPathologyRateComboBox.SelectedIndex + 1, MonthPathologyRateComboBox.SelectedIndex + 1, (int)YearPathologyRateComboBox.SelectedItem);
+            }
+        }
+
+        private void ResetPathologyRate(object sender, RoutedEventArgs e)
+        {
+            WeekPathologyRateComboBox.Visibility = Visibility.Collapsed;
+            reset.Visibility = Visibility.Collapsed;
+            WeekPathologyRateComboBox.SelectedItem = null;
+            MonthPathologyRateComboBox.SelectedItem = null;
+            statisticViewModel.LoadPathologyStatisticsByYear((int)YearPathologyRateComboBox.SelectedItem);
+        }
+
+        private void YearConsultationChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MonthConsultationStatisticComboBox.SelectedItem != null)
+            {
+                if (WeekConsultationStatisticComboBox.SelectedItem != null)
+                {
+                    statisticViewModel.LoadOnlineConsultationStatisticsByWeek(WeekConsultationStatisticComboBox.SelectedIndex + 1, MonthConsultationStatisticComboBox.SelectedIndex + 1, (int)YearConsultationStatisticComboBox.SelectedItem);
+                }
+                else
+                {
+                    statisticViewModel.LoadOnlineConsultationStatisticsByMonth(MonthConsultationStatisticComboBox.SelectedIndex + 1,(int)YearConsultationStatisticComboBox.SelectedItem);
+                }
+            }
+            else
+            {
+                statisticViewModel.LoadOnlineConsultationStatisticsByYear((int)YearConsultationStatisticComboBox.SelectedItem);
+            }
+        }
+
+        private void MonthConsultationChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (WeekConsultationStatisticComboBox.SelectedItem != null)
+            {
+                statisticViewModel.LoadOnlineConsultationStatisticsByWeek(WeekConsultationStatisticComboBox.SelectedIndex + 1, MonthConsultationStatisticComboBox.SelectedIndex + 1,(int)YearConsultationStatisticComboBox.SelectedItem);
+            }
+            else if (MonthConsultationStatisticComboBox.SelectedItem != null)
+            {
+                WeekConsultationStatisticComboBox.Visibility = Visibility.Visible;
+                resetOnlineConsultation.Visibility = Visibility.Visible;
+
+                statisticViewModel.LoadOnlineConsultationStatisticsByMonth(MonthConsultationStatisticComboBox.SelectedIndex + 1,(int)YearConsultationStatisticComboBox.SelectedItem);
+            }
+            else
+            {
+                statisticViewModel.LoadOnlineConsultationStatisticsByYear((int)YearConsultationStatisticComboBox.SelectedItem);
+            }
+        }
+
+        private void WeekConsultationChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (WeekConsultationStatisticComboBox.SelectedItem != null)
+            {
+                statisticViewModel.LoadOnlineConsultationStatisticsByWeek(WeekConsultationStatisticComboBox.SelectedIndex + 1, MonthConsultationStatisticComboBox.SelectedIndex + 1,(int)YearConsultationStatisticComboBox.SelectedItem);
+            }
+        }
+
+        private void ResetOnlineConsultation(object sender, RoutedEventArgs e)
+        {
+            WeekConsultationStatisticComboBox.Visibility = Visibility.Collapsed;
+            resetOnlineConsultation.Visibility = Visibility.Collapsed;
+
+            WeekConsultationStatisticComboBox.SelectedItem = null;
+            MonthConsultationStatisticComboBox.SelectedItem = null;
+
+            statisticViewModel.LoadOnlineConsultationStatisticsByYear((int)YearConsultationStatisticComboBox.SelectedItem);
+        }
+
+        private void ResetRevenueStatistic(object sender, RoutedEventArgs e)
+        {
+            WeekRevenueStatisticComboBox.Visibility = Visibility.Collapsed;
+            resetRevenueStatistic.Visibility = Visibility.Collapsed;
+
+            WeekRevenueStatisticComboBox.SelectedItem = null;
+            MonthRevenueStatisticComboBox.SelectedItem = null;
+
+            statisticViewModel.LoadRevenueStatisticsByYear((int)YearRevenueStatisticComboBox.SelectedItem);
+        }
+
+        private void WeekRevenueChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (WeekRevenueStatisticComboBox.SelectedItem != null)
+            {
+                statisticViewModel.LoadRevenueStatisticsByWeek(WeekRevenueStatisticComboBox.SelectedIndex + 1, MonthRevenueStatisticComboBox.SelectedIndex + 1, (int)YearRevenueStatisticComboBox.SelectedItem);
+            }
+        }
+
+        private void MonthRevenueChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (WeekRevenueStatisticComboBox.SelectedItem != null)
+            {
+                statisticViewModel.LoadRevenueStatisticsByWeek(WeekRevenueStatisticComboBox.SelectedIndex + 1, MonthRevenueStatisticComboBox.SelectedIndex + 1, (int)YearRevenueStatisticComboBox.SelectedItem);
+            }
+            else if (MonthRevenueStatisticComboBox.SelectedItem != null)
+            {
+                WeekRevenueStatisticComboBox.Visibility = Visibility.Visible;
+                resetRevenueStatistic.Visibility = Visibility.Visible;
+                statisticViewModel.LoadRevenueStatisticsByMonth(MonthRevenueStatisticComboBox.SelectedIndex + 1, (int)YearRevenueStatisticComboBox.SelectedItem);
+            }
+            else
+            {
+                statisticViewModel.LoadRevenueStatisticsByYear((int)YearRevenueStatisticComboBox.SelectedItem);
+            }
+
+        }
+
+        private void YearRevenueChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MonthRevenueStatisticComboBox.SelectedItem != null)
+            {
+                if (WeekRevenueStatisticComboBox.SelectedItem != null)
+                {
+                    statisticViewModel.LoadRevenueStatisticsByWeek(WeekRevenueStatisticComboBox.SelectedIndex + 1, MonthRevenueStatisticComboBox.SelectedIndex + 1, (int)YearRevenueStatisticComboBox.SelectedItem);
+                }
+                else
+                {
+                    statisticViewModel.LoadRevenueStatisticsByMonth(MonthRevenueStatisticComboBox.SelectedIndex + 1, (int)YearRevenueStatisticComboBox.SelectedItem);
+                }
+            }
+            else
+            {
+                statisticViewModel.LoadRevenueStatisticsByYear((int)YearRevenueStatisticComboBox.SelectedItem);
+            }
+        }
     }
 }

@@ -13,10 +13,12 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.1*"></RowDefinition>
-            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
         </Grid.RowDefinitions>
-        
+
+        <!-- Pathology Rate -->
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
@@ -28,33 +30,63 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
-                    Text="Pathology Rate over month" FontWeight="SemiBold" Foreground="#666" 
+                    Text="Pathology Rate" FontWeight="SemiBold" Foreground="#666" 
                            HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0 0 0"/>
-                
-                <ComboBox Grid.Column="1"
-                    x:Name="StatisticComboBox" Background="#336699" Foreground="#fff" FontWeight="SemiBold"
-                    ItemsSource="{x:Bind statisticViewModel.Months, Mode=OneWay}"
-                    SelectedItem="{x:Bind statisticViewModel.selectedMonth, Mode=TwoWay}"
-                    SelectionChanged="MonthChanged"
-                    Text="Statistic"
+
+                <!-- Pathology Rate ComboBox-->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="reset" Background="#336699" Click="ResetPathologyRate" Visibility="Collapsed"
+                            Margin="0 0 10 0" VerticalAlignment="Center">
+                        <FontIcon FontFamily="{StaticResource FontAwesome}"  Glyph="&#xf021;" 
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                  FontSize="15" Foreground="#fff"></FontIcon>
+                    </Button>
+                    <ComboBox x:Name="WeekPathologyRateComboBox" Visibility="Collapsed"
+                    Background="#336699" Foreground="#fff" FontWeight="SemiBold"
+                    ItemsSource="{x:Bind statisticViewModel.Weeks, Mode=OneWay}"
+                    SelectionChanged="WeekPathologyRateChanged"
+                    PlaceholderText="Week"
+                    PlaceholderForeground="#fff"
                     Margin="0 0 10 0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center">
-                </ComboBox>
+                    </ComboBox>
+
+                    <ComboBox x:Name="MonthPathologyRateComboBox"
+                    Background="#336699" Foreground="#fff" FontWeight="SemiBold"
+                    PlaceholderText="Month"
+                    PlaceholderForeground="#fff"
+                    ItemsSource="{x:Bind statisticViewModel.Months, Mode=OneWay}"
+                    SelectionChanged="MonthPathologyRateChanged"
+                    Margin="0 0 10 0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+                    </ComboBox>
+
+                    <ComboBox x:Name="YearPathologyRateComboBox" 
+                    Background="#336699" Foreground="#fff" FontWeight="SemiBold"
+                    ItemsSource="{x:Bind statisticViewModel.Years, Mode=OneWay}"
+                    SelectedItem="{x:Bind statisticViewModel.defaultYear, Mode=OneTime}"
+                    SelectionChanged="YearPathologyRateChanged"
+                    Margin="0 0 10 0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+                    </ComboBox>
+                </StackPanel>
             </Grid>
+
             <Grid Grid.Row="1"
                 Background="#fff" Margin="10" BorderBrush="#000" BorderThickness="1" CornerRadius="10">
                 <lvc:CartesianChart ZoomMode="None"
-                        Series="{Binding ColumnSeries}" 
+                        Series="{Binding ColumnSeries, Mode=TwoWay}" 
                         XAxes="{Binding ColumnXAxes}"
                         YAxes="{Binding ColumnYAxes}"/>
             </Grid>
         </Grid>
-
+        
+        <!-- Consultation Statistic -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="5*"></RowDefinition>
             </Grid.RowDefinitions>
@@ -64,34 +96,115 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
-                Text="Frequency of online consultation over month" FontWeight="SemiBold" Foreground="#666" 
-               HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0 0 0"/>
+                Text="Online consultation statistic" FontWeight="SemiBold" Foreground="#666" 
+                   HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0 0 0"/>
 
-                <ComboBox Grid.Column="1"
-                          Background="#336699" Foreground="#fff" FontWeight="SemiBold"
-                    ItemsSource="{x:Bind statisticViewModel.Years, Mode=OneWay}"
-                    SelectedItem="{x:Bind statisticViewModel.selectedYear, Mode=TwoWay}"
-                    SelectionChanged="YearChanged"
-                    Text="Statistic"
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="resetOnlineConsultation" Background="#336699" Click="ResetOnlineConsultation" Visibility="Collapsed"
+                            Margin="0 0 10 0" VerticalAlignment="Center">
+                        <FontIcon FontFamily="{StaticResource FontAwesome}"  Glyph="&#xf021;" 
+                          VerticalAlignment="Center" HorizontalAlignment="Center" 
+                          FontSize="15" Foreground="#fff"></FontIcon>   
+                    </Button>
+                    <ComboBox 
+                    x:Name="WeekConsultationStatisticComboBox" Background="#336699" Foreground="#fff" FontWeight="SemiBold"
+                    ItemsSource="{x:Bind statisticViewModel.Weeks, Mode=OneWay}" Visibility="Collapsed"
+                    SelectionChanged="WeekConsultationChanged"
+                    PlaceholderText="Week"
+                    PlaceholderForeground="#fff"
                     Margin="0 0 10 0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"> 
-                </ComboBox>
-            </Grid>
+                    </ComboBox>
 
-            <Grid Grid.Row="1"
-            Background="#fff" Margin="10" BorderBrush="#000" BorderThickness="1" CornerRadius="10">
-                <lvc:CartesianChart ZoomMode="None"
-            Series="{Binding LineSeries}" 
-            XAxes="{Binding LineXAxes1}"
-            YAxes="{Binding LineYAxes1}"/>
+                    <ComboBox
+                    x:Name="MonthConsultationStatisticComboBox" Background="#336699" Foreground="#fff" FontWeight="SemiBold"
+                    ItemsSource="{x:Bind statisticViewModel.Months, Mode=OneWay}" 
+                    SelectionChanged="MonthConsultationChanged"
+                    PlaceholderText="Month"
+                    PlaceholderForeground="#fff"
+                    Margin="0 0 10 0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"> 
+                    </ComboBox>
+                    
+                    <ComboBox
+                    x:Name="YearConsultationStatisticComboBox" Background="#336699" Foreground="#fff" FontWeight="SemiBold"
+                    ItemsSource="{x:Bind statisticViewModel.Years, Mode=OneWay}"
+                    SelectedItem="{x:Bind statisticViewModel.defaultYear, Mode=OneTime}"
+                    SelectionChanged="YearConsultationChanged"
+                    Margin="0 0 10 0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"> 
+                    </ComboBox>
+                </StackPanel>
             </Grid>
-
-            <TextBlock Text="Revenue through each month" Grid.Row="2" FontWeight="SemiBold" Foreground="#666" 
-            HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0 0 5"/>
             
-            <Grid Grid.Row="3"
-                Background="#fff" Margin="10 0 10 10" BorderBrush="#000" BorderThickness="1" CornerRadius="10">
+            <Grid Grid.Row="1"
+                Background="#fff" Margin="10" BorderBrush="#000" BorderThickness="1" CornerRadius="10">
+                            <lvc:CartesianChart ZoomMode="None"
+                Series="{Binding LineSeries}" 
+                XAxes="{Binding LineXAxes1}"
+                YAxes="{Binding LineYAxes1}"/> 
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Revenue statistic" Grid.Row="2" FontWeight="SemiBold" Foreground="#666" 
+                           HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 0 0 5"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="resetRevenueStatistic" Background="#336699" Click="ResetRevenueStatistic" Visibility="Collapsed"
+                    Margin="0 0 10 0" VerticalAlignment="Center">
+                    <FontIcon FontFamily="{StaticResource FontAwesome}"  Glyph="&#xf021;" 
+                    VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    FontSize="15" Foreground="#fff"></FontIcon>
+                    </Button>
+                    <ComboBox 
+                        x:Name="WeekRevenueStatisticComboBox" Background="#336699" Foreground="#fff" FontWeight="SemiBold"
+                        ItemsSource="{x:Bind statisticViewModel.Weeks, Mode=OneWay}" Visibility="Collapsed"
+                        SelectionChanged="WeekRevenueChanged"
+                        PlaceholderText="Week"
+                        PlaceholderForeground="#fff" 
+                        Margin="0 0 10 0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"> 
+                    </ComboBox>
+
+                    <ComboBox
+                        x:Name="MonthRevenueStatisticComboBox" Background="#336699" Foreground="#fff" FontWeight="SemiBold"
+                        ItemsSource="{x:Bind statisticViewModel.Months, Mode=OneWay}" 
+                        SelectionChanged="MonthRevenueChanged"
+                        PlaceholderText="Month"
+                        PlaceholderForeground="#fff"
+                        Margin="0 0 10 0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"> 
+                    </ComboBox>
+
+                    <ComboBox
+                        x:Name="YearRevenueStatisticComboBox" Background="#336699" Foreground="#fff" FontWeight="SemiBold"
+                        Margin="0 0 10 0"
+                        ItemsSource="{x:Bind statisticViewModel.Years, Mode=OneWay}"
+                        SelectedItem="{x:Bind statisticViewModel.defaultYear, Mode=OneTime}"
+                        SelectionChanged="YearRevenueChanged" 
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"> 
+                    </ComboBox>
+                </StackPanel> 
+            </Grid>
+            <Grid Grid.Row="1"
+                Background="#fff" Margin="10" BorderBrush="#000" BorderThickness="1" CornerRadius="10">
                <lvc:CartesianChart ZoomMode="None"
                 Series="{Binding LineSeries2}" 
                 XAxes="{Binding LineXAxes2}"
