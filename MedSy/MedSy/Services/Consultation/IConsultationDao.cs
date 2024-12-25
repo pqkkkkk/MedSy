@@ -18,8 +18,12 @@ namespace MedSy.Services.Consultation
         public int UpdateStatus(Models.Consultation selectedConsultation, string status);
         public bool updateResult(int id, string result);
         public int DeleteConsultation(Models.Consultation selectedConsultation);
-        public Dictionary<string, int> GetPathologyCountByMonth(int month);
-        public Dictionary<int, int> countOnlineConsultationEachMonth(int year);
+        public Dictionary<string, int> GetPathologyCountByMonth(int month, int year);
+        public Dictionary<string, int> GetPathologyCountByYear(int year);
+        public Dictionary<string, int> GetPathologyCountByWeek(int week, int month, int year);
+        public Dictionary<int, int> countOnlineConsultationByYear(int year);
+        public Dictionary<int, int> countOnlineConsultationByMonth(int month, int year);
+        public Dictionary<int, int> countOnlineConsultationByWeek(int week, int month, int year);
         public List<string> getAllPathology();
     }
 }

@@ -14,7 +14,7 @@ using Windows.System;
 
 namespace MedSy.Services.Consultation
 {
-    public class ConsultationSqlDao:IConsultationDao
+    public class ConsultationSqlDao : IConsultationDao
     {
         private SqlConnection connection;
         private List<Models.Consultation> consultations;
@@ -26,11 +26,11 @@ namespace MedSy.Services.Consultation
         public List<Models.Consultation> GetConsultations(string userRole, int userId, string status, DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             consultations = new List<Models.Consultation>();
-            
+
             connection.Open();
 
             var sqlQuery = new StringBuilder("SELECT * FROM consultation where 1=1");
-                
+
 
             if (userRole == "patient")
             {
@@ -109,7 +109,7 @@ namespace MedSy.Services.Consultation
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
-        
+
             connection.Close();
             return consultations;
         }
@@ -175,22 +175,20 @@ namespace MedSy.Services.Consultation
 
         }
 
-        public Dictionary<string, int> GetPathologyCountByMonth(int month)
+        public Dictionary<string, int> GetPathologyCountByYear(int year)
         {
             var pathologyCount = new Dictionary<string, int>();
-
             string query = @"
             SELECT p.name, COUNT(c.id) AS Count
             FROM pathology p LEFT JOIN consultation c
-            ON p.name = c.pathology AND MONTH(c.date) = @month
+            ON p.name = c.pathology AND YEAR(c.date) = @year
             GROUP BY p.name";
-
             try
             {
                 connection.Open();
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@month", month);
+                    command.Parameters.AddWithValue("@year", year);
 
                     using (var reader = command.ExecuteReader())
                     {
@@ -212,7 +210,85 @@ namespace MedSy.Services.Consultation
             return pathologyCount;
         }
 
-        public Dictionary<int,int> countOnlineConsultationEachMonth(int year)
+        public Dictionary<string, int> GetPathologyCountByMonth(int month, int year)
+        {
+            var pathologyCount = new Dictionary<string, int>();
+
+            string query = @"
+            SELECT p.name, COUNT(c.id) AS Count
+            FROM pathology p LEFT JOIN consultation c
+            ON p.name = c.pathology AND MONTH(c.date) = @month AND YEAR(c.date) = @year
+            GROUP BY p.name";
+
+            try
+            {
+                connection.Open();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@month", month);
+                    command.Parameters.AddWithValue("@year", year);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string pathology = reader.GetString(0);
+                            int count = reader.GetInt32(1);
+
+                            pathologyCount[pathology] = count;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            connection.Close();
+            return pathologyCount;
+        }
+
+        public Dictionary<string, int> GetPathologyCountByWeek(int week, int month, int year)
+        {
+            var pathologyCount = new Dictionary<string, int>();
+
+            string query = @"
+            SELECT p.name AS pathology_name, COUNT(c.id) AS consultation_count
+            FROM pathology p
+            LEFT JOIN consultation c ON p.name = c.pathology
+            AND YEAR(c.date) = @year AND MONTH(c.date) = @month AND DATEPART(WEEK, c.date) - DATEPART(WEEK, DATEFROMPARTS(YEAR(c.date), MONTH(c.date), 1)) + 1 = @week
+            GROUP BY p.name";
+
+            try
+            {
+                connection.Open();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@week", week);
+                    command.Parameters.AddWithValue("@month", month);
+                    command.Parameters.AddWithValue("@year", year);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string pathology = reader.GetString(0);
+                            int count = reader.GetInt32(1);
+
+                            pathologyCount[pathology] = count;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            connection.Close();
+            return pathologyCount;
+        }
+
+        public Dictionary<int, int> countOnlineConsultationByYear(int year)
         {
             var OnlineConsultationEachMonth = new Dictionary<int, int>();
             connection.Open();
@@ -243,7 +319,8 @@ namespace MedSy.Services.Consultation
                         OnlineConsultationEachMonth[month] = count;
                     }
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
@@ -253,6 +330,103 @@ namespace MedSy.Services.Consultation
             }
             return OnlineConsultationEachMonth;
         }
+
+        public Dictionary<int, int> countOnlineConsultationByMonth(int month, int year)
+        {
+            var OnlineConsultationEachWeek = new Dictionary<int, int>();
+            connection.Open();
+            var query = $"""
+                SELECT 
+                DATEPART(WEEK, c.date) - DATEPART(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, c.date), 0)) + 1 AS WeekOfMonth,
+                COUNT(c.id) AS count
+                FROM 
+                consultation c
+                WHERE 
+                YEAR(c.date) = @year
+                AND MONTH(c.date) = @month
+                AND c.type = 'online'
+                 GROUP BY 
+                DATEPART(WEEK, c.date) - DATEPART(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, c.date), 0)) + 1
+                ORDER BY 
+                WeekOfMonth;
+                """;
+
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@month", month);
+            command.Parameters.AddWithValue("@year", year);
+            try
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int week = reader.GetInt32(0);
+                        int count = reader.GetInt32(1);
+
+                        OnlineConsultationEachWeek[week] = count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return OnlineConsultationEachWeek;
+        }
+
+        public Dictionary<int, int> countOnlineConsultationByWeek(int week, int month, int year)
+        {
+            var OnlineConsultationEachDayInAWeek = new Dictionary<int, int>();
+            connection.Open();
+            var query = $"""
+                SELECT 
+                DATEPART(WEEKDAY, c.date) AS day_of_week,
+                COUNT(c.id) AS count
+                FROM 
+                consultation c
+                WHERE 
+                YEAR(c.date) = @year          
+                AND MONTH(c.date) = @month    
+                AND ((DAY(c.date) - 1) / 7 + 1) = @week
+                AND c.type = 'online'
+                GROUP BY 
+                DATEPART(WEEKDAY, c.date)    
+                ORDER BY 
+                DATEPART(WEEKDAY, c.date); 
+                """;
+
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@month", month);
+            command.Parameters.AddWithValue("@year", year);
+            command.Parameters.AddWithValue("@week", week);
+            try
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int day = reader.GetInt32(0);
+                        int count = reader.GetInt32(1);
+
+                        OnlineConsultationEachDayInAWeek[day] = count;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return OnlineConsultationEachDayInAWeek;
+        }
+
         public SqlConnection ConnectSql()
         {
             var connectionString = """
@@ -320,7 +494,7 @@ namespace MedSy.Services.Consultation
 
             try
             {
-                
+
                 int result = command.ExecuteNonQuery();
 
                 return true;
@@ -328,11 +502,11 @@ namespace MedSy.Services.Consultation
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
-                return false; 
+                return false;
             }
             finally
             {
-                connection.Close(); 
+                connection.Close();
             }
         }
         public Models.Consultation GetNextConsultationToday(string userRole, int userId)
@@ -476,6 +650,6 @@ namespace MedSy.Services.Consultation
             connection.Close();
             return consultations;
         }
-    }
+    } 
 
 }

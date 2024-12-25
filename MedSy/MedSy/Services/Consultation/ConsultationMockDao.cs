@@ -277,6 +277,36 @@ namespace MedSy.Services.Consultation
         {
             throw new NotImplementedException();
         }
+
+        public Dictionary<string, int> GetPathologyCountByMonth(int month, int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, int> GetPathologyCountByYear(int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, int> GetPathologyCountByWeek(int week, int month, int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<int, int> countOnlineConsultationByYear(int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<int, int> countOnlineConsultationByMonth(int month, int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<int, int> countOnlineConsultationByWeek(int week, int month, int year)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MedSy.Views.Admin.AdminDashboard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MedSy.Views.Admin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="#D4F3FF">
+
+    <NavigationView x:Name="AdminNavigate" SelectionChanged="NavigationView_SelectionChanged"
+                        PaneDisplayMode="LeftCompact"
+                        IsPaneOpen="False" IsBackButtonVisible="Collapsed" IsSettingsVisible="False">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Drug Management" Tag="DrugManagement">
+                <NavigationViewItem.Icon>
+                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf484;" FontSize="20"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="Statistic" Tag="StatisticPage">
+                <NavigationViewItem.Icon>
+                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf201;" FontSize="20"/>
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
+        <Frame Grid.Column="1" Name="contentFrame"/>
+    </NavigationView>
+</Page>

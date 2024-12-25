@@ -275,7 +275,7 @@ namespace MedSy.Services.Prescription
             connection.Close();
             return rowsAffected;
         }
-        public Dictionary<int,int> calculateRevenueEachMonth(int year)
+        public Dictionary<int,int> calculateRevenueByYear(int year)
         {
             connection.Open();
             var revenue = new Dictionary<int, int>();
@@ -294,6 +294,73 @@ namespace MedSy.Services.Prescription
                     while (reader.Read())
                     {
                         revenue.Add(reader.GetInt32(reader.GetOrdinal("month")), reader.GetInt32(reader.GetOrdinal("total")));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            connection.Close();
+            return revenue;
+        }
+        public Dictionary<int, int> calculateRevenueByMonth(int month, int year)
+        {
+            connection.Open();
+            var revenue = new Dictionary<int, int>();
+            var query = $"""
+                SELECT DATEPART(WEEK, created_day) - DATEPART(WEEK, DATEADD(DAY, 1 - DAY(created_day), created_day)) + 1 AS week,SUM(total_price) AS total
+                FROM prescription
+                WHERE MONTH(created_day) = 12 AND YEAR(created_day) = 2024 AND status = 'Paid'
+                GROUP BY DATEPART(WEEK, created_day) - DATEPART(WEEK, DATEADD(DAY, 1 - DAY(created_day), created_day)) + 1
+                ORDER BY week;
+                """;
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@year", year);
+            command.Parameters.AddWithValue("@month", month);
+            try
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        revenue.Add(reader.GetInt32(reader.GetOrdinal("week")), reader.GetInt32(reader.GetOrdinal("total")));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            connection.Close();
+            return revenue;
+        }
+        public Dictionary<int, int> calculateRevenueByWeek(int week, int month, int year)
+        {
+            connection.Open();
+            var revenue = new Dictionary<int, int>();
+            var query = $"""
+                SELECT DATEPART(WEEKDAY, created_day) AS day, SUM(total_price) AS total
+                FROM prescription
+                WHERE MONTH(created_day) = @month AND YEAR(created_day) = @year AND status = 'Paid' AND DATEPART(WEEK, created_day) - DATEPART(WEEK, DATEADD(DAY, 1 - DAY(created_day), created_day)) + 1 = @week
+                GROUP BY DATEPART(WEEKDAY, created_day)
+                ORDER BY day;
+                """;
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@year", year);
+            command.Parameters.AddWithValue("@month", month);
+            command.Parameters.AddWithValue("@week", week);
+
+            try
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        revenue.Add(
+                            reader.GetInt32(reader.GetOrdinal("day")),
+                            reader.GetInt32(reader.GetOrdinal("total"))
+                            );
                     }
                 }
             }

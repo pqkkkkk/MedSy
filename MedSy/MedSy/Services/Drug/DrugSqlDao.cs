@@ -266,5 +266,47 @@ namespace MedSy.Services.Drug
             }
 
         }
+
+        public bool addDrug(Models.Drug drug)
+        {
+            connection.Open();
+            var query = $"""
+                INSERT INTO drug (name, unit, price, quantity, manufacturing_date, expiry_date, drug_type)
+                VALUES (@name, @unit, @price, @quantity, @manufacturing_date, @expiry_date, @drug_type)
+            """;
+            var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@name", drug.name);
+            command.Parameters.AddWithValue("@unit", drug.unit);
+            command.Parameters.AddWithValue("@price", drug.price);
+            command.Parameters.AddWithValue("@quantity", drug.quantity);
+            command.Parameters.AddWithValue("@manufacturing_date", drug.manufacturing_date);
+            command.Parameters.AddWithValue("@expiry_date", drug.expiry_date);
+            command.Parameters.AddWithValue("@drug_type", drug.drugTypeName);
+
+            try
+            {
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine("Drug added successfully.");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("No rows were affected. Please check your input.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
     }
+
 }
