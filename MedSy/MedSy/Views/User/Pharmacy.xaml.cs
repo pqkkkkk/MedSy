@@ -73,10 +73,6 @@ namespace MedSy.Views.User
                 {
                     Frame.Navigate(typeof(PrescriptionPaymentPage));
                 }
-                //else if (selectedIndex == 1)
-                //{
-                //    Frame.Navigate(typeof(Pharmacy));
-                //}
             }
         }
 

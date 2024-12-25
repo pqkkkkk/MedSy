@@ -102,8 +102,13 @@ namespace MedSy.ViewModels
         public int acceptRequest()
         {
            IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
-   
-           if(consultationDao.UpdateStatus(selectedConsultation, "Accepted") == 1){
+            List<Models.Consultation> sameDayConsultationList = consultationDao.GetConsultations("doctor", selectedConsultation.doctorId, "Accepted", selectedConsultation.date, null, null);
+            int sameTimeConsultationCount = sameDayConsultationList.Count(c => c.startTime < selectedConsultation.endTime || c.endTime > selectedConsultation.startTime);
+            if (sameTimeConsultationCount > 0)
+            {
+                return -1;
+            }
+            if (consultationDao.UpdateStatus(selectedConsultation, "Accepted") == 1){
 
                 selectedConsultation.status = "Accepted";
                 return 1;

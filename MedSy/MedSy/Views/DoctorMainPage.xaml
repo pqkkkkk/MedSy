@@ -146,7 +146,7 @@
         <Button
             Click="ChatBotClicked"
             Grid.Column="1"
-            HorizontalAlignment="Right"
+            HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
             x:Name="chatBotButton">
             <Grid>

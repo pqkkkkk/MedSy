@@ -137,7 +137,8 @@ namespace MedSy.Services.User
                         phoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
                         address = reader.GetString(reader.GetOrdinal("Address")),
                         birthday = reader.GetDateTime(reader.GetOrdinal("Birthday")),
-                        role = reader.GetString(reader.GetOrdinal("role"))
+                        role = reader.GetString(reader.GetOrdinal("role")),
+                        gender = reader.IsDBNull(reader.GetOrdinal("gender")) ? "Unknown" : reader.GetString(reader.GetOrdinal("gender"))
                     };
                     return user;
                 }

@@ -380,6 +380,7 @@
                 VerticalAlignment="Top"
                 Grid.Row="2" x:Name="requestField">
                 <controls:DataGrid
+                    AlternatingRowBackground="LightGray"
                     IsReadOnly="True"
                     SelectionChanged="OnSelectionChanged"
                     x:Name="requestList" AutoGenerateColumns="False"

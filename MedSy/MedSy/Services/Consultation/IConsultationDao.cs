@@ -22,9 +22,7 @@ namespace MedSy.Services.Consultation
         public Dictionary<string, int> GetPathologyCountByYear(int year);
         public Dictionary<string, int> GetPathologyCountByWeek(int week, int month, int year);
         public Dictionary<int, int> countOnlineConsultationByYear(int year);
-
         public Dictionary<int, int> countOnlineConsultationByMonth(int month, int year);
-
         public Dictionary<int, int> countOnlineConsultationByWeek(int week, int month, int year);
         public List<string> getAllPathology();
     }

@@ -32,7 +32,7 @@ namespace MedSy.Views.User
             this.InitializeComponent();
             prescriptionPaymentViewModel = new PrescriptionPaymentViewModel();
             this.DataContext = prescriptionPaymentViewModel;
-            PageComboBox.SelectedIndex = 0; // MyPrecsription
+            PageComboBox.SelectedIndex = 0;
             (Application.Current as App).locator.socketService.paymentCompleteMessageReceived += PaymentCompleteHandler;
 
         }
@@ -45,7 +45,13 @@ namespace MedSy.Views.User
 
                 if (selectedIndex == 1)
                 {
-                    Frame.Navigate(typeof(Pharmacy));
+                    prescriptionPaymentViewModel.LoadData("paid");
+                    prescriptionPaymentViewModel.InitializeSelectedPrescription();
+                }
+                else
+                {
+                    prescriptionPaymentViewModel.LoadData("unpaid");
+                    prescriptionPaymentViewModel.InitializeSelectedPrescription();
                 }
             }
         }
@@ -60,7 +66,7 @@ namespace MedSy.Views.User
 
         private async void PayButton_ClickAsync(object sender, RoutedEventArgs e)
         {
-            if(prescriptionPaymentViewModel.selectedPrescription == null)
+            if(prescriptionPaymentViewModel.selectedPrescription == null || prescriptionPaymentViewModel.selectedPrescription.totalPrice == 0)
             {
                 await new ContentDialog
                 {
@@ -71,7 +77,17 @@ namespace MedSy.Views.User
                 }.ShowAsync();
                 return;
             }
-            
+            if(prescriptionPaymentViewModel.selectedPrescription.status == "paid")
+            {
+                await new ContentDialog
+                {
+                    XamlRoot = this.XamlRoot,
+                    Title = "Already paid",
+                    Content = "This prescription has already been paid",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+                return;
+            }
             string paymentUrl = await (Application.Current as App).locator.paymentService.CreatePaymentAsync(prescriptionPaymentViewModel.selectedPrescription.totalPrice,prescriptionPaymentViewModel.selectedPrescription.prescriptionId);
             prescriptionField.Visibility = Visibility.Collapsed;
             paymentField.Source = new Uri(paymentUrl);
@@ -82,10 +98,11 @@ namespace MedSy.Views.User
             (Application.Current as App).locator.mainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 prescriptionPaymentViewModel.UpdatePrescriptionStatus();
-                prescriptionPaymentViewModel.LoadData();
+                prescriptionPaymentViewModel.LoadData("unpaid");
                 paymentField.Source = null;
                 paymentField.Visibility = Visibility.Collapsed;
                 prescriptionField.Visibility = Visibility.Visible;
+                prescriptionPaymentViewModel.InitializeSelectedPrescription();
             });
            
         }

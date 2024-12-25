@@ -5,11 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MedSy.Views.User"
     xmlns:parentView="using:MedSy.Views"
+    xmlns:converters="using:MedSy.Converter.PrescriptionPayment"
+    xmlns:parentConverter="using:MedSy.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local1="using:MedSy.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converters:StatusTextFgConverter x:Key="StatusTextFgConverter"/>
+        <converters:NullPrescriptionConverter x:Key="NullPrescriptionConverter"/>
+        <parentConverter:IntToVnCurrencyConverter x:Key="IntToVnCurrencyConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid
             x:Name="prescriptionField"
@@ -39,7 +46,7 @@
                 <ComboBoxItem Name="prescription">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock>
-                <Run Text="Your" Foreground="#fff"/><Run Text=" Prescription" Foreground="#45CFDD"/>
+                            <Run Text="Unpaid" Foreground="#fff"/><Run Text=" Prescription" Foreground="#45CFDD"/>
                         </TextBlock>
                     </StackPanel>
                 </ComboBoxItem>
@@ -47,7 +54,7 @@
                 <ComboBoxItem Name="pharmacy">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock>
-                <Run Text="Our" Foreground="#fff"/><Run Text=" Pharmacy" Foreground="#45CFDD"/>
+                            <Run Text="Paid" Foreground="#fff"/><Run Text=" Prescription" Foreground="#45CFDD"/>
                         </TextBlock>
                     </StackPanel>
                 </ComboBoxItem>
@@ -68,7 +75,7 @@
                 Margin="20 0 20 0"
                 FontSize="20"
                 FontWeight="SemiBold"
-                PlaceholderText="Choose Your Unpaid Prescription"
+                PlaceholderText="Choose Your Prescription"
                 PlaceholderForeground="#fff">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -114,7 +121,7 @@
                             </Border>
 
                             <Border Grid.Column="2" BorderBrush="#666" BorderThickness="1" CornerRadius="20" Width="100" HorizontalAlignment="Center"  Background="#fff">
-                                <TextBlock Margin="5" Text="{Binding price, Mode=TwoWay}" FontSize="18" 
+                                <TextBlock Margin="5" Text="{Binding price, Mode=TwoWay, Converter={StaticResource IntToVnCurrencyConverter}}" FontSize="18" 
                                 VerticalAlignment="Center" HorizontalAlignment="Center" 
                                Foreground="#666"  FontWeight="SemiBold"/>
                             </Border>
@@ -122,44 +129,66 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
+            <Viewbox
+                MaxWidth="500"
+                Visibility="{x:Bind prescriptionPaymentViewModel.selectedPrescription, Mode=OneWay, Converter={StaticResource NullPrescriptionConverter}}"
+                Grid.Row="2">
+                <TextBlock
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Margin="20 0 20 0" Text="Choose prescription"
+                    FontWeight="Bold" Foreground="#000"/>
+            </Viewbox>
             <Grid Grid.Row="3" Margin="20 0 20 0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="6*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock 
+                <Viewbox
+                    MaxWidth="100"
                     Grid.Row="0"
-                    Grid.Column="1" Text="Total price:" FontWeight="SemiBold" FontSize="22" Foreground="#000"
-                    VerticalAlignment="Center" HorizontalAlignment="Right"/>
-
-                <TextBlock 
+                    Grid.Column="0"
+                    VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock 
+                     Text="Total price:" FontWeight="SemiBold" Foreground="#000"/>
+                </Viewbox>
+                <Viewbox
+                    Grid.Column="1" Grid.Row="0"
+                    VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock 
+                    Text="{x:Bind prescriptionPaymentViewModel.selectedPrescription.totalPrice, Mode=OneWay, Converter={StaticResource IntToVnCurrencyConverter}}" Margin="20 0 40 0"
+                    FontWeight="SemiBold" Foreground="#000" />
+                </Viewbox>
+                <Viewbox
+                    MaxWidth="100"
                     Grid.Column="2" Grid.Row="0"
-                    Text="{x:Bind prescriptionPaymentViewModel.selectedPrescription.totalPrice, Mode=OneWay}" Margin="0 0 40 0"
-                    FontWeight="SemiBold" FontSize="22" Foreground="#000" 
-                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock
+                    Text="{x:Bind prescriptionPaymentViewModel.selectedPrescription.status, Mode=OneWay}"
+                    FontWeight="SemiBold" Foreground="{x:Bind prescriptionPaymentViewModel.selectedPrescription.status, Mode=OneWay, Converter={StaticResource StatusTextFgConverter}}"/>
+                </Viewbox>
 
-                <Button 
-                    HorizontalAlignment="Center"
+                <Viewbox
+                    Grid.Row="1" Grid.Column="2">
+                    <Button 
+                    HorizontalAlignment="Left"
                     BorderBrush="#333"
                     BorderThickness="1"
-                    Grid.Row="1" Grid.Column="2"
-                    Width="120"
                     Content="Get Pay" 
                     VerticalAlignment="Top"
                     Background="#336699" 
                     Foreground="#fff" 
                     FontSize="20" 
                     FontWeight="SemiBold" 
-                    CornerRadius="20" 
+                    CornerRadius="20"
                     Click="PayButton_ClickAsync"
-                    Margin="0, 0, 30, 0">
-                </Button>
+                    Margin="0, 0, 40, 0">
+                    </Button>
+                </Viewbox>
             </Grid>
         
         </Grid>

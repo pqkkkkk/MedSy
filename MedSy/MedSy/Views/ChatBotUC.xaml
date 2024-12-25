@@ -15,10 +15,12 @@
         <converter:MessageContainerBgConverter x:Key="MessageContainerBgConverter"/>
         <converter:TextFgConverter x:Key="TextFgConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid
+        Width="300"
+        Height="300">
         <Grid.RowDefinitions>
             <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
         <ScrollViewer
             Grid.Row="0"
@@ -81,21 +83,13 @@
                 </ComboBox.Resources>
                 <ComboBox.ItemTemplate>
                     <DataTemplate x:DataType="model:Message">
-                        <Border
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            Margin="5"
-                            CornerRadius="10"
-                            Padding="10"
-                            Background="#336699">
-                            <TextBlock
-                                Foreground="#ffffff"
-                                FontWeight="Bold"
-                                Text="{x:Bind content}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="WrapWholeWords"
-                                Margin="0,5,0,0"/>
-                        </Border>
+                        <TextBlock
+                            Foreground="#ffffff"
+                            FontWeight="Bold"
+                            Text="{x:Bind content}"
+                            TextTrimming="WordEllipsis"
+                            TextWrapping="Wrap"
+                            Margin="0,5,0,0"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>

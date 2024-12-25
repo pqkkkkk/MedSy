@@ -7,8 +7,12 @@
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local1="using:MedSy.Models"
+    xmlns:parentConverter="using:MedSy.Converter"
     mc:Ignorable="d"
     Background="#D4F3FF">
+    <Page.Resources>
+        <parentConverter:IntToVnCurrencyConverter x:Key="IntToVnCurrencyConverter"/>
+    </Page.Resources>
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -220,7 +224,7 @@
                                                  Foreground="#666" FontWeight="SemiBold" TextAlignment="Center" />
                                     </Border>
 
-                                    <TextBlock Grid.Column="3" Text="{Binding price, Mode=TwoWay}" FontSize="16" 
+                                    <TextBlock Grid.Column="3" Text="{Binding price, Mode=TwoWay, Converter={StaticResource IntToVnCurrencyConverter}}" FontSize="16" 
                                                Margin="20 0 0 0"  VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                Foreground="#666"  FontWeight="SemiBold"/>
                                 </Grid>

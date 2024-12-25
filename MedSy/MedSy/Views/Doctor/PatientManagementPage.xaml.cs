@@ -1,3 +1,4 @@
+using MedSy.Models;
 using MedSy.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -8,6 +9,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,44 +31,24 @@ namespace MedSy.Views.Doctor
         {
             this.InitializeComponent();
             patientManagementViewModel = new PatientManagementViewModel();
-            setUpUI();
+            
         }
-        private void setUpUI()
-        {
-            if (patientManagementViewModel.patients.Count == 0)
-            {
-                emptyPatientListMessage.Visibility = Visibility.Visible;
-                mainField.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                mainField.Visibility = Visibility.Visible;
-                emptyPatientListMessage.Visibility = Visibility.Collapsed;
-            }
-        }
-        private void OnPatientItemTapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (sender is TextBlock textBlock && textBlock.DataContext is Models.PatientManagementItem item)
-            {
-                item.isExpanded = !item.isExpanded;
-            }
-        }
-
-        private void OnConsultationTapped(object sender, TappedRoutedEventArgs e)
-        {
-            string consultationIdString = (sender as StackPanel).Tag.ToString();
-            int consultationId = int.Parse(consultationIdString);
-            patientManagementViewModel.UpdateSelectedConsultation(consultationId);
-
-            if(consultationDetail.Visibility == Visibility.Collapsed)
-            {
-                consultationDetail.Visibility = Visibility.Visible;
-            }
-        }
-
         private void EditPrescription_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(PrescriptionPage), patientManagementViewModel.selectedConsultation);
+            Button button = sender as Button;
+            var consultationItem = button.DataContext as Consultation;
+
+            if (consultationItem != null)
+            {
+                Debug.WriteLine($"Consultation ID: {consultationItem.id}");
+            }
+
+            Frame.Navigate(typeof(PrescriptionPage), consultationItem );
+        }
+        private void OnSelectedPatientItemChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = patientListView.SelectedItem as Models.PatientManagementItem;
+            patientManagementViewModel.UpdateSelectedPatientItem(item);
         }
     }
 }

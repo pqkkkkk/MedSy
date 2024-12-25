@@ -115,9 +115,19 @@ namespace MedSy.Views.Doctor
             consultationRequestsViewModel.searchAndFilterConsultations(date, startTime, endTime);
 
         }
-        private void acceptAllClicked(object sender, RoutedEventArgs e)
+        private async void acceptAllClicked(object sender, RoutedEventArgs e)
         {
-            consultationRequestsViewModel.acceptRequest();
+            int result = consultationRequestsViewModel.acceptRequest();
+            if (result == -1)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Title = "Unable to accept request",
+                    Content = "There is a consultation at the same time",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+            }
         }
         private void rejectAllClicked(object sender, RoutedEventArgs e)
         {
@@ -192,7 +202,6 @@ namespace MedSy.Views.Doctor
             }
             CreateRoomClickedEvent?.Invoke();
         }
-
         private void CloseTooLateDialog(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
             consultationRequestsViewModel.updateAllMissedConsultations();
@@ -210,7 +219,6 @@ namespace MedSy.Views.Doctor
             dateFilter.Date = null;
 
         }
-
         private void RefreshAll(object sender, RoutedEventArgs e)
         {
             consultationRequestsViewModel.updateAllMissedConsultations();
