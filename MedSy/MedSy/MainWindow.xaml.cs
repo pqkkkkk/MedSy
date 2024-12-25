@@ -1,4 +1,5 @@
 using MedSy.Views;
+using MedSy.Views.Admin;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -40,7 +41,7 @@ namespace MedSy
                     break;
 
                 case "admin":
-                    content.Navigate(typeof(StatisticPage));
+                    content.Navigate(typeof(AdminDashboard));
                     break;
             }
             
