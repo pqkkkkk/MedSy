@@ -1,4 +1,5 @@
-﻿using MedSy.Services.Consultation;
+﻿using MedSy.Models;
+using MedSy.Services.Consultation;
 using MedSy.Services.Management;
 using MedSy.Services.User;
 using Microsoft.UI.Xaml;
@@ -17,12 +18,14 @@ namespace MedSy.ViewModels
     {
         
         public ObservableCollection<Models.PatientManagementItem> patients { get; set; }
+        public Models.PatientManagementItem selectedPatientItem { get; set; }
         public Models.Consultation selectedConsultation { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public PatientManagementViewModel()
         {
             IManagementDao managementDao = (Application.Current as App).locator.managementDao;
             IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
+            IUserDao userDao = (Application.Current as App).locator.userDao;
             int userId = (Application.Current as App).locator.currentUser.id;
             string userRole = (Application.Current as App).locator.currentUser.role;
 
@@ -31,14 +34,20 @@ namespace MedSy.ViewModels
             foreach (var item in list)
             {
                 ObservableCollection<Models.Consultation> consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetAllDoneConsultationsByDoctorIdAndPatientId(userId,item.id));
-                patients.Add(new Models.PatientManagementItem { patient = item, consultations = consultations, isExpanded = false });
+                var patient = userDao.getUserById(item.id);
+                patients.Add(new Models.PatientManagementItem { patient = patient, consultations = consultations, isExpanded = false });
             }
 
             selectedConsultation = new Models.Consultation();
+            selectedPatientItem = patients.Count == 0 ? new Models.PatientManagementItem() : patients[0];
         }
         public void UpdateSelectedConsultation(int consultationId)
         {
             selectedConsultation = patients.SelectMany(x => x.consultations).FirstOrDefault(x => x.id == consultationId);
+        }
+        public void UpdateSelectedPatientItem(PatientManagementItem item)
+        {
+            selectedPatientItem = item;
         }
     }
 }

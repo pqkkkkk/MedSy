@@ -15,7 +15,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\avt01.jpg" />
-    <Content Remove="Assets\defaultavt.jpg" />
     <Content Remove="Assets\doctoravt.jpg" />
   </ItemGroup>
   <ItemGroup>
