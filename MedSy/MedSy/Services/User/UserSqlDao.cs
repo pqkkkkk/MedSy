@@ -92,6 +92,7 @@ namespace MedSy.Services.User
                         email = reader.GetString(reader.GetOrdinal("Email")),
                         phoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
                         address = reader.GetString(reader.GetOrdinal("Address")),
+                        gender = reader.GetString(reader.GetOrdinal("gender")),
                         birthday = reader.GetDateTime(reader.GetOrdinal("Birthday")),
                         role = reader.GetString(reader.GetOrdinal("role"))
                     };

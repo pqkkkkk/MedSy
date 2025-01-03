@@ -12,8 +12,8 @@ namespace MedSy.Models
     public class PatientManagementItem : INotifyPropertyChanged
     {
         public Models.User patient { get; set; }
-        public ObservableCollection<Models.Consultation> consultations { get; set; }
-        public bool isExpanded { get; set; }
+        public ObservableCollection<Models.Consultation> doneConsultations { get; set; }
+        public ObservableCollection<Models.Consultation> todayConsultations { get; set; }
     public event PropertyChangedEventHandler PropertyChanged;
     }
 }

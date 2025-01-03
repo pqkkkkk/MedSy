@@ -603,18 +603,43 @@ namespace MedSy.Services.Consultation
             throw new NotImplementedException();
         }
 
-        public List<Models.Consultation> GetAllDoneConsultationsByDoctorIdAndPatientId(int doctorId, int patientId)
+        public List<Models.Consultation> GetAllConsultationsByDoctorIdAndPatientId(int doctorId, int patientId, string status, DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             consultations = new List<Models.Consultation>();
             connection.Open();
 
-            var sql = """
-                SELECT * FROM consultation
-                WHERE doctor_id = @doctorId AND patient_id = @patientId and status = 'Done'
-                """;
-            var command = new SqlCommand(sql, connection);
+            var sql = new StringBuilder("SELECT * FROM consultation WHERE doctor_id = @doctorId AND patient_id = @patientId ");
+
+
+            if (status != null && status != "All")
+            {
+                sql.Append(" AND status = @status");
+            }
+
+            if (date.HasValue)
+            {
+                sql.Append(" AND date = @date ");
+            }
+            if (startTime.HasValue)
+            {
+                sql.Append(" AND start_time >= @startTime ");
+            }
+            if (endTime.HasValue)
+            {
+                sql.Append(" AND end_time <= @endTime ");
+            }
+            
+            var command = new SqlCommand(sql.ToString(), connection);
             command.Parameters.AddWithValue("@doctorId", doctorId);
             command.Parameters.AddWithValue("@patientId", patientId);
+            if (status != null && status != "All")
+                command.Parameters.AddWithValue("@status", status);
+            if (date.HasValue)
+                command.Parameters.AddWithValue("@date", date);
+            if (startTime.HasValue)
+                command.Parameters.AddWithValue("@startTime", startTime);
+            if (endTime.HasValue)
+                command.Parameters.AddWithValue("endTime", endTime);
             try
             {
                 using (var reader = command.ExecuteReader())

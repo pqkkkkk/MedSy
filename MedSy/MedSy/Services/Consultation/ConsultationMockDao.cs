@@ -22,7 +22,7 @@ namespace MedSy.Services.Consultation
                     status = "Accepted",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateOnly(2024, 12,11),
+                    date = new DateOnly(2025, 01,03),
                     startTime = new TimeOnly(17,00),
                     endTime = new TimeOnly(18,00)
                 },
@@ -34,9 +34,9 @@ namespace MedSy.Services.Consultation
                     status = "New",
                     result = "",
                     reason ="kkkkkkkk",
-                    date = new DateOnly(2024, 11,13),
-                    startTime = new TimeOnly(12,00),
-                    endTime = new TimeOnly(13,00)
+                    date = new DateOnly(2025, 1,3),
+                    startTime = new TimeOnly(17,00),
+                    endTime = new TimeOnly(18,00)
                 },
                 new Models.Consultation()
                 {
@@ -268,7 +268,7 @@ namespace MedSy.Services.Consultation
             return 1;
         }
 
-        public List<Models.Consultation> GetAllDoneConsultationsByDoctorIdAndPatientId(int doctorId, int patientId)
+        public List<Models.Consultation> GetAllConsultationsByDoctorIdAndPatientId(int doctorId, int patientId)
         {
             throw new NotImplementedException();
         }
@@ -304,6 +304,11 @@ namespace MedSy.Services.Consultation
         }
 
         public Dictionary<int, int> countOnlineConsultationByWeek(int week, int month, int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Models.Consultation> GetAllConsultationsByDoctorIdAndPatientId(int doctorId, int patientId, string status, DateOnly? date, TimeOnly? startTime, TimeOnly? endTime)
         {
             throw new NotImplementedException();
         }

@@ -101,9 +101,9 @@ namespace MedSy.ViewModels
         }
         public int acceptRequest()
         {
-           IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
+            IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
             List<Models.Consultation> sameDayConsultationList = consultationDao.GetConsultations("doctor", selectedConsultation.doctorId, "Accepted", selectedConsultation.date, null, null);
-            int sameTimeConsultationCount = sameDayConsultationList.Count(c => c.startTime < selectedConsultation.endTime || c.endTime > selectedConsultation.startTime);
+            int sameTimeConsultationCount = sameDayConsultationList.Count(c => c.startTime == selectedConsultation.startTime && c.endTime == selectedConsultation.endTime);
             if (sameTimeConsultationCount > 0)
             {
                 return -1;
