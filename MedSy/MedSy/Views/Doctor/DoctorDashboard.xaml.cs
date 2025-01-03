@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using MedSy.ViewModels;
+using MedSy.Views.Doctor;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,9 +25,44 @@ namespace MedSy.Views
     /// </summary>
     public sealed partial class DoctorDashboard : Page
     {
+        public MainPageViewModel mainPageViewModel;
         public DoctorDashboard()
         {
             this.InitializeComponent();
+            mainPageViewModel = new MainPageViewModel();
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter != null)
+            {
+                var data = e.Parameter as MainPageViewModel;
+                mainPageViewModel = data;
+            }
+        }
+
+        private void ConsultationRequest_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainPageViewModel.updateSelectedPage("ConsultationRequest");
+            Frame.Navigate(typeof(ConsultationRequestsPage));
+        }
+
+        private void WorkSchedule_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainPageViewModel.updateSelectedPage("workSchedule");
+            Frame.Navigate(typeof(WorkSchedulePage));
+        }
+
+        private void PatientManagement_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainPageViewModel.updateSelectedPage("patientManagement");
+            Frame.Navigate(typeof(PatientManagementPage));
+        }
+
+        private void Chat_Button_Click(object sender, RoutedEventArgs e)
+        {
+            mainPageViewModel.updateSelectedPage("Chat");
+            Frame.Navigate(typeof(DoctorChatPage));
         }
     }
 }
