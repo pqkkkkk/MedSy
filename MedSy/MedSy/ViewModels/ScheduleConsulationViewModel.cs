@@ -21,53 +21,31 @@ namespace MedSy.ViewModels
 
         public Models.User selectedPatient { get; set; }
         public Models.Doctor selectedDoctor { get; set; }
-
-        public List<string> Form { get; set; } = new List<string> { "Online", "Offline" };
+        public List<string> Form { get; set; } = new List<string> { "online", "offline" };
         public List<string> pathology { get; set; }
         public string selectedPathology { get; set; }
         public string selectedForm { get; set; }
-        public Models.User currentUser = (Application.Current as App).locator.currentUser;
-        public System.DateTimeOffset? _consultationDate { get; set; }
-        public System.TimeSpan selected_startTime { get; set; }
-        public System.TimeSpan selected_endTime { get; set; }
+        public Models.User currentUser { get; set; }
+        public System.DateTimeOffset? consultationDate { get; set; }
+        public System.TimeSpan selectedStartTime { get; set; }
+        public System.TimeSpan selectedEndTime { get; set; }
         public string _reason { get; set; }
 
         public string _status = "New";
 
-        //void LoadData()
-        //{
-            
-
-        //    PatientMockDao patientDao = new PatientMockDao();
-        //    patients = new ObservableCollection<Patient>(patientDao.GetAllPatient());
-        //    if (currentUser != null && currentUser.role == "patient")
-        //    {
-        //        selectedPatient = new Patient()
-        //        {
-        //            id = currentUser.id,
-        //            username = currentUser.username,
-        //            email = currentUser.email,
-        //            fullName = currentUser.fullName,
-        //            password = currentUser.password,
-        //            phoneNumber = currentUser.phoneNumber,
-        //            gender = currentUser.gender,
-        //            address = currentUser.address,
-        //            healthInsurance = true
-        //        };
-        //    }
-        //}
+       
         public ScheduleConsulationViewModel(Models.Doctor d)
         {
+            currentUser = (Application.Current as App).locator.currentUser;
             selectedDoctor = new Models.Doctor();
             selectedDoctor = d;
-            selected_startTime = new System.TimeSpan(12,0,0);
-            selected_endTime = new System.TimeSpan(12, 0, 0);
+            selectedStartTime = new System.TimeSpan(12,0,0);
+            selectedEndTime = new System.TimeSpan(12, 0, 0);
             pathology = new List<string>();
             selectedPathology = "";
             IConsultationDao dao = (Application.Current as App).locator.consultationDao;
             pathology = dao.getAllPathology();
             selectedPatient = (Application.Current as App).locator.currentUser;
-            //LoadData();
         }
 
         public void UpdateConsulation()
@@ -76,12 +54,20 @@ namespace MedSy.ViewModels
            
         }
 
-        public bool CreateConsultation()
+        public int CreateConsultation()
         {
-            IConsultationDao dao = (Application.Current as App).locator.consultationDao;
-
+            IConsultationDao consultationDao = (Application.Current as App).locator.consultationDao;
+            List<Models.Consultation> sameDayConsultationList = consultationDao.GetConsultations(currentUser.role, currentUser.id, "Accepted", DateOnly.FromDateTime(consultationDate.Value.DateTime), null, null);
+            int sameTimeConsultationCount = sameDayConsultationList.Count(c => c.startTime == TimeOnly.FromTimeSpan(selectedStartTime) && c.endTime == TimeOnly.FromTimeSpan(selectedEndTime));
+            if (sameTimeConsultationCount > 0)
+            {
+                return -1;
+            }
             (Application.Current as App).locator.socketService.sendNewCRMessage(selectedDoctor.id, currentUser.id);
-            return dao.createConsultation(DateOnly.FromDateTime(_consultationDate.Value.DateTime), TimeOnly.FromTimeSpan(selected_startTime), TimeOnly.FromTimeSpan(selected_endTime), selectedForm, _status, selectedPatient.id, selectedDoctor.id, "", _reason,selectedPathology);
+            if (consultationDao.createConsultation(DateOnly.FromDateTime(consultationDate.Value.DateTime), TimeOnly.FromTimeSpan(selectedStartTime), TimeOnly.FromTimeSpan(selectedEndTime), selectedForm, _status, selectedPatient.id, selectedDoctor.id, "", _reason, selectedPathology))
+                return 1;
+            else
+                return 0;
         }
     }
 }

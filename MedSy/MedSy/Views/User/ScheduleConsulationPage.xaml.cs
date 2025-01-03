@@ -68,8 +68,10 @@ namespace MedSy.Views.User
                     Content = "please choose your consultation form",
                     CloseButtonText = "OK"
                 }.ShowAsync();
+
+                return;
             }
-            else if(ConsulationDate.Date == null)
+            if(ConsulationDate.Date == null)
             {
                 await new ContentDialog()
                 {
@@ -77,8 +79,10 @@ namespace MedSy.Views.User
                     Content = "please choose your consultation day",
                     CloseButtonText = "OK"
                 }.ShowAsync();
+
+                return;
             }
-            else if (pathologyComboBox.SelectedItem == null)
+            if (pathologyComboBox.SelectedItem == null)
             {
                 await new ContentDialog()
                 {
@@ -86,8 +90,10 @@ namespace MedSy.Views.User
                     Content = "please choose your pathology",
                     CloseButtonText = "OK"
                 }.ShowAsync();
+
+                return;
             }
-            else if (scheduleConsulationViewModel.CreateConsultation())
+            if (scheduleConsulationViewModel.CreateConsultation() == 1)
             {
                 await new ContentDialog()
                 {
@@ -96,6 +102,19 @@ namespace MedSy.Views.User
                     CloseButtonText = "OK"
                 }.ShowAsync();
                 Frame.GoBack();
+                return;
+            }
+            else if (scheduleConsulationViewModel.CreateConsultation() == -1)
+            {
+                await new ContentDialog()
+                {
+                    XamlRoot = this.Content.XamlRoot,
+                    Title = "Unable to accept request",
+                    Content = "There is a consultation at the same time",
+                    CloseButtonText = "OK"
+                }.ShowAsync();
+
+                return;
             }
             else
             {
@@ -105,12 +124,13 @@ namespace MedSy.Views.User
                     Content = "An error occurred during processing, please try again.",
                     CloseButtonText = "OK"
                 }.ShowAsync();
+                return;
             }
         }
 
         private void selectedTime_Changed(TimePicker sender, TimePickerSelectedValueChangedEventArgs args)
         {
-            scheduleConsulationViewModel.selected_endTime = scheduleConsulationViewModel.selected_startTime.Add(TimeSpan.FromHours(1));
+            scheduleConsulationViewModel.selectedEndTime = scheduleConsulationViewModel.selectedStartTime.Add(TimeSpan.FromHours(1));
         }
     }
 

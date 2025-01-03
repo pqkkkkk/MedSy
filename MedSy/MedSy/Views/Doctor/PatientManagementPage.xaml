@@ -20,10 +20,29 @@
     <Grid
         Background="#F0F2F5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.7*"></RowDefinition>
             <RowDefinition Height="8*"></RowDefinition>
         </Grid.RowDefinitions>
-
+        <StackPanel
+            BorderBrush="LightGray"
+            BorderThickness="1"
+            VerticalAlignment="Stretch"
+            Grid.Row="0"
+            Orientation="Horizontal"
+            Background="#ffffff">
+            <TextBlock
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left">
+                <Run
+                    Foreground="LightGray"
+                    FontWeight="Bold"
+                    Text="Patient List >"/>
+                <Run
+                    Foreground="Black"
+                    FontWeight="Bold"
+                    Text="{x:Bind patientManagementViewModel.selectedPatientItem.patient.fullName}"/>
+            </TextBlock>
+        </StackPanel>
         <Grid
             Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -154,6 +173,7 @@
                             </TextBlock>
                         </StackPanel>
                         <StackPanel
+                            Orientation="Vertical"
                             Padding="10"
                             CornerRadius="10"
                             BorderBrush="Gray"
@@ -162,13 +182,34 @@
                             Grid.Column="1">
                             <TextBlock 
                                 Foreground="Black"
-                                Text="Appointment Schedule" FontWeight="Bold"/>
-                            <TextBlock 
-                                Foreground="Gray"
-                                Text="12 Oct 2023: Prosthetic Tooth Fabrication"/>
-                            <TextBlock 
-                                Foreground="Gray"
-                                Text="12 Sep 2023: Post-Surgical Care"/>
+                                Text="Appointment Schedule Today" FontWeight="Bold"/>
+                            <ScrollViewer>
+                                <ItemsControl
+                                    ItemsSource="{x:Bind patientManagementViewModel.selectedPatientItem.todayConsultations, Mode=OneWay}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate
+                                            x:DataType="models:Consultation">
+                                            <TextBlock>
+                                                <Run
+                                                    Foreground="Gray"
+                                                    Text="{x:Bind startTime, Mode=OneWay}"/>
+                                                <Run
+                                                    Foreground="Gray"
+                                                    Text=" - "/>
+                                                <Run 
+                                                    Foreground="Gray"
+                                                    Text="{x:Bind endTime, Mode=OneWay}"/>
+                                                <Run
+                                                    Foreground="Gray"
+                                                    Text=" : "/>
+                                                <Run 
+                                                    Foreground="Gray"
+                                                    Text="{x:Bind reason, Mode=OneWay}"/>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
                         </StackPanel>
                     </Grid>
                     <StackPanel
@@ -192,7 +233,7 @@
                             BorderThickness="1"
                             Grid.Row="2"
                             CornerRadius="10"
-                            ItemsSource="{x:Bind patientManagementViewModel.selectedPatientItem.consultations, Mode=OneWay}">
+                            ItemsSource="{x:Bind patientManagementViewModel.selectedPatientItem.doneConsultations, Mode=OneWay}">
                             <ListView.Header>
                                 <Grid
                                     Background="#eaeaea">

@@ -466,17 +466,6 @@
                 </Grid.ColumnDefinitions>
 
                 <Button
-                    Grid.Column="0"
-                    IsEnabled="{x:Bind consultationRequestsViewModel.selectedConsultation, Converter={StaticResource EnableButtonsForDoneCRConverter},Mode=OneWay}"
-                    x:Name="viewDetail"
-                    Background="#ffffff"
-                    Margin="0,0,10,0">
-                    <TextBlock
-                        Foreground="#336699"
-                        Text="View Detail"
-                        FontWeight="SemiBold"/>
-                </Button>
-                <Button
                     Grid.Column="1"
                     Margin="0,0,10,0"
                     x:Name="acceptAll"

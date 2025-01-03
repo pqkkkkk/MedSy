@@ -33,9 +33,10 @@ namespace MedSy.ViewModels
             patients = new ObservableCollection<Models.PatientManagementItem>();
             foreach (var item in list)
             {
-                ObservableCollection<Models.Consultation> consultations = new ObservableCollection<Models.Consultation>(consultationDao.GetAllDoneConsultationsByDoctorIdAndPatientId(userId,item.id));
+                ObservableCollection<Models.Consultation> doneConsultations = new ObservableCollection<Models.Consultation>(consultationDao.GetAllConsultationsByDoctorIdAndPatientId(userId,item.id,"Done",null,null,null));
+                ObservableCollection<Models.Consultation> todayConsultations = new ObservableCollection<Models.Consultation>(consultationDao.GetAllConsultationsByDoctorIdAndPatientId(userId, item.id, "Accepted", DateOnly.FromDateTime(DateTime.Now), null, null));
                 var patient = userDao.getUserById(item.id);
-                patients.Add(new Models.PatientManagementItem { patient = patient, consultations = consultations, isExpanded = false });
+                patients.Add(new Models.PatientManagementItem { patient = patient, doneConsultations = doneConsultations, todayConsultations = todayConsultations });
             }
 
             selectedConsultation = new Models.Consultation();
@@ -43,7 +44,7 @@ namespace MedSy.ViewModels
         }
         public void UpdateSelectedConsultation(int consultationId)
         {
-            selectedConsultation = patients.SelectMany(x => x.consultations).FirstOrDefault(x => x.id == consultationId);
+            selectedConsultation = patients.SelectMany(x => x.doneConsultations).FirstOrDefault(x => x.id == consultationId);
         }
         public void UpdateSelectedPatientItem(PatientManagementItem item)
         {
