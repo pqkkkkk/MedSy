@@ -112,7 +112,7 @@
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="ConsultationRequest_Button"  HorizontalAlignment="Left">
+                <Button Name="ConsultationRequest_Button"  HorizontalAlignment="Center" Click="ConsultationRequest_Button_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -137,7 +137,7 @@
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="WorkSchedule_Button"  HorizontalAlignment="Center">
+                <Button Name="WorkSchedule_Button" HorizontalAlignment="Center" Click="WorkSchedule_Button_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -163,7 +163,7 @@
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="PatientManagement_Button"  HorizontalAlignment="Right">
+                <Button Name="PatientManagement_Button"  HorizontalAlignment="Center" Click="PatientManagement_Button_Click">
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -199,7 +199,7 @@
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="Chat_Button"  HorizontalAlignment="Left">
+                <Button Name="Chat_Button"  HorizontalAlignment="Center" Click="Chat_Button_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>

@@ -34,8 +34,8 @@ namespace MedSy.Views
         public DoctorMainPage()
         {
             this.InitializeComponent();
-            content.Navigate(typeof(DoctorDashboard));
             mainPageViewModel = new MainPageViewModel();
+            content.Navigate(typeof(DoctorDashboard),mainPageViewModel);
             HasNewConsultationToday += chatBot.HasNewConsultationTodayHandler;
             HasNewCR += chatBot.HasNewCRHandler;
             HasNewConsultationToday?.Invoke(mainPageViewModel.HasConsultationToday);
@@ -54,7 +54,7 @@ namespace MedSy.Views
             var button = sender as Button;
             string selectedPage = button.Tag.ToString();
             mainPageViewModel.updateSelectedPage(selectedPage);
-            content.Navigate(typeof(DoctorDashboard));
+            content.Navigate(typeof(DoctorDashboard),mainPageViewModel);
         }
         private void ConsultationRequestClick(object sender, RoutedEventArgs e)
         {

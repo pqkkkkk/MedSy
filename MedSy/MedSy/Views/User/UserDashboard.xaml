@@ -113,7 +113,7 @@
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="OnlineConsultation_Button"  HorizontalAlignment="Left">
+                <Button Name="OnlineConsultation_Button"  HorizontalAlignment="Center" Click="OnlineConsultation_Button_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -123,11 +123,11 @@
                         <FontIcon Grid.Column="0"
                                  Style="{StaticResource FontIconStyle}"
                                  FontFamily="{StaticResource FontAwesome}"
-                                 Glyph="&#xf0f1;" >
+                                 Glyph="&#xf0f8;" >
                         </FontIcon>
                         <TextBlock Grid.Column="1"
                                        Style="{StaticResource TextBlock_inButton_Style}"
-                                        Text="Online Consultation">
+                                        Text="Schedule Consultation">
                         </TextBlock>
                     </Grid>
                 </Button>
@@ -138,7 +138,7 @@
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="HospitalAppoiment_Button"  HorizontalAlignment="Center">
+                <Button Name="MyConsultation"  HorizontalAlignment="Center" Click="MyConsultation_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -153,7 +153,7 @@
 
                         <TextBlock Grid.Column="1"
                                Style="{StaticResource TextBlock_inButton_Style}"
-                                Text="Offline Consultation">
+                                Text="My Consultation">
                         </TextBlock>
                     </Grid>
                 </Button>
@@ -164,7 +164,7 @@
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="OnlinePharmacy_Button"  HorizontalAlignment="Right">
+                <Button Name="ChatWithDoctor_Button"  HorizontalAlignment="Center" Click="ChatWithDoctor_Button_Click">
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -176,11 +176,11 @@
                                       
                                      Style="{StaticResource FontIconStyle}"
                                      FontFamily="{StaticResource FontAwesome}"
-                                     Glyph="&#xf469;" >
+                                     Glyph="&#xf075;" >
                         </FontIcon>
                         <TextBlock Grid.Column="1"
                                        Style="{StaticResource TextBlock_inButton_Style}"
-                                       Text="Online Pharmacy">
+                                       Text="Chat with doctor">
                         </TextBlock>
                     </Grid>
                 </Button>
@@ -195,12 +195,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="0" Margin="30 0 50 0">
+            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="1" Margin="30 0 50 0">
                 <Border.Shadow>
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="TrackPersonalHealth_Button"  HorizontalAlignment="Left">
+                <Button Name="PrescriptionPaymentPage"  HorizontalAlignment="Center" Click="PrescriptionPaymentPage_Button_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -210,22 +210,22 @@
                         <FontIcon Grid.Column="0"
                                      Style="{StaticResource FontIconStyle}"
                                      FontFamily="{StaticResource FontAwesome}"
-                                     Glyph="&#xf21e;">
+                                     Glyph="&#xf469;">
                         </FontIcon>
                         <TextBlock Grid.Column="1"
                            Style="{StaticResource TextBlock_inButton_Style}"
-                            Text="Track personal health">
+                            Text="Prescription Payment">
                         </TextBlock>
                     </Grid>
                 </Button>
             </Border>
 
-            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="1" Margin="50 0 30 0">
+            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="0" Margin="50 0 30 0">
                 <Border.Shadow>
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="MedicalNewsButton"  HorizontalAlignment="Left">
+                <Button Name="Pharmacy"  HorizontalAlignment="Center" Click="Pharmacy_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -235,12 +235,12 @@
                         <FontIcon Grid.Column="0"
                                      Style="{StaticResource FontIconStyle}"
                                      FontFamily="{StaticResource FontAwesome}"
-                                     Glyph="&#xf1ea;">
+                                     Glyph="&#xf4b9;">
                         </FontIcon>
 
                         <TextBlock Grid.Column="1"
                                        Style="{StaticResource TextBlock_inButton_Style}"
-                                       Text="Medical News">
+                                       Text="Online Pharmacy">
                         </TextBlock>
                     </Grid>
                 </Button>

@@ -494,100 +494,184 @@
                 </Button>
             </Grid>
         </Grid>
- 
+
         <ContentDialog
-            Title="Prescription"
+            Title="Consultation Detail"
             CloseButtonText="Close"
             x:Name="consultationDetail">
-            <Grid
-                Width="500"
-                Height="300">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="6*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                
-                <ListView
-                    Grid.Column="0"
-                    ItemsSource="{x:Bind consultationRequestsViewModel.prescriptionDetails, Mode=OneWay}"
-                     CornerRadius="10" Background="Transparent"
-                    BorderBrush="#666" BorderThickness="1">
-                    <ListView.Header>
-                        <Grid Background="#fff">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="2*"/>
-                            </Grid.ColumnDefinitions>
-                            <Border  
-                                Grid.Column="0"
-                                Padding="10" BorderBrush="#666" BorderThickness="0 0 0 1" CornerRadius="10 0 0 0">
-                                <TextBlock
-                                    TextWrapping="Wrap"
-                                    Text="Drug" FontWeight="Bold"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="#333"/>
-                            </Border>
-                            <Border  
-                                Grid.Column="1"
-                                Padding="10" BorderBrush="#666" BorderThickness="1 0 0 1">
-                                <TextBlock 
-                                TextWrapping="Wrap"
-                                Text="Usage" FontWeight="Bold" VerticalAlignment="Center"
-                                HorizontalAlignment="Center"  Foreground="#333"/>
-                            </Border>
-                        </Grid>
-                    </ListView.Header>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:PrescriptionDetail">
-                            <Grid 
-                                Margin="-15"
-                                Padding="10"
+            <ScrollViewer Background="#D4F3FF">
+                <Grid MinWidth="500" MinHeight="400">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" BorderBrush="#000" BorderThickness="1" CornerRadius="10" Margin="10 10 20 10" Background="#fff">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
+                            Foreground="#336699" TextWrapping="Wrap"
+                            Margin="20 15 0 0" VerticalAlignment="Center">
+                            <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.patientId, Converter={StaticResource IdToFullnameConverter},Mode=OneWay}" FontSize="20" FontWeight="Bold"/> 
+                            <LineBreak/>
+                            <Run Text="(Patient)" FontSize="17" FontWeight="SemiBold"/>
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"
+                                  Foreground="#336699" TextWrapping="Wrap"
+                                  Margin="20 15 0 0" VerticalAlignment="Center">
+                            <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.doctorId, Converter={StaticResource IdToFullnameConverter},Mode=OneWay}" FontSize="20" FontWeight="Bold"/>
+                            <LineBreak/>
+                            <Run Text="(Doctor)" FontSize="17" FontWeight="SemiBold"/>
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Run Text="Time Start: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.startTime, Mode=OneWay}" FontSize="14"/>
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="1" Grid.Column="1" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Run Text="Time End: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.endTime, Mode=OneWay}" FontSize="14"/>
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"> 
+                            <Run Text="Date: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.date, Mode=OneWay}" FontSize="14"/>
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="2" Grid.Column="1" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Run Text="Form: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.form, Mode=OneWay}" FontSize="14"/>
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Margin="20 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Run Text="Reason: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.reason, Mode=OneWay}" FontSize="14"/>
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="3" Grid.Column="1" Margin="20 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.status, Mode=OneWay}" FontSize="18" FontWeight="Bold" Foreground="Green"/>
+                        </TextBlock>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="6*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Prescription:" Margin="10 10 0 0"
+                        FontSize="15" FontWeight="SemiBold" VerticalAlignment="Bottom"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Diagnosis:" Margin="10 10 0 0"
+                                   FontSize="15" FontWeight="SemiBold" VerticalAlignment="Bottom"/>
+
+                        <ListView Grid.Column="0" Grid.Row="1" Margin="10 5 5 10" Background="#fff"
+                        ItemsSource="{x:Bind consultationRequestsViewModel.prescriptionDetails, Mode=OneWay}"
+                        CornerRadius="10"
+                        BorderBrush="#000" BorderThickness="1">
+                            <ListView.Header>
+                                <Grid Background="#fff">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.2*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Border Grid.Column="0" Padding="5">
+                                        <TextBlock
+                                        TextWrapping="Wrap" Margin="10 0 0 -5"
+                                        Text="Drug" FontWeight="SemiLight" FontSize="13"
+                                        VerticalAlignment="Bottom" HorizontalAlignment="Left"  Foreground="#666666"/>
+                                    </Border>
+
+                                    <Border Grid.Column="1" Padding="5" >
+                                        <TextBlock 
+                                        TextWrapping="Wrap" FontSize="13" Margin="5 0 0 -5"
+                                        Text="Quantity" FontWeight="SemiLight"
+                                        VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="#666666"/>
+                                    </Border>
+
+                                    <Border Grid.Column="2" Padding="5" BorderBrush="#ccc">
+                                        <TextBlock Margin="-20 0 0 -5"
+                                         TextWrapping="Wrap"  FontSize="13"
+                                         Text="Usage" FontWeight="SemiLight"
+                                         VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#666666"/> 
+                                    </Border> 
+                                    
+                                </Grid>
+                                
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:PrescriptionDetail">
+                                    <Grid  
+                                Margin="-10 0 0 0"
+                                Padding="5"
                                 HorizontalAlignment="Stretch"
-                                CornerRadius="10" Background="#fff">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock
+                                BorderBrush="#ccc" BorderThickness="0 1 0 0"
+                                Background="#fff">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.2*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <TextBlock
                                     HorizontalAlignment="Left"
                                     Grid.Column="0"
                                     TextWrapping="Wrap"
                                     Text="{Binding drug.name}" 
-                                    Margin="0,0,10,0"
+                                    FontSize="14"
                                     FontWeight="Bold" VerticalAlignment="Center" Foreground="#666"/>
-                                <TextBlock 
+
+                                    <TextBlock
                                     Grid.Column="1"
                                     TextWrapping="Wrap"
+                                    Text="{Binding quantity}" 
+                                    Margin="0,0,10,0"
+                                    FontSize="14"
+                                    FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                        Foreground="#666"/> 
+
+                                        <TextBlock 
+                                    Grid.Column="2"
+                                    TextWrapping="Wrap"
                                     Text="{Binding usage, Mode=OneWay}"
-                                    VerticalAlignment="Center" HorizontalAlignment="Left" 
-                                    Foreground="#666" FontWeight="SemiBold" TextAlignment="Center" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-                <Grid 
-                    Grid.Column="1"
-                    Background="#336699"
-                    Margin="10 0 0 0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="8*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock 
-                        Grid.Row="0" Text="Diagnosis" FontWeight="Bold" Foreground="#fff" 
-                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
-                    <TextBlock 
-                        Grid.Row="1"
-                        Text="{x:Bind consultationRequestsViewModel.selectedConsultation.result,Mode=OneWay}" 
-                        Margin="20 0 20 0"
-                        FontWeight="SemiBold"
-                        HorizontalAlignment="Left"
-                        Foreground="#ffffff" TextWrapping="Wrap"
-                        VerticalAlignment="Top"/>
+                                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="#666" FontWeight="Medium"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        
+                        <Border Grid.Row="1"  Grid.Column="1" 
+                                BorderBrush="#666" BorderThickness="1" 
+                                VerticalAlignment="Top"
+                                MinHeight="100" Background="#fff"
+                                CornerRadius="10" Margin="5 5 20 0">
+                            <TextBlock 
+                            Text="{x:Bind consultationRequestsViewModel.selectedConsultation.result,Mode=OneWay}" 
+                            Margin="10 10 10 0"
+                            FontWeight="Medium"
+                            HorizontalAlignment="Left"
+                            Foreground="#000" TextWrapping="Wrap"
+                            VerticalAlignment="Top"/>
+                        </Border>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </ScrollViewer>
         </ContentDialog>
     </Grid>
     
