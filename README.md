@@ -14,6 +14,12 @@
     - [Hướng dẫn chạy ứng dụng](#3-hướng-dẫn-chạy-ứng-dụng-ở-milestone-2)
     - [Số giờ làm việc](#4-số-giờ-làm-việc-milestone2)
     - [Điểm tự đánh giá](#5-điểm-tự-đánh-giá-milestone2)
+ - [Milestone 3](#v-milestone-3)
+    - [Làm việc nhóm](#1-làm-việc-nhóm-milestone3)
+    - [Các chức năng đã làm](#2-các-chức-năng-đã-làm-milestone3)
+    - [Hướng dẫn chạy ứng dụng](#3-hướng-dẫn-chạy-ứng-dụng-ở-milestone-3)
+    - [Số giờ làm việc](#4-số-giờ-làm-việc-milestone3)
+    - [Điểm tự đánh giá](#5-điểm-tự-đánh-giá-milestone3)
 ## I. Thông tin nhóm
 - 22120174 - Phạm Quốc Kiệt
 - 22120353 - Nguyễn Quang Thông
@@ -262,4 +268,30 @@ node server.js
 | 4    | Phản hồi về lịch đặt khám của bệnh nhân | 9.5 |
 | 5    | Quản lý bệnh án | 9.5 |
 | 6    | Kê đơn thuốc cho bệnh nhân | 9.5 |
+| Điểm đánh giá chung | | 9.5 |
+
+## V. Milestone 3
+### 1. Làm việc nhóm <a id="1-làm-việc-nhóm-milestone3"></a>
+### 2. Các chức năng đã làm <a id="2-các-chức-năng-đã-làm-milestone3"></a>
+#### a. Mua thuốc theo toa và thanh toán trực tuyến
+#### b. Xem hoá đơn trực tuyến
+#### c. Thống kê
+#### d. Trợ lý thông minh
+Tài liệu kiểm thử các chức năng có thể xem tại đây:
+### 3. Hướng dẫn chạy ứng dụng ở milestone 3
+### 4. Số giờ làm việc <a id="4-số-giờ-làm-việc-milestone3"></a>
+| STT | Tính năng | Mô tả | Số giờ làm việc |
+|-----------|-------|------------------|------------------|
+| 1    | Mua thuốc theo toa và thanh toán trực tuyến | Cho phép đặt thuốc theo toa trực tiếp trên ứng dụng và thanh toán trực tuyến | 2 |
+| 2    | Xem hoá đơn trực tuyến | Cho phép xem các đơn thuốc đã thanh toán trực tuyến | 1 |
+| 3    | Thống kê | Thống kê tần suất khám bệnh với các loại bệnh lý, tần suất khám bệnh trực tuyến, thống kê doanh thu qua ngày/tháng/năm, thống kê, quản lý thuốc trong kho | 2 |
+| 4    | Trợ lý thông minh | Thông báo nhắc nhở cho bác sĩ về các cuộc hẹn đặt khám của bênh nhân sắp tới mà mình đã chấp nhận, nhắc nhở bệnh nhân về các lịch khám sắp tới của mình | 2 |
+| Tổng số giờ làm việc | | | 7 |
+### 5. Điểm tự đánh giá <a id="5-điểm-tự-đánh-giá-milestone3"></a>
+| STT | Tính năng | Điểm tự đánh giá |
+|-----------|-------|------------------|
+| 1    | Mua thuốc theo toa và thanh toán trực tuyến | 9.5 |
+| 2    | Xem hoá đơn trực tuyến | 9.5 |
+| 3    | Thống kê | 9.5 |
+| 4    | Trợ lý thông minh | 9.5 |
 | Điểm đánh giá chung | | 9.5 |
