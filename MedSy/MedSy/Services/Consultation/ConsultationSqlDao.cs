@@ -511,12 +511,13 @@ namespace MedSy.Services.Consultation
         }
         public Models.Consultation GetNextConsultationToday(string userRole, int userId)
         {
+            
             var list = GetConsultations(userRole, userId, "Accepted", DateOnly.FromDateTime(DateTime.Now), null, null);
             Models.Consultation result = null;
             if (list.Count != 0)
             {
-                list.OrderBy(c => c.startTime).ToList();
-                result = list.FirstOrDefault();
+                result = list.OrderBy(c => c.startTime).ToList().FirstOrDefault();
+                //result = list.FirstOrDefault();
             }
             return result;
         }
