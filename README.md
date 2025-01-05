@@ -279,7 +279,7 @@ node server.js
 ![all text](./report_resource/phancongcongviec_milestone3.png)
 #### Git flow
 ![all text](./report_resource/gitflow_milestone3.png)
-#### Hop nhom
+#### Họp nhóm
 ![all text](./report_resource/hopnhom_milestone3.png)
 ### 2. Các chức năng đã làm <a id="2-các-chức-năng-đã-làm-milestone3"></a>
 #### a. Mua thuốc theo toa và thanh toán trực tuyến
@@ -288,7 +288,7 @@ node server.js
 #### d. Trợ lý thông minh
 Tài liệu kiểm thử các chức năng có thể xem tại đây: https://docs.google.com/document/d/1Off0Ytp16BNc8iRU4r8Ro9Ead9VxN4ZF/edit?usp=sharing&ouid=103352419354890159322&rtpof=true&sd=true
 ### 3. Hướng dẫn chạy ứng dụng ở milestone 3
-Giong nhu milestone 2
+[Giống như milestone 2](#3-hướng-dẫn-chạy-ứng-dụng-ở-milestone-2)
 ### 4. Số giờ làm việc <a id="4-số-giờ-làm-việc-milestone3"></a>
 | STT | Tính năng | Mô tả | Số giờ làm việc |
 |-----------|-------|------------------|------------------|
