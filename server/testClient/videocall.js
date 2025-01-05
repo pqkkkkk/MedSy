@@ -50,7 +50,7 @@ let micEnabled = true;
 let cameraEnabled = true;
 
 const signalingSocket = io('http://localhost:5555');
-
+console.log(signalingSocket);
 signalingSocket.on('offer', async (offer) =>
 {
     await  peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
@@ -132,15 +132,22 @@ function endVideoCall(){
     toggleCameraButton.disabled = true;
 }
 function receiveDataFromUserClient(senderId, receiverId, consultationDuration) {
-    senderIdValue = senderId;
-    receiverIdValue = receiverId;
-    const consultationDurationValue = consultationDuration;
+    try {
+        senderIdValue = senderId;
+        receiverIdValue = receiverId;
+        const consultationDurationValue = consultationDuration;
 
-    signalingSocket.emit('register',{
-        userId: senderIdValue,
-        role : "videocall",
-    });
-    startConsultationTimeRemaining(consultationDurationValue);
+        signalingSocket.emit('register', {
+            userId: senderIdValue,
+            role: "videocall",
+        });
+        startConsultationTimeRemaining(consultationDurationValue);
+        return "success";
+    }
+    catch (error) {
+        console.log('Error receiving data from user client:', error.message);
+        return error.message;
+    }
 }
 function formatTime(unit)
 {

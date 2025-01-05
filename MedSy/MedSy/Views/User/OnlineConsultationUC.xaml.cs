@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -57,10 +58,11 @@ namespace MedSy.Views.User
             TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
             int consultationDuration = (int)endTime.ToTimeSpan().Subtract(now.ToTimeSpan()).TotalSeconds;
             int senderId = (Application.Current as App).locator.currentUser.id;
-            int receiverId = consultationRequestsViewModel.nextConsultationToday.patientId;
+            int receiverId = consultationRequestsViewModel.nextConsultationToday.doctorId;
 
             string script = $"window.receiveDataFromUserClient({senderId},{receiverId},{consultationDuration});";
-            await videlcall.ExecuteScriptAsync(script);
+            string result = await videlcall.ExecuteScriptAsync(script);
+            Debug.WriteLine(result);
         }
     }
 }

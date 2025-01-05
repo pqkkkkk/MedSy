@@ -43,10 +43,13 @@ namespace MedSy.ViewModels
             questionOptionList = new ObservableCollection<Message>()
             {
                 new Message() { content = "None", senderId = -1, receiverId = currentUser.id },
-                currentUser.role == "doctor" ? new Message() { content = "Do I have any new consultation request?", senderId = -1, receiverId = currentUser.id } : new Message() { content = "Warning", senderId = -1, receiverId = currentUser.id },
                 new Message() { content = "Do I have any consultation appointment today?", senderId = -1, receiverId = currentUser.id },
                 new Message() { content = "List detail of each consultation appointment today for me", senderId = -1, receiverId = currentUser.id },
             };
+            if(currentUser.role == "doctor")
+            {
+                questionOptionList.Add(new Message() { content = "Do I have any new consultation request?", senderId = -1, receiverId = currentUser.id });
+            }
         }
         public void addNewCRNotification()
         {
