@@ -28,6 +28,7 @@
 - WinUI 3
 - ExpressJS: xây dựng socket server phục vụ tính năng chat và videl call realtime
 - WebRTC: API phục vụ tính năng video call
+- VNPAY API: tích hợp thanh toán trực tuyến
 ## III. Milestone 1
 ### 1. Làm việc nhóm
 #### Phân công công việc
@@ -286,6 +287,7 @@ node server.js
 #### b. Xem hoá đơn trực tuyến
 #### c. Thống kê
 #### d. Trợ lý thông minh
+#### e. Cải thiện UI trang quản lý bệnh nhân
 Tài liệu kiểm thử các chức năng có thể xem tại đây: https://docs.google.com/document/d/1Off0Ytp16BNc8iRU4r8Ro9Ead9VxN4ZF/edit?usp=sharing&ouid=103352419354890159322&rtpof=true&sd=true
 ### 3. Hướng dẫn chạy ứng dụng ở milestone 3
 [Giống như milestone 2](#3-hướng-dẫn-chạy-ứng-dụng-ở-milestone-2)
