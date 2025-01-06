@@ -78,13 +78,6 @@ namespace MedSy.Views
             mainPageViewModel.updateSelectedPage(selectedPage);
             content.Navigate(typeof(WorkSchedulePage));
         }
-        private void MedicalNewsClick(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            string selectedPage = button.Tag.ToString();
-            mainPageViewModel.updateSelectedPage(selectedPage);
-            content.Navigate(typeof(DoctorDashboard));
-        }
         private void patientManagementClick(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
