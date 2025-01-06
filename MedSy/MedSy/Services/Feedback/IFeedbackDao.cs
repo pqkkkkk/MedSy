@@ -11,5 +11,6 @@ namespace MedSy.Services.Feedback
     public interface IFeedbackDao
     {
         public List<Models.Feedback> GetFeedback();
+        public void AddFeedback(Models.Feedback feedback);
     }
 }

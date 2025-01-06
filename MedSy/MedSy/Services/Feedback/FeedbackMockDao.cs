@@ -8,6 +8,11 @@ namespace MedSy.Services.Feedback
 {
     public class FeedbackMockDao:IFeedbackDao
     {
+        public void AddFeedback(Models.Feedback feedback)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Models.Feedback> GetFeedback(/*string PatientID*/)
         {
             var Feedbacks = new List<Models.Feedback>()

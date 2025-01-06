@@ -65,12 +65,13 @@ namespace MedSy.Views.User
                 {
                     var newFeedback = new Feedback
                     {
+                        PatientID = (Application.Current as App).locator.currentUser.id,
                         DoctorID = DoctorViewModel.SelectedDoctor.id,
                         Content = CommentBox.Text,
                         Rating = (int)CommentRating.Value
                     };
 
-                    DoctorViewModel.Feedbacks.Add(newFeedback);
+                    DoctorViewModel.AddFeedback(newFeedback);
 
                     CommentBox.Text = string.Empty;
                     CommentRating.Value = 0;

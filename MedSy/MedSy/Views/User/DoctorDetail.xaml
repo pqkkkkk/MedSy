@@ -7,18 +7,28 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:local1="using:MedSy.Models"
+    xmlns:local1="using:MedSy.Models" 
+    xmlns:converter="using:MedSy.Converter.ConsultationRequest"
     Background="#D4F3FF">
 
     <Page.Resources>
+        <converter:IdToFullnameConverter x:Key="IdToFullnameConverter"/>
         <!-- DataTemplate for each item in the Listview -->
         <DataTemplate x:Name="CommentItemList" x:DataType="local1:Feedback">
             <Grid Background="#fff" Margin="10">
-                <TextBlock Grid.Column="0" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Foreground="#336699" Margin="10" TextWrapping="Wrap">
-                    <Run Text="Patient ID:"/>  <Run Text="{x:Bind PatientID}" Foreground="Red"/>, 
-                    Comment: <Run Text="{x:Bind Content}" Foreground="Blue" FontWeight="Bold"/>, 
-                    Rating: <Run Text="{x:Bind Rating}" Foreground="Green" FontWeight="Bold"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" FontSize="20" VerticalAlignment="Center" Margin="10" TextWrapping="Wrap">
+                    <Run Text="{x:Bind PatientID, Converter={StaticResource IdToFullnameConverter}}" Foreground="#336699" FontWeight="SemiBold"/>:
+                    <Run Text="{x:Bind Content}" Foreground="Blue" FontWeight="Bold"/>
                 </TextBlock>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+                    <TextBlock Text="Rating:" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Foreground="#336699"  Margin=" 0 0 10 7">
+                    </TextBlock>
+                    <RatingControl Value="{Binding Rating, Mode=TwoWay}" VerticalAlignment="Center" IsReadOnly="True" MaxRating="5" Foreground="Yellow"/>
+                </StackPanel>
             </Grid>
         </DataTemplate>
         
@@ -120,7 +130,7 @@
                         </Grid.RowDefinitions>
                         
                         <ListView Grid.Row="0" Background="#fff" Margin="10 10 10 5" CornerRadius="20" CanBeScrollAnchor="True" MaxHeight="220" MaxWidth="560"
-                    ItemsSource="{x:Bind DoctorViewModel.Feedbacks}"
+                    ItemsSource="{x:Bind DoctorViewModel.Feedbacks, Mode=TwoWay}"
                      ItemTemplate="{StaticResource CommentItemList}">
                         </ListView>
                         
@@ -131,7 +141,7 @@
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" x:Name="CommentBox" PlaceholderText="Comment here" Margin="10 5 10 10" CornerRadius="10" MaxHeight="40"/>
+                            <TextBox Grid.Column="0" x:Name="CommentBox" PlaceholderText="Comment here" Margin="10 5 10 10" CornerRadius="10" MaxHeight="40" TextWrapping="Wrap"/>
                             <Viewbox Grid.Column="2">
                                 <Button x:Name="CommentButton" Background="#336699" Foreground="#fff"
                                 HorizontalAlignment="Center" CornerRadius="10" Margin="10" Click="CommentButton_Click">
