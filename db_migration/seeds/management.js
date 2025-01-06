@@ -25,5 +25,31 @@ exports.seed = async function(knex) {
       doctor_New_Message : false,
       patient_New_Message : false,
     },
+    {
+      doctor_Id : 2,
+      patient_Id : 13,
+      doctor_New_Message : false,
+      patient_New_Message : false,
+    },{
+      doctor_Id : 2,
+      patient_Id : 14,
+      doctor_New_Message : false,
+      patient_New_Message : false,
+    },{
+      doctor_Id : 2,
+      patient_Id : 15,
+      doctor_New_Message : false,
+      patient_New_Message : false,
+    },{
+      doctor_Id : 2,
+      patient_Id : 16,
+      doctor_New_Message : false,
+      patient_New_Message : false,
+    },{
+      doctor_Id : 2,
+      patient_Id : 17,
+      doctor_New_Message : false,
+      patient_New_Message : false,
+    },
   ]);
 };

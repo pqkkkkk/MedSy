@@ -59,20 +59,20 @@ public partial class DoctorViewModel : INotifyPropertyChanged
 
         SelectedPageIndex = CurrentPage - 1;
         CreatePageInfos();
+        Feedbacks = new ObservableCollection<Feedback>();
     }
 
     public void LoadFeedback()
     {
-        Feedbacks = new ObservableCollection<Feedback>();
         IFeedbackDao fb_dao = new FeedbackSqlDao();
-        var fb = fb_dao.GetFeedback();
-        foreach(var fb_item in fb)
-        {
-            if (fb_item.DoctorID == SelectedDoctor.id)
-            {
-                Feedbacks.Add(fb_item);
-            }
-        }
+        Feedbacks = new ObservableCollection<Feedback>(fb_dao.GetFeedback());
+    }
+
+    public void AddFeedback(Feedback feedback)
+    {
+        IFeedbackDao fb_dao = new FeedbackSqlDao();
+        fb_dao.AddFeedback(feedback);
+        LoadFeedback();
     }
 
     public void resetsort()

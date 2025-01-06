@@ -57,7 +57,7 @@ exports.seed = async function(knex) {
       password : "pqkiet854",
       avatar_Path : "ms-appx:///Assets/defaultavt.jpg",
       phoneNumber : "0123456789",
-      email : "pqkiet854@gmail.com",
+      email : "vna@gmail.com",
       address : "Hanoi",
       birthday : "1999-08-05",
       gender :"Male",
@@ -158,6 +158,66 @@ exports.seed = async function(knex) {
       birthday : "2004-08-04",
       gender :"Male",
       role : "admin"
+    },
+    {
+      fullName : "Bui Duy An",
+      username : "buiduyan",
+      password : "pqkiet854",
+      avatar_Path : "ms-appx:///Assets/defaultavt.jpg",
+      phoneNumber : "0123456789",
+      email : "bda@gmail.com",
+      address : "Ho Chi Minh",
+      birthday : "1999-08-05",
+      gender :"Male",
+      role : "patient"
+    },
+    {
+      fullName : "Le Bao",
+      username : "lebao",
+      password : "pqkiet854",
+      avatar_Path : "ms-appx:///Assets/defaultavt.jpg",
+      phoneNumber : "0123456789",
+      email : "lebao@gmail.com",
+      address : "Ho Chi Minh",
+      birthday : "1999-08-12",
+      gender :"Male",
+      role : "patient"
+    },
+    {
+      fullName : "Nguyen Quang Thong",
+      username : "qthong2004",
+      password : "pqkiet854",
+      avatar_Path : "ms-appx:///Assets/defaultavt.jpg",
+      phoneNumber : "0123456789",
+      email : "qthong2004@gmail.com",
+      address : "Ho Chi Minh",
+      birthday : "1999-04-08",
+      gender :"Male",
+      role : "patient"
+    },
+    {
+      fullName : "Le Van Thanh Dat",
+      username : "thanhdat",
+      password : "pqkiet854",
+      avatar_Path : "ms-appx:///Assets/defaultavt.jpg",
+      phoneNumber : "0123456789",
+      email : "thanhdat@gmail.com",
+      address : "Ho Chi Minh",
+      birthday : "1999-08-05",
+      gender :"Male",
+      role : "patient"
+    },
+    {
+      fullName : "Nguyen Xuan Son",
+      username : "xuanson",
+      password : "pqkiet854",
+      avatar_Path : "ms-appx:///Assets/defaultavt.jpg",
+      phoneNumber : "0123456789",
+      email : "xuanson@gmail.com",
+      address : "Ho Chi Minh",
+      birthday : "1999-04-08",
+      gender :"Male",
+      role : "patient"
     },
   ]);
 };

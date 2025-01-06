@@ -51,7 +51,27 @@ public class FeedbackSqlDao : IFeedbackDao
         connection.Close();
         return feedbacks;
     }
+    public void AddFeedback(Models.Feedback feedback)
+    {
+        connection.Open();
+        var query = $"""
+                insert into feedback (doctor_id, patient_id, content, rating)
+                values ({feedback.DoctorID}, {feedback.PatientID}, '{feedback.Content}', {feedback.Rating})
+                """;
 
-    
+        var command = new SqlCommand(query, connection);
+        try
+        {
+            command.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+
+        connection.Close();
+    }
+
+
 
 }

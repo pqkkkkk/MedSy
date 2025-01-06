@@ -40,7 +40,7 @@
                 <Run
                     Foreground="Black"
                     FontWeight="Bold"
-                    Text="{x:Bind patientManagementViewModel.selectedPatientItem.patient.fullName}"/>
+                    Text="{x:Bind patientManagementViewModel.selectedPatientItem.patient.fullName, Mode=OneWay}"/>
             </TextBlock>
         </StackPanel>
         <Grid
@@ -49,16 +49,16 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="3*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Column ="0">
             <StackPanel
                 x:Name="patientList"
-                Grid.Column="0" Background="#F0F2F5" Padding="10">
+                Background="#F0F2F5" Padding="10">
                 <TextBlock
                     Margin="0,0,0,20"
                     Text="Patient Queue"
                     Foreground="Black"
                     FontWeight="Bold">
                 </TextBlock>
-                <ScrollViewer>
                     <ListView
                             x:Name="patientListView"
                             SelectionChanged="OnSelectedPatientItemChanged"
@@ -89,9 +89,8 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </ScrollViewer>
-            </StackPanel>
-
+                </StackPanel>
+            </ScrollViewer>
             <ScrollViewer
                 Margin="10"
                 CornerRadius="10"
