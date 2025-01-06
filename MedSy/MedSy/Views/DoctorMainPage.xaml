@@ -35,7 +35,6 @@
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Button 
@@ -115,22 +114,8 @@
                 </Grid>
             </Button>
 
-            <Button 
-                x:Name="MedicalNewsButton" Click="MedicalNewsClick"
-                Tag="MedicalNews" Grid.Row="5"
-                HorizontalAlignment="Center"
-                ToolTipService.ToolTip="Medical News">
-                <Grid>
-                    <FontIcon 
-                 FontFamily="{StaticResource FontAwesome}"
-                 Glyph="&#xf1ea;"
-                 FontSize="40"
-                 Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='MedicalNews',Mode=OneWay}"/>
-                </Grid>
-            </Button>
-
             <Button x:Name="patientManagementButton" Click="patientManagementClick"
-                    Tag="patientManagement" Grid.Row="6"
+                    Tag="patientManagement" Grid.Row="5"
                     HorizontalAlignment="Center">
                 <Grid>
                     <FontIcon 

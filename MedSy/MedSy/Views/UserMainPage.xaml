@@ -35,7 +35,6 @@
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Button 
@@ -118,19 +117,6 @@
                         Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='Pharmacy',Mode=OneWay}"/>
                 </Grid>
             </Button>
-
-            <Button 
-                x:Name="MedicalNewsButton" Click="MedicalNewsClick" Tag="MedicalNews" Grid.Row="6"
-                HorizontalAlignment="Center"
-                ToolTipService.ToolTip="Medical news">
-                <Grid>
-                    <FontIcon 
-                         FontFamily="{StaticResource FontAwesome}"
-                         Glyph="&#xf1ea;"
-                         FontSize="40"
-                         Foreground="{x:Bind mainPageViewModel.selectedPage, Converter={StaticResource selectedNavigationItemConverter}, ConverterParameter='MedicalNews',Mode=OneWay}"/>
-                </Grid>
-            </Button>
         </Grid>
 
         <Frame x:Name="content" Grid.Column="1"/>
@@ -145,8 +131,8 @@
                     x:Name="chatBotAnimation"
                     AutoPlay="True"
                     Stretch="Uniform"
-                    Width="120"
-                    Height="120">
+                    Width="100"
+                    Height="100">
                     <lottie:LottieVisualSource UriSource="ms-appx:///Assets/Animation-1734405880078.json"/>
                 </AnimatedVisualPlayer>
             </Grid>

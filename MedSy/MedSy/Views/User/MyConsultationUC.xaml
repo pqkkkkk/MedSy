@@ -536,23 +536,33 @@
                             <Run Text="(Doctor)" FontSize="17" FontWeight="SemiBold"/>
                         </TextBlock>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock 
+                            Foreground="Gray"
+                            Grid.Row="1" Grid.Column="0" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Run Text="Time Start: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.startTime, Mode=OneWay}" FontSize="14"/>
                         </TextBlock>
 
-                        <TextBlock Grid.Row="1" Grid.Column="1" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock 
+                            Foreground="Gray"
+                            Grid.Row="1" Grid.Column="1" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Run Text="Time End: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.endTime, Mode=OneWay}" FontSize="14"/>
                         </TextBlock>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"> 
+                        <TextBlock 
+                            Foreground="Gray"
+                            Grid.Row="2" Grid.Column="0" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"> 
                             <Run Text="Date: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.date, Mode=OneWay}" FontSize="14"/>
                         </TextBlock>
 
-                        <TextBlock Grid.Row="2" Grid.Column="1" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock 
+                            Foreground="Gray"
+                            Grid.Row="2" Grid.Column="1" Margin="20 10 0 0" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Run Text="Form: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.form, Mode=OneWay}" FontSize="14"/>
                         </TextBlock>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Margin="20 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock 
+                            Foreground="Gray"
+                            Grid.Row="3" Grid.Column="0" Margin="20 10 0 10" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Run Text="Reason: " FontSize="14"/> <Run Text="{x:Bind consultationRequestsViewModel.selectedConsultation.reason, Mode=OneWay}" FontSize="14"/>
                         </TextBlock>
 
@@ -571,10 +581,14 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Prescription:" Margin="10 10 0 0"
+                        <TextBlock 
+                            Foreground="Black"
+                            Grid.Row="0" Grid.Column="0" Text="Prescription:" Margin="10 10 0 0"
                         FontSize="15" FontWeight="SemiBold" VerticalAlignment="Bottom"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Diagnosis:" Margin="10 10 0 0"
+                        <TextBlock 
+                            Foreground="Black"
+                            Grid.Row="0" Grid.Column="1" Text="Diagnosis:" Margin="10 10 0 0"
                                    FontSize="15" FontWeight="SemiBold" VerticalAlignment="Bottom"/>
 
                         <ListView Grid.Column="0" Grid.Row="1" Margin="10 5 5 10" Background="#fff"

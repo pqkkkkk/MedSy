@@ -175,18 +175,18 @@
                 <Viewbox
                     Grid.Row="1" Grid.Column="2">
                     <Button 
-                    HorizontalAlignment="Left"
-                    BorderBrush="#333"
-                    BorderThickness="1"
-                    Content="Get Pay" 
-                    VerticalAlignment="Top"
-                    Background="#336699" 
-                    Foreground="#fff" 
-                    FontSize="20" 
-                    FontWeight="SemiBold" 
-                    CornerRadius="20"
-                    Click="PayButton_ClickAsync"
-                    Margin="0, 0, 40, 0">
+                        HorizontalAlignment="Left"
+                        BorderBrush="#333"
+                        BorderThickness="1"
+                        Content="Get Pay" 
+                        VerticalAlignment="Top"
+                        Background="#336699" 
+                        Foreground="#fff" 
+                        FontSize="20" 
+                        FontWeight="SemiBold" 
+                        CornerRadius="20"
+                        Click="PayButton_ClickAsync"
+                        Margin="0, 0, 40, 0">
                     </Button>
                 </Viewbox>
             </Grid>

@@ -104,10 +104,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="0" Margin="30 0 0 0">
+            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="0" Margin="30 0 50 0">
                 <Border.Shadow>
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
@@ -132,7 +131,7 @@
                 </Button>
             </Border>
 
-            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="1" Margin="30 0 0 0">
+            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="1" Margin="30 0 30 0">
                 <Border.Shadow>
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
@@ -158,33 +157,7 @@
                 </Button>
             </Border>
 
-            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="2" Margin="30 0 30 0">
-                <Border.Shadow>
-                    <ThemeShadow></ThemeShadow>
-                </Border.Shadow>
-
-                <Button Name="PatientManagement_Button"  HorizontalAlignment="Center" Click="PatientManagement_Button_Click">
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-                        <FontIcon Grid.Column="0"
-                                  
-                                 Style="{StaticResource FontIconStyle}"
-                                 FontFamily="{StaticResource FontAwesome}"
-                                 Glyph="&#xf80d;">
-                        </FontIcon>
-                        <TextBlock Grid.Column="1"
-                                   Style="{StaticResource TextBlock_inButton_Style}"
-                                   Text="Patient Management">
-                        </TextBlock>
-                    </Grid>
-                </Button>
-            </Border>
-
+           
         </Grid>
 
         <!--- Set up hang 2 -->
@@ -194,7 +167,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="0" Margin="30 0 50 0">
+            <Border 
+                Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="0" Margin="30 0 50 0">
                 <Border.Shadow>
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
@@ -218,13 +192,13 @@
                     </Grid>
                 </Button>
             </Border>
-
-            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="1" Margin="50 0 30 0">
+            <Border Background="#ffffff" CornerRadius="10,10,10,10" Grid.Column="2" Margin="30 0 30 0">
                 <Border.Shadow>
                     <ThemeShadow></ThemeShadow>
                 </Border.Shadow>
 
-                <Button Name="MedicalNewsButton"  HorizontalAlignment="Left">
+                <Button Name="PatientManagement_Button"  HorizontalAlignment="Center" Click="PatientManagement_Button_Click">
+
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -232,14 +206,14 @@
                         </Grid.ColumnDefinitions>
 
                         <FontIcon Grid.Column="0"
-                                 Style="{StaticResource FontIconStyle}"
-                                 FontFamily="{StaticResource FontAwesome}"
-                                 Glyph="&#xf1ea;">
+                       
+                      Style="{StaticResource FontIconStyle}"
+                      FontFamily="{StaticResource FontAwesome}"
+                      Glyph="&#xf80d;">
                         </FontIcon>
-
                         <TextBlock Grid.Column="1"
-                                   Style="{StaticResource TextBlock_inButton_Style}"
-                                   Text="Medical News">
+                        Style="{StaticResource TextBlock_inButton_Style}"
+                        Text="Patient Management">
                         </TextBlock>
                     </Grid>
                 </Button>
